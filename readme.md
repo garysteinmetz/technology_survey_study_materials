@@ -1,6 +1,11 @@
 
 # Welcome to My Technology Survey Study Materials
 
+## For now, just worry about this section
+
+  - [Syllabus](syllabus.md)
+  - [Software Installation](setup_instructions/software_installations.md)
+
 ## Goal
 The goal of these study materials is to provide a survey of technology.
 
@@ -140,6 +145,7 @@ Robert Shiller advice - 'keep living like a student'
 Ask your parents - 'is your job a grind?'
 If you help someone who is uninterested, expect them not to appreciate your sacrifice as much as you do
 A web page is normally constructed by making a series of HTTP GET calls
+Why primary care physicians are paid less than specialists
 
 JavaScript eventing
 JavaScript Ajax
@@ -152,8 +158,9 @@ Paying for the Party - https://www.youtube.com/watch?v=AucEd5YYYGo
 Enough book
 Failure to launch
 https://www.scientificamerican.com/article/failure-to-launch-syndrome/
+Actuary Salaries
 
-Checklist - Name, age, why shined up, know languages
+Checklist - Name, age, why showed up, know languages
 
 
   - (First Chinese School Class)
