@@ -146,6 +146,8 @@ Ask your parents - 'is your job a grind?'
 If you help someone who is uninterested, expect them not to appreciate your sacrifice as much as you do
 A web page is normally constructed by making a series of HTTP GET calls
 Why primary care physicians are paid less than specialists
+Going concern
+Chartered Financial Analyst
 
 JavaScript eventing
 JavaScript Ajax
