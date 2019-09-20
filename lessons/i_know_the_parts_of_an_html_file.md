@@ -1,15 +1,15 @@
-#I know the parts of an HTML file
+# I know the parts of an HTML file
 
-##What are HTML files?
+## What are HTML files?
 HTML files are -the- main types of files that produce the web pages
 viewed in web browsers.
 
-##What are the files themselves?
+## What are the files themselves?
 They are a type of ... text file! The actual text consists of HTML 'tags'
 and the overall layout is similar too, but not necessarily compliant with,
 an XML document.
 
-##What is XML?
+## What is XML?
 XML is a way of representing data. It consists of 'tags' with each tag
 starting with a word proceeded by '<' and ending with '>' and ending with
 the same word proceeded by '</' and ending with '>' - other tags and text
@@ -47,7 +47,7 @@ so that your browser knows what kind of file that it is. In Chrome,
 you can view a local file by selecting the 'File' menu option
 and then selecting the 'Open File' option.
 
-##What are the sections of an HTML file?
+## What are the sections of an HTML file?
 The overall contents are encased in an 'html' tag which contains
 an (optional) 'head' tag and a 'body' tag. The 'body' tag holds the
 components on a page that are visible in the browser
@@ -60,7 +60,7 @@ reloading the entire page.
 The overall structure (the 'html' tag and everything it contains)
 is referred to as the 'DOM' (document object model).
 
-##How is programming code added to a web page?
+## How is programming code added to a web page?
 It's added in one or more 'script' tags in the 'head' tag (section).
 Unless otherwise specified, these commands are interpreted to be JavaScript.
 The 'alert' JavaScript command displays a pop-up message in the browser.
@@ -82,7 +82,7 @@ but it's useful for teaching examples like here.
 </html>
 ```
 
-##How is styling added to a web page?
+## How is styling added to a web page?
 It's added in one or more 'style' tags in the 'head' tag (section).
 All tags of a certain kind, specific classes of a tag (identified
 by the 'class' attribute), and specific instances of a tag (identified
@@ -117,21 +117,21 @@ In this example, the 'p' tag represents a paragraph.
 </html>
 ```
 
-##How are visible components and text added to a web page?
+## How are visible components and text added to a web page?
 They are added as tags within the 'body' tag. And those tags can themselves
 have tags within them. Text can reside within a tag too.
 
-##Can an individual tag be uniquely identified?
+## Can an individual tag be uniquely identified?
 Yes, each HTML tag supports the optional 'id' attribute
 which should have a unique value. Both JavaScript and CSS
 can search for this unique value to interact with and style
 that specific tag.
 
-##What are commonly used components?
+## What are commonly used components?
 
 Here are several commonly used HTML tags.
 
-###p
+### p
 This demarcates a paragraph. Pressing the 'return' key does not
 create a new line in HTML (it just creates another space).
 When this tag doesn't contain anything (text or tags), it's about
@@ -153,7 +153,7 @@ two 'return' keys').
 </html>
 ```
 
-###br
+### br
 This is like the 'p' tag but it create about half the vertical spacing
 (like pressing the 'return' key once).
 
@@ -171,7 +171,7 @@ This is like the 'p' tag but it create about half the vertical spacing
 </html>
 ```
 
-###hr
+### hr
 Renders a horizontal bar.
 
 ```
@@ -184,7 +184,7 @@ Renders a horizontal bar.
 </html>
 ```
 
-###div
+### div
 Wraps a section of HTML content (both tags and text) into a common
 block for styling (like applying a border). By its default behaviour,
 it's like a 'p' tag but much more purposefully used by web UI
@@ -210,7 +210,7 @@ used by web UI developers because of its styling flexibility.
 ```
 
 
-###span
+### span
 
 This is like a 'div' tag but doesn't block itself out. It's used more
 for inline styling (usually for text). This is used frequently.
@@ -231,7 +231,7 @@ for inline styling (usually for text). This is used frequently.
 </html>
 ```
 
-###ul
+### ul
 Creates a list of bullet points with each bullet point
 represented by a nested 'li' tag.
 
@@ -248,7 +248,7 @@ represented by a nested 'li' tag.
 </html>
 ```
 
-###ol
+### ol
 Creates numbered list with with each numbered items
 represented by a nested 'li' tag.
 
@@ -265,14 +265,14 @@ represented by a nested 'li' tag.
 </html>
 ```
 
-###li
+### li
 Represents an item within a list (created by either a 'ul' tag or an 'ol' tag).
 
-###iframe
+### iframe
 Creates a block that displays another web page in it.
 The value of the 'src' attribute determines which web page to display.
 
-###a
+### a
 Creates a hyperlink with the 'href' attribute being the destination.
 Including the optional 'target' attribute with the value '_blank'
 will open up a new browser window.
@@ -292,7 +292,7 @@ will open up a new browser window.
 </html>
 ```
 
-###table
+### table
 Used to create a table (rows and columns). For generalized web page
 layout (like a page including a header and a footer), 'div' tags
 are generally used instead.
@@ -351,7 +351,7 @@ A row is declared (top to bottom) with the 'tr' tag and each cell
 </html>
 ```
 
-###img
+### img
 Displays a block with an image in it. The image is referenced
 by the 'src' (source) attribute. This attribute's value can either be
 a file in the same directory as the web page, a file in a subdirectory
@@ -376,15 +376,15 @@ locations of the web page.
 </html>
 ```
 
-###video
+### video
 Displays a block with a video clip in it. The video is referenced
 by the 'src' (source) attribute.
 
-###audio
+### audio
 Displays a block with an audio clip in it. The audio is referenced
 by the 'src' (source) attribute.
 
-###h1, h2, h3, ...
+### h1, h2, h3, ...
 Displays stylized headers in the web page. The smaller the number
 used in the tag's name, the bigger the header ('h1' is the biggest).
 
@@ -400,26 +400,26 @@ used in the tag's name, the bigger the header ('h1' is the biggest).
 </html>
 ```
 
-##What are forms?
+## What are forms?
 Forms are groupings of interactive components
 (like buttons, text boxes, and drop-down menus) that a user
 can adjust and submit. For very traditional web sites,
 this is -the- way that a user submits information
 (like placing an order).
 
-###How are forms demarcated?
+### How are forms demarcated?
 All forms are enclosed by a 'form' tag. Two common attributes
 assigned to this tag are 'action' (URL indicating where the form
 should be submitted) and 'method' (usually 'POST' is used for
 'important' things involving sensitive data and financial transactions,
 but 'GET' can be used for casual and less sensitive submissions).
 
-###What are commonly used form tags?
+### What are commonly used form tags?
 Some form tags are listed below. Each uses the 'name' attribute
 which is sent to the server along with its corresponding value
 once the form is submitted.
 
-####select
+#### select
 Displays a dropdown or multi-select list. One or more 'option'
 tags determine which values can be selected. For dropdowns, the
 topmost 'option' tag is the one first selected unless another
@@ -445,10 +445,10 @@ tag is what gets displayed for that option.
 </html>
 ```
 
-####input
+#### input
 Represents a block of text that should be submitted with the form.
 
-#####type="text"
+##### type="text"
 Displays an unconcealed block (single line) of text.
 
 ```
@@ -461,7 +461,7 @@ Displays an unconcealed block (single line) of text.
 </html>
 ```
 
-#####type="password"
+##### type="password"
 Displays a concealed block (single line) of text.
 
 ```
@@ -474,7 +474,7 @@ Displays a concealed block (single line) of text.
 </html>
 ```
 
-#####type="hidden"
+##### type="hidden"
 Represents a text value hidden from view. This is often used in form
 submissions to send a fixed value that the browser user shouldn't change
 (maybe like the user's home address, like, for instance, if the user
@@ -490,7 +490,7 @@ checks 'Use my home address' checkbox when submitting an order).
 </html>
 ```
 
-####textarea
+#### textarea
 Displays an unconcealed multi-line block of text.
 
 ```
@@ -529,7 +529,7 @@ the 'Elements' tab is selected. Study the hierarchical nature
 of the DOM structure. Notice how the 'div' tag is used to organize
 sections of the page.
 
-## Double Bonus - Change the DOM Structure
+### Double Bonus - Change the DOM Structure
 In the 'Elements' pane, right-click over an HTML tag and select
 the 'Delete element' option and note how that element disappears
 from the viewable page. I've used this technique to remove ads
