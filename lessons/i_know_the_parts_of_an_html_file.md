@@ -105,7 +105,7 @@ In this example, the 'p' tag represents a paragraph.
         color: blue;
       }
       p#C {
-        font-decoration: italizicied;
+        font-style: italic;
       }
     </style>
   </head>
