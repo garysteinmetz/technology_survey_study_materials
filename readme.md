@@ -148,22 +148,52 @@ A web page is normally constructed by making a series of HTTP GET calls
 Why primary care physicians are paid less than specialists
 Going concern
 Chartered Financial Analyst
+Jamestown settlement
+Sacrificing for others
+Initial salary about half of salary after 10 years later
+Don't take more college debt than the starting salary for a job
+Perpetual beta
+"You can't ask a man to understand something if his salary depends on him not understanding it"
+Principle-agent problem
+Identity is important, try not to cross people
 
 JavaScript eventing
 JavaScript Ajax
 HTML forms and file uploads
 JavaDoc
 Review overall flow of client to server (cookies, web service calls, JavaScript)
+One a web page, the 'head' section holds adjectives and verbs, the 'body' section holds nouns
+Copy-paste hot keys
 
 Paying for the Party - https://www.youtube.com/watch?v=AucEd5YYYGo
 
+https://developer.mozilla.org/en-US/docs/Web/CSS/Reference
+
+Yak shaving
 Enough book
 Failure to launch
 https://www.scientificamerican.com/article/failure-to-launch-syndrome/
 Actuary Salaries
-
+Why sales people get paid more than engineers?
+"You won't be rich but you will be comfortable"
+"Nice work if you can get it"
+Character is the most important quality in a spouse
+Perseverance is the most important quality of an engineer
+Cities taking money from youth with high rent
+People with bigger families tend to live conventional lives
+Contacts and networking matter more for people who are or aspire to be upper class
+"A smart man knows everything, a wise man knows everyone"
+Those who plan their careers ahead of time tend to do better
+'Enough' book
+From the teacher's experience, immigrants tend to have good work ethic and character
+Importance of going on patrol
+Don't be overly vested in corporate life
+If you give everything you got to an ordinary job without a rewarding career track, you are an idiot
+What is taught/valuable with a computer science degree differs from software engineering skills
+About 70% of software lifecycle is maintenance
+Only about 20% of computer science graduates are still programming at age 40
 Checklist - Name, age, why showed up, know languages
-
+Gender ratios on college campuses
 
   - (First Chinese School Class)
     - Writing on a web page with debugging
