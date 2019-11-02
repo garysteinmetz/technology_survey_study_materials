@@ -15,6 +15,7 @@ you can conclude that you are a software engineer!
 
   - [I know what text files are and can write a hello world shell script](lessons/i_know_what_text_files_are_and_can_write_a_hello_world_shell_script.md)
   - [I know the parts of an HTML file](lessons/i_know_the_parts_of_an_html_file.md)
+  - [I know how to reserve a domain in aws and create a static web site using s3](lessons/i_know_how_to_reserve_a_domain_in_aws_and_create_a_static_web_site_using_s3.md)
   - I am a computer programmer who has written the classic 'Hello World!' program in a browser
   - I am a server-side programmer
   - I can create an interactive web page (Form Submission, Ajax)

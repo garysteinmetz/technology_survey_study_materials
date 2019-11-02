@@ -194,6 +194,17 @@ About 70% of software lifecycle is maintenance
 Only about 20% of computer science graduates are still programming at age 40
 Checklist - Name, age, why showed up, know languages
 Gender ratios on college campuses
+In cooperative human relations (like workplace and family life), the more mediocre person wins
+Institutions/people in power don't necessarily do what they are supposed to do, but when they are held accountable for
+https://www.youtube.com/watch?v=vhhgI4tSMwc ('Why 30 is not the new 20 | Meg Jay')
+Travelling gets markedly harder once you have children
+Go on patrol
+Darth Vader - voice actor versus stage actor
+//
+https://git-scm.com/download/win
+git clone https://github.com/garysteinmetz/technology_survey_study_materials.git
+https://github.com/garysteinmetz/technology_survey_study_materials
+https://github.com/docker/toolbox/releases
 
   - (First Chinese School Class)
     - Writing on a web page with debugging
