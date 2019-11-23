@@ -194,6 +194,13 @@ registration might be publicly available.
   - Uncheck the 'Block all public access' check box then click
     the 'Next' button.
   - Finally, create the 'Create bucket' button.
+  - Back on the main S3 page, click the name of the bucket under
+    the 'Bucket name' column.
+  - Click the 'Properties' tab, click the 'Static website hosting' box,
+    click the 'Use this bucket to host a website' radio button,
+    enter 'index.html' in the 'Index document' box (this is the file that
+    gets selected when someone goes to a URL without a specific file
+    or directly listed), then click the 'Save' button.
 
 ### Align the Domain with the S3 Bucket
 
@@ -206,10 +213,15 @@ registration might be publicly available.
   - Click the link for the hosted zone then click
     the 'Create Record Set' button.
   - In the 'Create Record Set' form, leave the 'Name' field blank,
-    select 'Yes' for the 'Alias' value, click the 'Alias Target' field
-    and select the S3 bucket under the '-- S3 website endpoints --',
+    keep 'Type' as 'A - IPv4 address', select 'Yes' for the 'Alias' value,
+    click the 'Alias Target' field and select the S3 bucket
+    under the '-- S3 website endpoints --' listing,
     then click the 'Create' button.
-  - Repeat the previous step but this time use 'www' for the 'Name' field.
+  - Again click the 'Create Record Set' form, enter 'www' into the 'Name'
+    field, keep 'Type' as 'A - IPv4 address', select 'Yes' for the 'Alias' value,
+    click the 'Alias Target' field and select the S3 bucket name under
+    the '-- Record sets in this hosted zone --' listing,
+    then click the 'Create' button.
 
 Note that the name of this hosted zone will have a period '.'
 at the end of it.
