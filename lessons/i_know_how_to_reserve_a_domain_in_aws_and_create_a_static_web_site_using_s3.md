@@ -202,6 +202,12 @@ registration might be publicly available.
     gets selected when someone goes to a URL without a specific file
     or directly listed), then click the 'Save' button.
 
+Repeat the above steps to create a second S3 bucket. It will be identical
+to the one just created but the name of the bucket will be prefixed
+with 'www.' so that Route 53 below can support web browser access to both
+the domain name (e.g. like 'somedomain.com') and the 'www' version
+of the domain name (e.g. like 'www.somedomain.com').
+
 ### Align the Domain with the S3 Bucket
 
   - Go to the AWS console main page, click the 'Services' link (top-left).
@@ -215,6 +221,7 @@ registration might be publicly available.
   - In the 'Create Record Set' form, leave the 'Name' field blank,
     keep 'Type' as 'A - IPv4 address', select 'Yes' for the 'Alias' value,
     click the 'Alias Target' field and select the S3 bucket
+    that has the same name as the domain name
     under the '-- S3 website endpoints --' listing,
     then click the 'Create' button.
   - Again click the 'Create Record Set' form, enter 'www' into the 'Name'
@@ -223,10 +230,16 @@ registration might be publicly available.
     the '-- Record sets in this hosted zone --' listing,
     then click the 'Create' button.
 
+Now repeat the same steps above but use 'www' for the 'Name' field while
+creating the record set and select the bucket with 'www.' in front of it
+under the '-- Record sets in this hosted zone --' listing.
+
 Note that the name of this hosted zone will have a period '.'
 at the end of it.
 
 ### Upload Project Files to the S3 Bucket
+
+Follow these steps for each of the two buckets that were created.
 
   - Go to the AWS console main page, click the 'Services' link (top-left).
   - Scroll down to the 'Networking & Content Delivery' section
@@ -243,6 +256,14 @@ at the end of it.
 Note that, when a user just enters the domain name into the browser,
 by convention web browser first searches for the 'index.html'
 web page. Make sure this file is present in the S3 bucket.
+
+#### Upload Files from the Command Line
+The above steps are error prone and laborious. They can be more quickly and
+safely done using the `aws` command-line command as follows from the
+project's base directory.
+
+  - aws s3 sync --acl public-read --exclude ".*" ./ s3://chhcsfun.com
+  - aws s3 sync --acl public-read --exclude ".*" ./ s3://www.chhcsfun.com
 
 ### Confirm
 Open a web browser and enter the domain name into the address bar.
