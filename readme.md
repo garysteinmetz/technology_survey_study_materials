@@ -200,6 +200,7 @@ https://www.youtube.com/watch?v=vhhgI4tSMwc ('Why 30 is not the new 20 | Meg Jay
 Travelling gets markedly harder once you have children
 Go on patrol
 Darth Vader - voice actor versus stage actor
+https://www.ft.com/content/b9f99656-b8f7-11e9-8a88-aa6628ac896c
 //
 https://git-scm.com/download/win
 git clone https://github.com/garysteinmetz/technology_survey_study_materials.git

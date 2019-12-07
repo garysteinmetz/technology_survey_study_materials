@@ -15,8 +15,9 @@ you can conclude that you are a software engineer!
 
   - [I know what text files are and can write a hello world shell script](lessons/i_know_what_text_files_are_and_can_write_a_hello_world_shell_script.md)
   - [I know the parts of an HTML file](lessons/i_know_the_parts_of_an_html_file.md)
-  - [I know how to reserve a domain in aws and create a static web site using S3](lessons/i_know_how_to_reserve_a_domain_in_aws_and_create_a_static_web_site_using_s3.md)
+  - [I know how to reserve a domain in AWS and create a static web site using S3](lessons/i_know_how_to_reserve_a_domain_in_aws_and_create_a_static_web_site_using_s3.md)
   - [I know how to collaborate with a team to edit source code](lessons/i_know_how_to_collaborate_with_a_team_to_edit_source_code.md)
+  - [I can create a responsive web page which uses CSS, JavaScript, and Cookies](lessons/i_can_create_a_responsive_web_page_which_uses_css_javascript_and_cookies.md)
   - [I can combine JavaScript with events on an HTML page](lessons/i_can_combine_javascript_with_events_on_an_html_page.md)
   - [I can incorporate and use a third-party library to create an HTML application](lessons/i_can_incorporate_and_use_a_third_party_library_to_create_an_html_application.md)
   - [I know how to collaborate with a team to allocate and track project work](lessons/i_know_how_to_collaborate_with_a_team_to_allocate_and_track_project_work.md)
