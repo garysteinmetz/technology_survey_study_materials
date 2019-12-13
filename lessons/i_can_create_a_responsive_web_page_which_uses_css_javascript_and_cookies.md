@@ -171,6 +171,31 @@ another image.
         }
 ```
 
+##### How Does JavaScript Run Based on a User Action?
+
+HTML tags have attributes which allow actions to occur when events (like clicking
+an HTML tag) happen. One such attribute is `onclick` which corresponds to the
+HTML tag being clicked.
+
+In this application, each selection (rock, paper, or scissors) has its own image
+(`img` tag) which itself has an `onclick` JavaScript function to submit
+the user's selection for processing.
+
+```
+                    <img class="selection_icon"
+                         src="https://img.icons8.com/color/48/000000/rock.png"
+                        onclick="playRockPaperScissors(ROCK)"/>
+                    ...
+                    <img class="selection_icon"
+                         src="https://img.icons8.com/dusk/64/000000/paper.png"
+                        onclick="playRockPaperScissors(PAPER)"/>
+                    ...
+                    <img class="selection_icon"
+                         src="https://img.icons8.com/plasticine/100/000000/scissors.png"
+                        onclick="playRockPaperScissors(SCISSORS)"/>
+
+```
+
 ### What Is CSS?
 
 CSS stands for Cascading Style Sheet and is a standard for formatting the layout
@@ -323,6 +348,57 @@ of top-to-bottom
         }
         span.title {
             font-size: 36pt;
+        }
+        @media screen and (max-width: 500px) {
+            div.wrapper {
+                width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+                border: 1px black solid;
+            }
+            div.title {
+                text-align: center;
+            }
+            div.computer {
+                display: block;
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            div.game {
+                display: block;
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            div.selected_icon {
+                width: 50px;
+                text-align: center;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            div.me {
+                display: block;
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            div.selection {
+                text-align: center;
+            }
+            div.selection_icon {
+                width: 100px;
+                text-align: center;
+            }
+            img.selection_icon {
+                text-align: center;
+                width: 32px;
+                height: 32px;
+            }
+            span.title {
+                font-size: 18pt;
+            }
         }
     </style>
 </head>
