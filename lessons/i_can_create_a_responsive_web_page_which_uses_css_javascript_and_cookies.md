@@ -227,6 +227,26 @@ of top-to-bottom
 5. `font-size: 36pt;` sets the font size of the text it contains
 (font size of 36 point in this case)
 
+#### How Can CSS Be Used to Make a Web Page Responsive?
+
+Using the `@media` directive along with criteria like `max-width` instructs the web browser
+to use different definitions for CSS classes based on the width of the screen. Mobile
+devices have smaller widths and the use of `@media` frequently is intended for these devices.
+
+The following directive instructs the browser to use different CSS classes when its width
+is 500 pixels in length or less.
+
+```
+@media screen and (max-width: 500px)
+```
+
+For the web page below, `display: inline-block;` is used to indicate that sections (blocks)
+of the web page can be arranged side-by-side (left to right), but for smaller screens
+the sections should be arranged top-to-bottom so `display: block;` (which in effect
+inserts an undeclared `p` (line break) after the `div` tag) is used instead. Likewise,
+the font size of the title of the page changes from `font-size: 36pt;` to
+`font-size: 18pt;` (it shrinks).
+
 ## Web Page Source Code
 
 ### Rock, Paper, Scissors
