@@ -222,6 +222,14 @@ Sunk Cost Fallacy
 Assortative Mating
 Engineer can move easily into and out of jobs
 Software is eating the world
+It's quite common for software developers to underestimate how long it will take to do something
+But there frequently is a young and male machismo to the work (but maybe that's common in competitive professions)
+The more you want something, the worse your negotiating position
+Did you attempt to use good judgement and did you try
+Rent seeking
+In terms of personal development, software development is humbling because the software developer is frequently proven wrong
+In social venues (like parties and gatherings), it's hard to relate the work to others
+I am either an adult or I'm a child and reviewed/discussed these exam questions with my parent(s)/guardian(s)
 //
 https://git-scm.com/download/win
 git clone https://github.com/garysteinmetz/technology_survey_study_materials.git

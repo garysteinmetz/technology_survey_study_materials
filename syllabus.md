@@ -52,6 +52,7 @@ security/oauth/cors
   - [I know how to collaborate with a team to allocate and track project work](lessons/i_know_how_to_collaborate_with_a_team_to_allocate_and_track_project_work.md)
   - [I can use an IDE to improve my software development productivity](lessons/i_can_use_an_ide_to_improve_my_software_development_productivity.md)
   - [I can create wireframes and pictures](lessons/i_can_create_wireframes_and_pictures.md)
+  - [I can use libraries and different data types on an HTML page](lessons/i_can_use_libraries_and_different_data_types_on_an_html_page.md)
   - [Bonus: I have completed these HTML examples](lessons/bonus_i_have_completed_these_html_examples.md)
   - I am a computer programmer who has written the classic 'Hello World!' program in a browser
   - I am a server-side programmer
