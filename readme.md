@@ -201,6 +201,27 @@ Travelling gets markedly harder once you have children
 Go on patrol
 Darth Vader - voice actor versus stage actor
 https://www.ft.com/content/b9f99656-b8f7-11e9-8a88-aa6628ac896c
+The best time to look for a job is when you have one
+The half-life for knowledge in this field is about 7 years
+Don't follow the argument someone is making, follow how they will gain from what's they're proposing
+Most popular undergraduate course at Harvard is in economics
+Roanoake versus other colony
+Edison versus Tesla
+Engineers more likely to be CEO
+Perseverance is the most important quality in an engineer
+Your teacher doesn't know everything and it's important to ask others
+Reason why oral surgeons make more than doctors
+Zoning regulations and higher housing costs in good job markets
+Adam Smith - "Not only to be loved but to be lovely"
+Economics isn't a science because claims can't be falsified
+Probability - Sunk cost fallacy, independence, correlation isn't causation, expected value
+Game Theory - Prisoner's Dilemma
+Importance of Being an Autodidact
+Perseverance Most Important Engineer Personality Trait
+Sunk Cost Fallacy
+Assortative Mating
+Engineer can move easily into and out of jobs
+Software is eating the world
 //
 https://git-scm.com/download/win
 git clone https://github.com/garysteinmetz/technology_survey_study_materials.git
