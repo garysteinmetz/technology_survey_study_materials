@@ -237,8 +237,69 @@ if (car && car.gasTankFull) {
 ```
 
 #### Number
+Numbers are numbers - either integers or numbers with decimal points.
+Here are examples.
+```
+var bankBalance = 200;
+//withdrew money, lower bank balance
+bankBalance = 190.5;
+```
+
+##### Arithmetic
+The operators `+`, `-`, `*`, and `/` correspond to the arithmetic
+operations add, subtract, multiply, and divide, respectively.
+Here are examples.
+```
+var bankBalance = 150 + 50.5;//200.5
+bankBalance = bankBalance - 0.5;//200
+bankBalance = bankBalance*2;//400
+bankBalance = bankBalance/40;//10
+```
+
+##### Number Comparisons
+Numbers can be compared to each other to generate true/false results
+for logical evaluation. `==`, `!=`, `<`, `>`, `<=`, `>=` correspond
+to the logical evaluations equal to, not equal to, less than, greater than,
+less than or equal to, and greater than or equal to, respectively.
+
+Here are examples.
+```
+var bankBalance = 200;
+//all of these evaluate to true
+var result = (bankBalance == 200);
+result = (bankBalance != 201);
+result = (bankBalance < 400);
+result = (bankBalance > 199);
+result = (bankBalance <= 200);
+result = (bankBalance <= 201);
+result = (bankBalance >= 200);
+result = (bankBalance >= 199.99);
+```
+
+##### 'Math' Object
+JavaScript includes a `Math` object for advanced math operations.
+Here are examples.
+```
+var n;
+n = Math.PI;//3.141592653589793
+n = Math.round(4.4);//4
+n = Math.round(4.7);//5
+n = Math.pow(8,2);//8*8=64
+n = Math.floor(4.999);//4
+
+```
+
+##### 'parseFloat' Function
+JavaScript has a `parseFloat` function for converting strings to numbers.
+Invalid input results in `NaN` as a response value. Here are examples.
+```
+var n = parseFloat("5.5");//5.5
+n = parseFloat("HahHahInvalid");//NaN
+```
 
 #### String
+String concatenation, converting to string
+
 
 #### Date
 

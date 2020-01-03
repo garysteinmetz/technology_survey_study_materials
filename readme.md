@@ -230,6 +230,13 @@ Rent seeking
 In terms of personal development, software development is humbling because the software developer is frequently proven wrong
 In social venues (like parties and gatherings), it's hard to relate the work to others
 I am either an adult or I'm a child and reviewed/discussed these exam questions with my parent(s)/guardian(s)
+As of 2020, software engineering teams are typically about 85% male
+As of 2020, software engineering teams are about 50% south Asian, 10% east Asian, and 40% American
+American engineers domestically compete against foreigners (typically Indians) with limited labor-market rights
+But likewise American engineers still earn (on average) more than engineers in most other countries
+Hot job markets tend to be better places to work for those without children
+More and more, companies typically want a higher degree in competence with DevOps and development frameworks (the boring stuff), than just traditional programming skills (which are still essential)
+Especially at larger companies, it's common for a software engineer to spend less than 50 percent of a work day coding
 //
 https://git-scm.com/download/win
 git clone https://github.com/garysteinmetz/technology_survey_study_materials.git
