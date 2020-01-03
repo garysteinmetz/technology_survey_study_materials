@@ -332,7 +332,25 @@ console.log(s.split("c"));//[" ab", " xyzz  "] - splits string by pattern
 
 #### Date
 
+The date data type is useful for getting time values and determining
+how much time has passed. Here are examples for creating a date object
+and getting elapsed time. (`UTC` refers to a standard international
+time zone (corresponding to England with daylight saving time adjustments.)
+```
+var d = new Date();//current date/time
+var elapsedTime = d.getTime();//number of milliseconds since January 1, 1970 00:00:00 UTC
+```
+
 #### Undefined and Null
+Uninitialized variables are by default assigned a value of `undefined`
+while a variable can explicitly be assigned no value with `null`.
+```
+var middleName;//has undefined value
+middleName = null;//the person has no middle name
+if (middleName == null) {
+    console.log("This person has no middle name");
+}
+```
 
 #### Array
 
