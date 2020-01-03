@@ -298,8 +298,37 @@ n = parseFloat("HahHahInvalid");//NaN
 ```
 
 #### String
-String concatenation, converting to string
+Strings are an ordered sequence of characters. Characters can include
+letters, numbers, punctuation, symbols, and something called `whitespace`.
+Whitespace represents characters that adjust the layout of a string
+and they include things like spaces (' '), tabs, and the enter/return
+character (actually, on Windows, it's represented as two characters -
+'carriage return' and 'line feed').
 
+Strings can be concatenated together to form a single composite
+string using the `+` operator. Likewise, strings and non-strings
+can be concatenated together to form a single composite string the same way.
+Here are examples.
+```
+var s = "abc" + "xyz";//"abcxyz"
+s = "a" + null + "b" + false + "c" + 5;//"anullbfalsec5"
+```
+
+##### String Functions
+The `length` member variable and supporting functions can be useful
+when interacting with strings. The first character in a string is
+actually the zeroth (not first) character. Here are examples.
+
+```
+var s = " abc xyzz  ";
+console.log(s.length);//11
+console.log(s.trim();//"abc xyzz" - remove leading/trailing whitespace
+console.log(s.replace("a", "q);//" qbc xyzz  "
+console.log(s.substr(1,3));//"abc" - get three characters starting with first
+console.log(s.indexOf("xyz"));//5 - get index of first occurrence
+console.log(s[1]);//"a" - get character at index 1
+console.log(s.split("c"));//[" ab", " xyzz  "] - splits string by pattern
+```
 
 #### Date
 
@@ -310,6 +339,8 @@ String concatenation, converting to string
 #### Object
 
 #### Function
+
+#### Regular Expressions
 
 ### JSON
 
