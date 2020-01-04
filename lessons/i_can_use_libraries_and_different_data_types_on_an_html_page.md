@@ -438,6 +438,53 @@ for (var i = 0; i < personAttributes.length; i++) {
 ```
 
 #### Function
+Functions are like verbs - they do things. What they do and how they
+do it frequently is determined by what `arguments` it receives.
+Functions can optionally `return` a value which the caller can
+optionally use. Here are examples.
+
+```
+//this function just takes one input argument ('message')
+//  and doesn't return anything
+function saySomething(message) {
+  console.log(message);
+}
+saySomething("Hey there");
+//this function takes two arguments ('numberOne' and 'numberTwo')
+//  and returns their sum
+function addNumbers(numberOne, numberTwo) {
+  return numberOne + numberTwo;
+}
+saySomething('Uno - ' + addNumbers(1, 0));
+saySomething('Dos - ' + addNumbers(1, 1));
+saySomething('Tres - ' + addNumbers(1, 2));
+//
+//functions can also be assigned directly to a variable
+var subtractOne = function(number) {return number - 1};
+saySomething("1 - 1 = " + subtractOne(1));
+```
+
+##### Arrow Functions
+More recently, a more streamlined way of declaring a function
+is now available and has become popular. It's known as an `arrow function`
+and is of the form `(argumentList) => {actions}`. It has two major benefits.
+
+1) It removes the need to type the `function` keyword. Even the curly
+braces (`{` and `}`) are optional if there is only one action and
+its value is what the function should return.
+2) (This is important.) The `this` keyword always has an unambiguous
+value. The traditional use of `this` in `function` has not been consistent.
+(The definition and explanation of the `this` keyword is beyond
+the scope of this introductory overview, but it's an important topic
+for JavaScript developers.)
+
+Here are examples.
+```
+var alwaysReturnOne = () => 1;
+console.log('This most definitely should be one - ' + alwaysReturnOne());
+var addTwoNumbers = (numberOne, numberTwo) => (numberOne + numberTwo);
+console.log('Adding one and one should most definitely be - ' + addTwoNumbers(1, 1));
+```
 
 #### Regular Expressions
 
