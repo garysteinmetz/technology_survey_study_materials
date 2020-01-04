@@ -437,6 +437,22 @@ for (var i = 0; i < personAttributes.length; i++) {
 //  - siblings
 ```
 
+##### Prototype
+JavaScript allows you to create your own object types.
+
+It's a complicated subject, but here's a brief example.
+```
+function Person(name) {this.name = name};
+Person.prototype = {
+    print: function() {return this.name;}
+};
+
+var personOne = new Person("Prince Harry");
+console.log(personOne.print());
+var personTwo = new Person("Prince William");
+console.log(personTwo.print());
+```
+
 #### Function
 Functions are like verbs - they do things. What they do and how they
 do it frequently is determined by what `arguments` it receives.
@@ -487,6 +503,38 @@ console.log('Adding one and one should most definitely be - ' + addTwoNumbers(1,
 ```
 
 #### Regular Expressions
+Regular expressions (often referred to as `reg ex`) are search patterns.
+Normal string functions are not conveniently malleable in the way
+that regular expressions are. They can be used to find -
+
+1) Where in a string a pattern can be found
+2) If a string conforms to an overall pattern
+
+Here's a quick example that removes all whitespace from a string.
+```
+var str = " a b   c  d       ";
+//In regular expression '/\s/g', '\s' means all white space
+//  and 'g' means 'greedy' (replace each whitespace character
+str = str.replace(/\s/g, '');
+console.log(str);//'abcd'
+```
+
+Here's a quick example to check if a string starts with 'hello' -
+web page JavaScript frequently uses regular expressions to validate
+user input (like to determine if a user entered a correctly-formed
+email address).
+```
+var regEx = /^hello/;
+var strOne = 'hello there';
+var resultOne = regEx.test(strOne);//true
+console.log(resultOne);
+var strTwo = 'hi and good morning';
+var resultTwo = regEx.test(strTwo);//false
+console.log(resultTwo);
+```
+
+In programming more generally (really DevOps), regular expressions
+are frequently used to search log files.
 
 ### JSON
 
