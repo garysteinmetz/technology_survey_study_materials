@@ -325,7 +325,7 @@ console.log(s.length);//11
 console.log(s.trim();//"abc xyzz" - remove leading/trailing whitespace
 console.log(s.replace("a", "q);//" qbc xyzz  "
 console.log(s.substr(1,3));//"abc" - get three characters starting with first
-console.log(s.indexOf("xyz"));//5 - get index of first occurrence
+console.log(s.indexOf("xyz"));//5 - get index of first occurrence or -1 if not found
 console.log(s[1]);//"a" - get character at index 1
 console.log(s.split("c"));//[" ab", " xyzz  "] - splits string by pattern
 ```
@@ -353,8 +353,89 @@ if (middleName == null) {
 ```
 
 #### Array
+An array is a sequential listing of zero or more items.
+(In JavaScript,) Each item in an array can be of any data type
+(including null). Like a string, the first element of an array
+is actually the zeroth element. Here's an example.
+
+```
+var shoppingList = ['apples', 'milk', 'pizza'];
+var fruits = shoppingList[0];//'apples'
+var dairy = shoppingList[1];//'milk'
+var junkFood = shoppingList[2];//'pizza'
+```
+
+##### Array Functions
+JavaScript supports a number of array functions including the following.
+
+```
+var shoppingList = ['apples', 'milk', 'pizza'];
+var numberOfItems = shoppingList.length;//3
+var zerothItem = shoppingList[0];//'apples'
+shoppingList.push('celery');//add item to end of array
+var vegetable = shoppingList.pop();//remove item from end of array
+var firstItem = shoppingList.indexOf('milk');//1
+```
 
 #### Object
+Informally speaking in JavaScript, objects are 'amalgamations'
+(collections) of things. Objects consist of zero or more properties
+(known as `key-value pairs`). Each property (key) has a name
+(usually it's a string) and that property is assigned a value.
+Property values can be of any data type - including booleans, numbers,
+strings, and arrays even functions and other objects.
+
+Here's an example.
+```
+var verySimpleObject = {};//this object has no keys!
+var person = {
+  "name": "Prince Harry",
+  "hairColor": "red",
+  "isWorkday": function(dayOfWeek) {
+    return (dayOfWeek != "Saturday" && dayOfWeek != "Sunday");
+  },
+  "royalty": true,
+  "yearOfBirth": 1984,
+  "siblings": [
+    {
+      "name": "Prince William"
+    }
+  ]
+};
+var dayOfWeek = "Wednesday";
+//Hello, my name is Prince Harry and I have red hair.
+console.log("Hello, my name is " + person.name
+  + " and I have " + person.hairColor + " hair.");
+//I am royalty. I was born in 1984 and have 1 sibling(s).
+console.log("I " + ((person.royalty)? "am" : "am not") + " royalty."
+  + " I was born in " + person.yearOfBirth + " and have "
+  + person.siblings.length + " sibling(s).");
+//Since today is Wednesday, I will be working.
+console.log("Since today is " + dayOfWeek
+  + ", I will" + ((person.isWorkday(dayOfWeek))? "" : " not")
+  + " be working.");
+```
+
+The `(A)? B : C` notation means if A is true then return B otherwise
+return C.
+
+The keys of an object can be gotten (as a list) using the `Object.keys()`
+call which is demonstrated below (continuing the example above).
+```
+var personAttributes = Object.keys(person);
+console.log("I can tell you about the following about me, "
+  + person.name + ".");
+for (var i = 0; i < personAttributes.length; i++) {
+  console.log("  - " + personAttributes[i]);
+}
+//I can tell you about the following about me, Prince Harry.
+//  - name
+//  - hairColor
+//  - isWorkday
+//  - royalty
+//  - yearOfBirth
+//  - siblings
+```
 
 #### Function
 
