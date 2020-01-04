@@ -42,6 +42,9 @@ queues/stacks/arrays/sets/recursion/complexity/object-oriented/threading
 probability/independence/gamblers-falacy
 rhetoric
 security/oauth/cors
+
+Code samples can be conveniently tested at https://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic .
+
   - [I know what text files are and can write a hello world shell script](lessons/i_know_what_text_files_are_and_can_write_a_hello_world_shell_script.md)
   - [I know the parts of an HTML file](lessons/i_know_the_parts_of_an_html_file.md)
   - [I know how to reserve a domain in AWS and create a static web site using S3](lessons/i_know_how_to_reserve_a_domain_in_aws_and_create_a_static_web_site_using_s3.md)

@@ -305,6 +305,9 @@ and they include things like spaces (' '), tabs, and the enter/return
 character (actually, on Windows, it's represented as two characters -
 'carriage return' and 'line feed').
 
+String values can be encased with either matching single quotes (`'`)
+or matching double quotes (`"`).
+
 Strings can be concatenated together to form a single composite
 string using the `+` operator. Likewise, strings and non-strings
 can be concatenated together to form a single composite string the same way.
@@ -537,9 +540,218 @@ In programming more generally (really DevOps), regular expressions
 are frequently used to search log files.
 
 ### JSON
+JSON (pronounced 'jay-sohn') stands for JavaScript Object Notation
+and it's the string representation of an object (or other data type,
+like an array). Objects exist in a computer's memory and can't be
+transferred to another computer, but strings can!
+
+JSON format is very popular (even ubiquitous) for web service calls
+made by a web page. (HTTP) Calls made by a web page can send an object
+as a string and receive another object as a string.
+
+It's very easy for JavaScript to interact with JSON,
+unlike other formats (especially including XML). JSON is also simple
+to learn and easy to read, which makes it quite convenient for developing,
+publishing, and using high-profile yet simpler web services.
+(Web services are behind-the-scenes internet calls made by a browser
+to get information ('what are the top Twitter postings?')
+and to perform transactions ('send order to Amazon').)
 
 #### JSON.stringify()
 
+`JSON.stringify()` converts a JavaScript object to a string.
+Here's an example.
+```
+var person = {"name": "Srini"};
+console.log(person);//[object]
+console.log(person.name);//Srini
+var json = JSON.stringify(person);
+console.log(json);//{"name":"Srini"}
+console.log(json.length);//16, 'length' is a string function
+```
+
 #### JSON.parse()
 
-https://phaser.io/examples/v3/view/display/tint/tint-fill-effect
+`JSON.parse()` converts a string to a JavaScript object.
+Here's an example. (If a string is encased in matching `"` characters,
+the `"` character(s) within the string itself must `escaped`
+with the `\` character to avoid confusion.)
+```
+var json = "{\"name\":\"Srini\"}";
+console.log(json);//{"name":"Srini"}
+console.log(json.length);//16, 'length' is a string function
+var person = JSON.parse(json);
+console.log(person);//[object]
+console.log(person.name);//Srini
+```
+
+## Libraries
+Libraries are collections of functionality (for JavaScript)
+and styling (for CSS). For web pages, they reside outside of the source
+code for the web page but are referenced by the web page.
+
+Using libraries have one or more of the following benefits.
+
+1) `Separation of Concerns` - It's common (and definitely recommended)
+in software development to partition functionality by responsibility.
+Just as a supermarket has different sections for different types of things,
+A web page will separate out its core DOM, stylings, and JavaScript
+into different files. It's imperative to do this on larger projects
+to avoid confusion (the web page isn't a single huge mess).
+2) `Better Quality` - Libraries are more focused which allows development
+to be narrow and specialized. As defects are fixed and new features
+are added, getting these improvements is just a matter of publishing
+a new version of the library and the users of the library to select
+this new version.
+3) `Reuse` - A major advantage to using libraries is that common
+functionality can be reused in different applications, which usually
+saves time and a lot of money.
+4) `External Knowledge` - Development, especially web development,
+makes heavy use of popular libraries. This means that new members
+of a team may already know and can use the libraries. And it also
+means that existing team members can make more focused job postings
+and ask better interview questions.
+
+As of 2020, two popular JavaScript libraries are `jQuery` (for DOM
+manipulation) and `Lodash` for advanced JavaScript processing.
+
+Here's the jQuery way of getting a DOM element by its `id` attribute value.
+Notice how jQuery uses considerably less code. jQuery can do much more
+advanced things like get all DOM elements on a page that have a certain
+CSS class (this could be useful for, for instance, making several 'div'
+boxes disappear simultaneously when a user decides to cancel an action).
+```
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
+    <script>
+      //in jQuery, the '$' character represents the library
+      //  the 'ready' function is a special (and cross-browser compatible)
+      //  function that runs as soon as the web page is 'loaded enough'
+      //  to allow DOM manipulation so that the user gets the finalized
+      //  look of the web page as quickly as possible
+      $(document).ready(function() {
+        document.getElementById('traditional').value = 'Keep Tradition';
+        $('#jquery').val('Try Something New');
+      });
+    </script>
+  </head>
+  <body>
+    Traditional JavaScript - <input type="text" id="traditional" />
+    <br />
+    jQuery - <input type="text" id="jquery" />
+  </body>
+</html>
+```
+
+Here's the Lodash way of combining two JavaScript objects into one
+with the fields of the first one taking precedence.
+```
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js" ></script>
+    <script>
+      var original = {"color": "red", "size": "large"};
+      var override = {"color": "blue"};
+      //in Lodash, the '_' character represents the library
+      var result = _.defaults(override, original);
+      //The resulting JSON object is - {"color":"blue","size":"large"}
+      console.log("The resulting JSON object is - " + JSON.stringify(result));
+    </script>
+  </head>
+</html>
+```
+### Frameworks
+
+The goal of libraries is to help software developers get work done
+sooner and better. Libraries like jQuery and Lodash _assist_ you
+in getting work done. Think of them as tool kits
+(like a hammer and a screwdriver).
+
+Other libraries not only assist you but _tell_ you how the work should
+be done. These are known as frameworks and include advanced web page
+rendering frameworks like `React`, `Angular`, and `Vue`. They are less
+like tool kits and more like assembly lines. Companies generally
+expect web developers to know one of these frameworks as they
+provide the capabilities and structure demanded by larger web apps.
+
+### Obsolescence
+
+Software development technologies, especially web technologies,
+change very rapidly. Even cornerstone utility libraries like jQuery
+are less necessary these days (as of 2020). There are many rendering
+frameworks with passionate supporters but likewise something could
+be seen as newer and cooler just a few years later. `Dojo` was seen
+as up-and-coming about a decade ago but it hardly gets used now.
+
+### Library Management
+Tools like `node` can be used to gather libraries (specified in a
+`package.json` file) used by an application. Combining this with
+other tools like `Uglify` and `Webpack` produces a developer's setup
+that can produce a single, high-optimized JavaScript file that's
+ready for production.
+
+Optimizations can include -
+1) `Aggregation` - Every time the browser encounters a 'script' tag
+that loads an external library, the browser completely stops processing
+until the library is loaded. Loading one library instead of several
+greatly reduces the time it takes for a page to render.
+2) `Minification` - Reduce the size of a library by removing whitespace
+and renaming variables to have smaller names, among other optimizations.
+Smaller libraries load more quickly.
+3) `Obfuscation` - Restructure the library's code so that it's harder
+for people outside the organization to analyze (and potentially exploit).
+4) `Streamline` - Remove unnecessary and unwanted code (like
+`console.log()` statements) that shouldn't be used in Production code.
+
+It all gets very complicated ....
+
+### CSS Libraries
+Like JavaScript, CSS can be loaded into a web page as an external
+library. Companies frequently have a central web page styling
+team develop common CSS definitions (among other reasons, to ensure
+a consistent look and feel among the various pages of a corporate
+web site, to provide a common brand). Individual development teams
+then add and extend common stylings for a specific web page.
+
+Like JavaScript, there are tools like `Less` and `Sass` that can
+optimize the packaging of a CSS file.
+
+Here's an example of loading CSS stylings. Make sure these files are
+in the same directory.
+
+Filename - 'styles.css'
+```
+h1
+{
+color: green;
+border: '1pt solid black'
+}
+
+p
+{
+color: red;
+background-color:#EFE7D6;
+border: '1pt solid black'
+}
+```
+
+Filename - 'testCss.html'
+```
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="styles.css"></link>
+  </head>
+  <body>
+    <h1>This text should be green surrounded by a thin black box</h1>
+    <p>This should be red text in a beige background
+    all surrounded by a thin black box</p>
+  </body>
+</html>
+```
+
+### Bonus - Use 'Phaser' to Create a Game
+Phaser is framework to make web app games. Examples and tutorials
+of this framework can be found at https://phaser.io/ . Consider
+studying this framework and making a game or a visual affect using
+this framework (this may take several hours).
