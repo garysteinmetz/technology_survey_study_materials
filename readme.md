@@ -242,6 +242,10 @@ Everyone thinks they are above average
 Pareto principle
 Five attempts but only one succeeded
 Importance of socializing (instead of other things like going to gym)
+Having a first child hits a marriage like a comet that killed the dinosaurs
+BMI and dietary fiber
+Tolerating unwanted situations is often important for achieving long-term goals
+Cash shortages after buying a house
 //
 https://git-scm.com/download/win
 git clone https://github.com/garysteinmetz/technology_survey_study_materials.git
