@@ -238,6 +238,10 @@ Hot job markets tend to be better places to work for those without children
 More and more, companies typically want a higher degree in competence with DevOps and development frameworks (the boring stuff), than just traditional programming skills (which are still essential)
 Especially at larger companies, it's common for a software engineer to spend less than 50 percent of a work day coding
 Boring, frustrating, hard
+Everyone thinks they are above average
+Pareto principle
+Five attempts but only one succeeded
+Importance of socializing (instead of other things like going to gym)
 //
 https://git-scm.com/download/win
 git clone https://github.com/garysteinmetz/technology_survey_study_materials.git
