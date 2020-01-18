@@ -325,8 +325,8 @@ actually the zeroth (not first) character. Here are examples.
 ```
 var s = " abc xyzz  ";
 console.log(s.length);//11
-console.log(s.trim();//"abc xyzz" - remove leading/trailing whitespace
-console.log(s.replace("a", "q);//" qbc xyzz  "
+console.log(s.trim());//"abc xyzz" - remove leading/trailing whitespace
+console.log(s.replace("a", "q"));//" qbc xyzz  "
 console.log(s.substr(1,3));//"abc" - get three characters starting with first
 console.log(s.indexOf("xyz"));//5 - get index of first occurrence or -1 if not found
 console.log(s[1]);//"a" - get character at index 1

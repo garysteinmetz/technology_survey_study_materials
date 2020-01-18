@@ -42,6 +42,7 @@ queues/stacks/arrays/sets/recursion/complexity/object-oriented/threading
 probability/independence/gamblers-falacy
 rhetoric
 security/oauth/cors
+patterns/anti-patterns/mvc/ioc
 
 Code samples can be conveniently tested at https://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic .
 

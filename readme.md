@@ -246,6 +246,65 @@ Having a first child hits a marriage like a comet that killed the dinosaurs
 BMI and dietary fiber
 Tolerating unwanted situations is often important for achieving long-term goals
 Cash shortages after buying a house
+Gregorian calendar
+Try to stay at a job for at least two years
+Make eye contact, smile, and listen
+Present alternatives to more powerful people, but allow them to disagree
+according to college roommate - 20s are the time people climb the food chain
+Dunning Kruger effect
+P-hacking
+Replication crisis in psychology
+Senior pay is approximately double beginner pay
+Status is the enemy of contentment
+Try not to get envious when others obtain more success in a certain area than you
+Voice and exit
+Among teacher's peers, those who did especially well were not consistent job hoppers
+Richard Feynman quote - 'The first principle is that you must not fool yourself and you are the easiest person to fool'
+Four percent rule
+Sometimes employers will use praise as a substitute for higher pay
+nash equilibrium
+before searching for career/house/romance, figure out what type of neighborhood you truly want
+raising children is the major work project of a marriage
+people say what they sell
+data science is mostly about curation
+cases (upper camel case, lower camel case, snake case, kabob case)
+dig a ditch poorly and you'll be digging it for the rest of your life
+emotional attachment causes a loss of power
+'those married to the spirit of the age are widows in the next'
+"history doesn't repeat itself but it does rhyme"
+goals come before strategy, strategy comes before tactics
+a diplomat thinks twice before saying nothing
+pricing of stock versus bonds, index funds, change in interest rates
+big 5 personality test
+how to survive aggressive people
+occurrence of sociopaths
+common flaws of studies
+don't get arrested
+shawn smith "Surviving Aggressive People" (desperate aggression (shutting down options), expert aggression - https://www.youtube.com/watch?v=cj7kQUE0Ht8)
+  - expert aggression - slowly break boundaries, quickly respond and early
+  - 5 ground rules
+    - establish common ground
+    - don't shame aggressor or yourself
+    - know what you want to accomplish
+    - listen to intuition
+a judge is a lawyer who knows a politician
+start career as a generalist, not a specialist
+four great inventions of Chinese civilization
+the more you do something, the more people expect you to do it
+be careful not to offend the identities of others
+https://www.nbcnews.com/better/lifestyle/mental-load-women-reflect-messy-truth-being-mom-ncna1012061
+technological shock
+financial firm gives same amount of money to both political parties
+high-earners tend to work more
+https://www.inc.com/quora/why-salespeople-get-paid-more-than-engineers.html
+costliness of unemployment versus other financially value-destroying acts
+success rates of entrepreneurs (model that as change in salary)
+job ambitions negatively correlated with pay - I want to help other people, I want to explore the truth 
+loss of control is a key contributor to unhappiness
+if a person gives you a lot of excuses why they can't do something, it may very well be because they don't want to do it
+80 percent of life is showing up
+the world is ruled by budgets
+for most people's careers, it's better be solidly good at a job and a great networker then awesome at a job with no network
 //
 https://git-scm.com/download/win
 git clone https://github.com/garysteinmetz/technology_survey_study_materials.git
