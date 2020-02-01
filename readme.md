@@ -326,6 +326,7 @@ rollback strategy
 vast majority of code running in popular software applications comes from imported libraries
 'retire by 40' site (gave up engineering career)
 the pieces in the chessboard have moved
+ball fell because I dropped it
 //
 https://git-scm.com/download/win
 git clone https://github.com/garysteinmetz/technology_survey_study_materials.git
