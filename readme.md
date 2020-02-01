@@ -305,6 +305,27 @@ if a person gives you a lot of excuses why they can't do something, it may very 
 80 percent of life is showing up
 the world is ruled by budgets
 for most people's careers, it's better be solidly good at a job and a great networker then awesome at a job with no network
+Conan O'Brien's commencement speech (failing the planned way, but finding your own way)
+50 percent of marketing budget great, 50 percent is a waste, but can't tell which half
+in the end, managers don't care much about story points, it's more about who is getting valued and tough-to-solve work done
+emperor has no clothes
+the most consequential decisions in adult life tend to happen earlier
+AI is nearly right but wrong in all the important cases
+Blue-green deployments, rollback strategy, validation testing
+Dunbar's number
+Percent of population that is sociopathic
+realtor pressuring to buy house, c-sections by compensated doctors
+performance reviews
+  - praise in public criticize in private
+  - rank-and-yank
+  - salary defined by salary grade (job title)
+  - years of experience determines salary
+  - salary tends to level off after about 10 years
+  - it's possible to receive a great performance review but only receive a mediocre raise
+rollback strategy
+vast majority of code running in popular software applications comes from imported libraries
+'retire by 40' site (gave up engineering career)
+the pieces in the chessboard have moved
 //
 https://git-scm.com/download/win
 git clone https://github.com/garysteinmetz/technology_survey_study_materials.git
