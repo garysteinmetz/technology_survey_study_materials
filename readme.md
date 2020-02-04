@@ -358,6 +358,61 @@ zoning laws taking increasing share of salaries in glamour job markets
 career teaches humility (code often wrong, strange problems come up, lots of smart people, younger person can prove an older person wrong)
 more rough-and-tumble
 spouses jointly employed in this field can save a lot of money before children are born
+  //
+https://en.wikipedia.org/wiki/Psychopathy_in_the_workplace
+pull requests
+you should expect to be laid off at least one time during your career
+batna
+millionaire next door
+https://www.getrichslowly.org/you-can-negotiate-anything/
+money has value because people collectively agree that it has value
+french agency that restricted scientific advancement
+adverse selection and moral hazard
+people with higher salaries more likely to apologize
+why colleges ask you to list other colleges you're applying to
+academically smart people are a penny a dozen (but you should still try hard in school)
+ops severity (failure rates)
+"Everyone has a mortgage to pay"
+job is mostly sedentary and doesn't place as much demand on looking good
+fluid IQ declines with age
+as one grows older, flexible time decreases but power tends to increase
+where do you want to be at age 50?
+biases (like survivor bias)
+loss of control is a key source of unhappiness
+make sure to talk to other people that you trust (especially your parents) and get their perspectives
+within the same company, the better engineers tend to have greater job stability and be assigned to newer initiatives (not necessarily get paid a lot more)
+enthusiasm is very important
+tulip mania
+scientific claims can be falsified
+replication crisis
+don't climb mount Everest with someone who doesn't want to climb mount Everest
+ball fell because I dropped it
+relative who got into higher-paying part of industry
+economics isn't a science
+blue-green deployment
+stories, points
+importance of motivation
+judges issue tougher sentences before eating lunch
+problems with studies
+the more emotionally attached to a situation you are, the less power you have
+rhetorical fallacies
+harder to get back into workforce after prolonged absence, job not secured and can be outsourced, limited part-time work, longer commutes
+easy mobility between jobs, no one understands your work
+easier chance to switch to other job roles
+slim but possible chance to become an entrepreneur
+work doesn't leave you once you leave the office
+working conditions safe
+mental challenges probably extend mental acuity later into life
+personal professional brand as a technical person probably doesn't influence salary that much (but helps one get/maintain job much more easily)
+nice office environment, business-casual dress
+much of the day-to-day work is spent on 'planet boring'
+participate in the global wave of cross-cultural integration and technological advancement
+world increasingly becoming increasingly dependent on technology
+easy to get a quick start with limited debt though salaries quickly stagnate within a decade
+engineers have lower divorce rates
+zoning laws taking increasing share of salaries in glamour job markets
+career teaches humility (code often wrong, strange problems come up, lots of smart people, younger person can prove an older person wrong)
+more rough-and-tumble
 //
 https://git-scm.com/download/win
 git clone https://github.com/garysteinmetz/technology_survey_study_materials.git
