@@ -413,6 +413,22 @@ engineers have lower divorce rates
 zoning laws taking increasing share of salaries in glamour job markets
 career teaches humility (code often wrong, strange problems come up, lots of smart people, younger person can prove an older person wrong)
 more rough-and-tumble
+atari video game bust
+emperor's new clothes
+work solves boredom, need, and vice
+a politician doesn't care about you if your vote is gaurenteed
+top government officials are more like salespeople than policy experts
+last mile problem
+credential inflation
+hashing also prevents outsiders from guessing the next number in a sequence
+minimum viable product
+people can game predictive systems
+politician doesn't pay attention to a sure vote
+arrow's impossibility theorem
+https://hbr.org/2017/05/the-h-1b-visa-debate-explained
+https://www.computer.org/csdl/magazine/co/2016/07/mco2016070088/13rRUyft7yn
+http://oregonecon.blogspot.com/2008/04/econ-101-myth-busting-self-service-gas.html
+economics of gas-station attendants
 //
 https://git-scm.com/download/win
 git clone https://github.com/garysteinmetz/technology_survey_study_materials.git

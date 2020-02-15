@@ -202,6 +202,219 @@ That's another reason why internet communication is based on IP addresses instea
 of MAC addresses - MAC addresses within a various subnet can vary widely but all the
 IP addresses assigned to them will fall in the same range.
 
+## HTTP
+
+HTTP stands for `Hypertext Transfer Protocol` which is a protocol for sending messages
+to and from servers. A 'client' starts by sending one message (request) to the server
+then the server sends a corresponding message (response) back.
+
+HTTP (and HTTPS, the encrypted version of HTTP) is the major protocol used
+by browsers. It's also a very popular protocol for communication between servers.
+
+### Client and Server
+
+In the case of a web browser searching Google, the web browser is acting
+as the client asking Google for search results and Google is acting
+as the server sending the search results back to the browser.
+
+```
+(Client)
+Browser
+  --     HTTP Client Request to 'GET' Search Results      -->
+                                                              (Server)
+                                                              Google
+  <-- HTTP Server Response With Search Results (HTML Page) --
+(Client)
+Browser
+```
+
+Note the use of the word 'GET' here, which is a type of HTTP request 'method' which
+(not surprisingly) gets information from a server. Whenever you type a URL into
+a browser's address bar, the browser attempts to 'GET' information from a server.
+
+If a browser finds references to other resources
+(like images, CSS, and JavaScript) while downloading a web page, it will make
+other HTTP requests to get those resources. (Note that when the internet is slow,
+this is why the text will appear on an HTML page first before the images and
+styling appear.)
+
+#### Exercise - Make Basic HTTP Call from Command Line
+In general, servers don't care what kind of client is making the request,
+the server will just service the request based on typical information found
+in the HTTP request. Whether the client is a browser or the command line
+or something else, the server should give the same response. (There is an optional
+`User-Agent` HTTP `request header` that the client can use to state what type
+of client it is (like 'User-Agent: Chrome'), but servers usually ignore this header.)
+
+The `curl` command is a command prompt (terminal) command for making HTTP
+(and HTTPS, the encrypted version of HTTP) client requests. Open a command prompt
+and enter `curl <URL>` where `<URL>` is the a web site that you frequently use,
+like `curl https://www.google.com`, and study the HTML that is returned from the
+server.
+
+Then open the developer tools in Chrome -
+
+  - On Mac, hold down both `command` and `option` then press `i`
+  - On Windows, hold down both `control` and `shift` then press `i`
+
+Go to the same URL in Chrome then click the 'Network' tab in Chrome developer tools.
+Click the top entry under the 'Name' column then click its associated 'Response' tab.
+The response HTML here should be similar or the same to what was received by
+the `curl` command.
+
+Note that, for a site like Google, the server may consider
+things like cookies and `User-Agent` header then generate a response that's slightly
+different than the `curl` command. However, `curl` has options to include cookies
+and headers so, if it specified everything that a browser submitted, the response
+to the `curl` command would be identical to the response received by the browser.
+
+The overall goal here is to show that whether using the browser, `curl`,
+or something else, servers treat all HTTP requests by what was sent, not
+who sent it.
+
+#### Exercise - Study HTTP Calls Made During Page Load
+Continuing on the last exercise, open Chrome and turn on its developer tools,
+then go to a web site. Click the 'Network' tab in Chrome developer tools
+then click the 'Preview' tab.
+Click the top entry under the 'Name' column (this is the URL you entered).
+If this entry (HTML page) doesn't reference anything else (like images, CSS,
+and JavaScript), then there won't be any entries below it, but most every
+popular web page will.
+
+Moving downward, click the each entry in the 'Name' column and check what appears
+in the 'Preview' pane - recognizable JavaScript, CSS, or image should appear
+in many cases. For at least one image, right-click over it's 'Name' entry,
+select 'Copy', then click 'Copy address link' . Then paste this URL into another
+browser tab (preferably with Chrome developer tools on too)
+and view the image on its own - if Chrome developer tools are on then just one
+entry should appear in the 'Name' column because, unlike an HTML page,
+the image doesn't need to make any additional calls to fully represent itself.
+
+#### Server Can Make Client Requests Too
+
+Note that a server itself can make client requests to other servers. If the browser
+submits 'weather' in a search request to Google, Google may in turn
+(now acting as a client) make an HTTP request to the National Weather Service
+to get the current weather forecast before sending it back the browser.
+
+```
+(Client)
+Browser
+  -- Search 'weather' -->
+                       (Server, About to Make Client Request)
+                       Google
+                         -- Get weather forecast -->
+                                                  (Server)
+                                                  National Weather Service
+                         <--   Weather forecast   --
+                       (Server)
+                       Google
+  <-- Weather HTML Page --
+(Client)
+Browser
+```
+
+### URL
+
+The `URL (Uniform Resource Locator)` is a String with summary information
+as to (a) which server the client wants to contact, (b) where on the server
+the client wants to contact, and (c) some (or all) of the information
+that the client wants to send. Note that there is usually other information beyond
+the URL that composes the overall HTTP request (and response).
+
+URLs can be simple like `https://www.google.com` but can also be very lengthy
+and follow this form (documented on Wikipedia) -
+```
+            userinfo          host        port
+        ┌───────┴───────┐ ┌────┴────────┐ ┌┴┐
+ http://john.doe:password@www.example.com:123/forum/questions/?tag=networking&order=newest#top
+ └─┬─┘ └───────────┬────────────────────────┘└─┬─────────────┘└────────┬──────────────────┘└┬─┘
+ scheme         authority                      path                  query             fragment
+```
+
+#### Scheme
+Scheme is the protocol used to obtain information. While this value _can_ be
+many things (like 'ftp'), it's almost always either 'http' or 'https' .
+
+#### User Info
+'userinfo' can specify a user's name/password combination but this is hardly
+every used to authenticate a user. (The 'Authorization' request header
+is now very popular for authentication.) If 'userinfo' isn't specified, then
+the '@' character that follows it shouldn't be included.
+
+#### Host
+This is the DNS name of the site (like 'www.google.com').
+
+#### Port
+Servers can open ports to listen to incoming connections. Ports are assigned
+a number and can range from 0 to 65535. In general, specific protocols (schemes)
+user certain ports by default - the default port for 'http' is 80, while it's
+443 for 'https' . In the typical case, specifying the port number isn't necessary
+because the 'scheme' value already defines it - https://www.google.com:443 is
+equivalent to https://www.google.com .
+
+If the port isn't specified, the ':' character preceding it shouldn't be included.
+
+#### Path
+This is the area on a server that should be contacted. It's like the path
+of a file within a file system.
+
+#### Query
+Like a function can take input variables, a URL can use request parameters
+to submit variables in an HTTP request.
+
+Query parameters are listed in '<name>=<value>' pair format with the '&' character
+separating each pair.
+
+If no parameters are specified, the '?' character preceding it shouldn't be included.
+
+The '<name>' and '<value>' fields must be encoded as follows -
+
+  - Each space (' ') character should be converted to a '+' character
+  - Each other special character (not letter or number) should be replaced with
+  the following string -
+    - Start with the '%' character followed by its two-digit 'ASCII' code
+      - One ASCII Code Table Reference - http://www.asciitable.com/
+        - Study the 'Hex' (for hexadecimal) column of this table
+    - Note - Sometimes now even the ' ' character follows this convention
+    by using '%20' instead of '+'
+
+##### Exercise - Go Straight to Google Search Results
+
+(As of February 2020,) Users can skip the Google home page and just get results
+directly from https://www.google.com/search?q=<query> . Using the query
+'<name>=<value>' encoding rules specified immediately above, customize this URL
+and go straight to the results page.
+
+For example, searching for 'best songs by Hall & Oates' converts to
+'best+songs+by+Hall+%26+Oates' which means that the URL should be
+https://www.google.com/search?q=best+songs+by+Hall+%26+Oates .
+
+#### Fragment
+This is where the browser should scroll to after receiving a page. When this isn't
+specified, the browser just scrolls to the top-left-most area of the page.
+
+As an example of its usage, https://html.com/anchors-links/#The_Anchor_Element
+will scroll the browser to 'The Anchor Element' section after the page loads. 
+
+If the anchor isn't specified, the '#' character preceding it shouldn't be included.
+
+//
+
+
+
+Web browsers are just like 'curl' command but they are much better able
+to represent server responses in a human-friendly format and transform user
+requests back to the server.
+
+Port numbers
+
+Chrome tools
+
+AJAX call
+
+CORS
+
 //Next
   - Static Content Versus Dynamic Content
   - CRUD Operation
@@ -213,3 +426,7 @@ IP addresses assigned to them will fall in the same range.
 
 
 Show examples of different web service APIs (Twitter, Coinbase)
+
+Redirect example with http://www.google.com
+
+https://docs.postman-echo.com/?version=latest

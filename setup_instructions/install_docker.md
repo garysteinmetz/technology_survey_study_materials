@@ -38,11 +38,9 @@ then press 'Enter' over the '[Yes]' option in the 'Exit Saving Changes?' menu
 
 ## Exercise - Confirm Installation
 
-Reference - https://github.com/docker/labs/blob/master/beginner/chapters/webapps.md
-
 1) Open a command prompt (actually, search for Docker and start its 'daemon')
 2) Enter the following command to start a local server
 ```
-docker run --name static-site-2 -e AUTHOR="Your Name" -d -p 8888:80 dockersamples/static-site
+docker run hello-world
 ```
-3) Open a browser and go to http://192.168.99.100:8888/
+3) Confirm that 'Hello from Docker!' appears in the output
