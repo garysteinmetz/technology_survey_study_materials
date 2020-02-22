@@ -429,6 +429,7 @@ https://hbr.org/2017/05/the-h-1b-visa-debate-explained
 https://www.computer.org/csdl/magazine/co/2016/07/mco2016070088/13rRUyft7yn
 http://oregonecon.blogspot.com/2008/04/econ-101-myth-busting-self-service-gas.html
 economics of gas-station attendants
+https://hbr.org/2017/05/the-h-1b-visa-debate-explained
 //
 https://git-scm.com/download/win
 git clone https://github.com/garysteinmetz/technology_survey_study_materials.git

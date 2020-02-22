@@ -399,6 +399,203 @@ will scroll the browser to 'The Anchor Element' section after the page loads.
 
 If the anchor isn't specified, the '#' character preceding it shouldn't be included.
 
+### HTTP Request
+
+A full single HTTP call consists of one HTTP request from a client to a server
+followed by one HTTP response from the server back to the client.
+
+Here are the parts of an HTTP request.
+
+#### Request URL
+
+This is the URL discussed above.
+
+#### Request Method
+
+The method specifies what you want to do at the URL.
+
+In databases, there are four major 'CRUD' operations - Create, Read, Update,
+and Delete. With just these four operations, any data can be read and changed.
+
+There are a number of HTTP methods but these ones are the most important
+for web development and align with CRUD operations.
+
+  - GET - Get content from a server (e.g. news article, picture). This is the same
+  as a Read CRUD operation. For casual web browsing, the vast majority
+  of HTTP client requests are GET calls.
+  - POST - Create new content on a server. This is a Create CRUD operation.
+    - Note that a POST call is often used to execute an action (like submit an order).
+  - DELETE - Delete existing content on a server. This is a Delete CRUD operation.
+  - PUT - Update existing content on a server. This is an Update CRUD operation.
+    - PATCH - Sometimes the content to be updated is very big and instead of
+    sending _All_ of the content to a server with just a minor change using a PUT,
+    a PATCH allows the caller to send just the change. For instance, an object
+    representing a person (e.g. physical characteristics, relatives, job history)
+    could be very large but you just want to update the person's data-of-birth.
+    In this case, just use a PATCH with the small change (new data-of-birth)
+    instead of sending the (very large) person object with a PUT.
+
+Browsers mostly use GET and POST calls. Server-to-server communication is more likely
+to also use DELETE, PUT, and PATCH calls.
+
+##### Exercise - Confirm GET Method Used Most of the Time
+
+Open the Google browser, turn on Developer Tools, click the 'Network' tab,
+make sure a 'Method' column appears in the table (if it isn't, right-click over
+one of the other columns and select 'Method'), then go to a popular web site.
+Notice how 'GET' is the method used in each HTTP call (row) the vast majority
+of the time.
+
+#### Request Headers
+
+Metadata is data about data. Request headers are key-value pairs telling the server
+what kind of data the request is sending and what it expects in the response.
+
+Here are common HTTP request headers.
+
+  - Accept - Tells the server what type of content the client wants from the server.
+  Values like 'text/html' and 'application/json' tell the server that the client
+  wants HTML and JSON, respectively.
+    - Example - `Accept: text/html`
+    - These designations are known as `mime types` and popular ones can be found
+    at https://en.wikipedia.org/wiki/Media_type#Common_examples .
+  - Authorization - Tells the server who you are. Servers obviously often want
+  to know who is making the call (`authorization`) and verify that the person
+  is authorized to make the call (`access control`). For sensitive information
+  (like medical records) and transactions (like money transfers), servers won't
+  let just anyone do anything.
+    - OAuth2 is a very popular authorization protocol.
+    - Example (OAuth2) - `Authorization: Bearer abd90df5f27a7b170cd775abf89d632b350b7c1c9d53e08b340cd9832ce52c2c`
+  - Content-Length - If a request body is being sent, this states how big it is.
+    - Example - `Content-Length: 348`
+  - Content-Type - If a request body is being sent, this states what it is.
+  This is the mirror-opposite of the 'Accept' header.
+    - Example - `Content-Type: application/json`
+  - Cookie - Servers can send information back to the browser which the browser
+  is supposed to send back to the server on future requests. This information is
+  referred to as a cookie. For instance, if the user sent a previous request
+  to a horoscope application that the user had 'Pisces' for a zodiac sign
+  (`Cookie: ZodiacSign=Pisces`), then whenever the user went back to that application
+  the forecast for Pisces would show up without the user having to reenter his/her
+  Zodiac sign again.
+    - Note that for more serious applications, servers often send back
+    a `session cookie` which is frequently just an alphanumeric string which maps
+    to the state of a session (like what's in a user's shopping cart) back
+    on the server.
+    - Example (Session Cookie) - `Cookie: SESSIONID=298zf09hf012fh2`
+      - Here, '298zf09hf012fh2' doesn't mean anything to the browser,
+      but the server (like Amazon) could map '298zf09hf012fh2' to a user's shopping
+      cart (e.g. 5 books, 1 CD, and a shovel). As the user adds things to the
+      shopping cart, the '298zf09hf012fh2' cookie value doesn't change but what
+      it maps to in the server's memory does change.
+  - User-Agent - This tells the server what actual client is being used, like
+  the browser type.
+    - Example - `User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36`
+
+##### Exercise - Try to Get Cryptocurrency Account without Authorization
+
+Go to `https://api.coinbase.com/v2/user` either in a browser or with the `curl`
+command, but don't send an `Authorization` header (by default, this header
+isn't sent). This is equivalent to walking into a bank without any identification.
+
+Here's the `curl` command. If no request method is specified, a GET is assumed.
+
+`curl -v https://api.coinbase.com/v2/user`
+
+Notice that the response contains '401' which is a code for 'Not Authorized'
+and the response body (what the server sent back) is as follows.
+
+`{"errors":[{"id":"invalid_token","message":"The access token is invalid"}]}`
+
+##### Exercise - Study Request Headers
+
+Open the Google browser, turn on Developer Tools, click the 'Network' tab,
+then go to a popular web site.
+Click each row and click the 'Headers' tab for each row, then scroll down
+to the 'Request Headers' section and study the request headers sent
+with each request.
+
+
+#### Request Body
+
+HTTP requests can also end with content of any size, like for a file upload
+or a large text submission. This section of the HTTP request is called
+the request body and is defined by the `Content-Type` and `Content-Length`
+HTTP request headers.
+
+While the URL can contain enough information to describe a request,
+it has two shortcomings.
+
+  1) Browsers have a maximum limit on URL length (like around 4096 characters).
+  2) URLs get stored in logging systems and it's imperative that confidential
+  information not be included in a URL.
+    - For instance, for an HTTP call that changes a user's password,
+    the new password should be sent in the request body, not in the URL.
+
+POST calls generally send information in the request body.
+
+GET calls don't normally send a request body (the URL should contain all
+the information about what the client wants to get).
+
+##### Exercise - Simple HTML Post Form
+
+Create an HTML web page (with filename ending in '.html') with the following content.
+
+```
+<html>
+  <body>
+    <h1>Submit Your Favorite Palindrome</h1>
+    <form method="POST" action="https://postman-echo.com/post">
+      <textarea type="text" name="palindrome">Able was I ere I saw Elba</textarea>
+      <input type="submit" name="submit" value="Submit your palindrome" />
+    </form>
+  </body>
+</html>
+```
+
+Open this page while also turning on Google Developer Tools. Click the
+'Submit your palindrome' button, then click the entry in the 'Network' tab,
+then click the 'Headers' tab. Scroll down to the 'Form Data' section and click
+'view source' and notice that the content is as follows (and that it doesn't
+appear in the URL and is 66 characters in length).
+
+`palindrome=Able+was+I+ere+I+saw+Elba&submit=Submit+your+palindrome`
+
+Scroll up to the 'Request Headers' section and note headers `Content-Length: 66`
+and `Content-Type: application/x-www-form-urlencoded`
+('application/x-www-form-urlencoded' means that parameters are encoded
+just as they would be if they were in a URL - like `&` is used to separate
+parameters and `+` is used to replace the ` ` character).
+
+##### Exercise - Setting and Sending Cookies
+
+1) In Chrome with Google Developer Tools turned on,
+go to https://postman-echo.com/cookies . Note how no 'favoriteCookie'
+value is sent in the 'cookie' request header.
+2) Go to https://postman-echo.com/cookies/set?favoriteColor=green .
+Note how the response contains `set-cookie: favoriteColor=green; Path=/` .
+This sets a cookie with name 'favoriteColor' gets 'green' for a value.
+This cookie will be sent in future requests to all ('Path=/') locations
+of https://postman-echo.com .
+3) Go back to https://postman-echo.com/cookies and notice how 'favoriteColor=green;'
+is part of the value of the 'cookie' request header.
+
+### HTTP Response
+
+Cookie
+
+Response Code
+
+Response Headers
+
+Response Body
+
+### Browser HTTP Communication
+
+#### Normal Communication
+
+#### Ajax
+
 //
 
 
@@ -407,17 +604,12 @@ Web browsers are just like 'curl' command but they are much better able
 to represent server responses in a human-friendly format and transform user
 requests back to the server.
 
-Port numbers
-
-Chrome tools
-
 AJAX call
 
 CORS
 
 //Next
   - Static Content Versus Dynamic Content
-  - CRUD Operation
   - HTTP (Response Codes, Request Parameters, Request/Response Body, Request/Response Headers, Request Method)
   - REST Standards Not Enforced
   - Form Submission
