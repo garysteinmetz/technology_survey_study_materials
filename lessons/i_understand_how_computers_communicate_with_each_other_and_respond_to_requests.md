@@ -582,19 +582,241 @@ is part of the value of the 'cookie' request header.
 
 ### HTTP Response
 
-Cookie
+Here are the parts of an HTTP response.
 
-Response Code
+#### Response Code
 
-Response Headers
+The server sends back a number ranging from 100 to 499 with its response indicating
+how successful the server was at processing the client's request. For typical
+browser client requests (especially GET calls), 200 (with the official description
+of 'OK') is the most common response code and it means that the server was
+successful in processing the client's request. Beyond GETting content, 200 is
+a common response code for POST actions (like submitting an order).
 
-Response Body
+##### Exercise - Verify 200 Is a Very Common Response Code
+
+Open Chrome Developer Tools then go to a popular web site. Study the 'Status'
+column under the 'Network' tab and notice that 200 is the most common value.
+
+##### 100-199 Information Response Codes
+
+These aren't used much.
+
+##### 200-299 Success Response Codes
+
+Codes from 200-299 indicate success.
+
+###### 200 OK
+
+Again, this is the most common response. For GET calls, the response body
+(referenced below) contains the information (like an HTML page) that
+the client (browser) was trying to GET.
+
+###### 201 Created
+
+For calls (typically POST calls) that create something (like a new user account),
+this response code can be sent back.
+
+###### 202 Accepted
+
+For calls that have been accepted for processing, but can't be processed immediately,
+this response code can be sent back.
+
+For instance, a POST call is made to upload an application form on a Sunday evening.
+The application is a request to reserve space in a public park for a picnic.
+The town council reviews this type of application on Wednesdays. Therefore,
+the server can't immediately determine whether this request is ultimately successful.
+Therefore, the server can accept the request by saving the application into
+a database and return this response code.
+
+###### 204 No Content
+
+Some calls, like DELETE calls, create a situation where there's nothing to return
+back to the client. This response code is used for this situation.
+
+##### 300-399 Redirect Response Codes
+
+Codes from 300-399 indicate that the server isn't sending back content, usually
+because the server is instructing the client (browser) to go to another URL.
+For redirects, the server will send back a 'Location' response header indicating
+where the browser should go next.
+
+###### Exercise - Use the Wrong Protocol to Contact Google
+
+As discussed above, HTTPS is the secure (encrypted) version of HTTP.
+Many web sites prefer that client requests use HTTPS and will forward HTTP requests
+to the HTTPS version of the URL.
+
+Open a browser with Google Developer Tools turned on and the 'Network' tab selected.
+Go to 'http://www.google.com' (HTTP) and notice that the browser ends up at
+'https://www.google.com' (HTTPS). Study the first entry in the 'Network' tab
+and notice that a 307 ('Temporary Redirect') HTTP status code was returned.
+Also notice that the response contains a 'Location' header with
+'https://www.google.com' for a value.
+
+##### 400-499 Client Error Response Codes
+
+Codes from 400-499 indicate that the server has included that the client's
+HTTP request was somehow invalid ("It's the client's fault").
+
+###### 400 Bad Request
+
+This means that the client send invalid information. For instance for a banking
+application, if someone attempts to withdraw 'Alligator' dollars, then the server
+would (rightly) conclude that the submission was bad request.
+
+###### 401 Unauthorized
+The client has attempted to do something without proper identification.
+This is like walking into a bank and trying to withdraw money from a bank account
+without showing any identification (the bank would reject you).
+
+###### 403 Forbidden
+The client has properly authenticated itself (like with an OAuth2 token in the
+'Authorization' request header), but the client isn't authorized to do
+the action it requests. This is like walking into a bank with a valid driver's
+license and asking to withdrawal money from another person's account.
+The server doesn't disagree with the client's identification but the server
+concludes that the client doesn't have the right to perform the requested action.
+
+###### 404 Not Found
+The client has made a request for something that isn't on the server.
+
+####### Exercise - Go to a URL that a Server Doesn't Support
+
+With Google Developer Tools open with the 'Network' tab selected, go to
+https://www.google.com/NoContentHere and confirm that an 404 appears under
+the 'Status' bar of the first row.
+
+##### 500-599 Server Error Response Codes
+
+Codes from 500-599 indicate that the server has encountered an unexpected
+problem ("It's the servers's fault"). These codes usually result from problems
+like a bug in the software or failure to contact a backend system.
+
+###### 500 Internal Server Error
+The server encountered an unexpected problem.
+
+#### Response Headers
+Just as an HTTP request can send headers, headers can be included in the response too.
+
+##### Set-Cookie
+Sets a cookie on the browser.
+
+##### Content-Length
+Specifies the size (in bytes) of the content in the response body.
+
+##### Content-Type
+Specifies the (mime) type of the content in the response body.
+
+##### Location
+This is often used for redirecting the browser. It can also be used to indicate
+the location of a newly-created entity (like in a response to a POST call
+to create a bank account, the 'Location' header value could be something like
+'https://somebank/youraccount/1269835740' ).
+
+#### Response Body
+This is the main content returned to the client.
 
 ### Browser HTTP Communication
 
+Browsers use HTTP communicate with servers.
+
 #### Normal Communication
 
-#### Ajax
+##### Address Bar
+
+Browsers normally communicate with servers by downloading whatever is entered
+into the address bar. If an HTML page is downloaded and it references other
+things (like images, CSS, JavaScript, and other HTML pages ('iframes')), then
+subsequent HTTP calls will be made to get those things too.
+
+URLs entered into the browser address bar use the GET method.
+
+###### Exercise - Favicons
+
+When a browser goes to a new web site, it can (and often does) check whether
+an image for that site is available. This image is often placed aside a site's
+title in its tab in the browser. The downloaded HTML page can specify
+the location of the image or the browser can just make an extra call
+to the '/favicon.ico' location of the web site to try to get to this image.
+
+Go to https://www.google.com/favicon.ico and confirm that it's the image
+that appears in the tab when just going to https://www.google.com .
+
+##### Hyperlinks
+Clicking a hyperlink is generally just the same as entering in the hyperlink's URL
+into the browser address bar. Likewise, it too uses a GET method.
+
+Hyperlinks can also trigger JavaScript instead of going to a new web page.
+
+##### Forms
+HTML form construct a URL to send based on the user's input into the form.
+Unlike the address bar and hyperlinks, forms have the option of submitting requests
+using either a GET or a POST method.
+
+#### AJAX Communication
+
+AJAX stands for Asynchronous JavaScript and XML, but (in most cases)
+what it's really just JavaScript making JSON-based HTTP calls.
+
+_This is how a web page is able to constantly update itself without completely
+reloading._
+
+jQuery and other libraries make these calls possible.
+
+```
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
+    <script>
+      //in jQuery, the '$' character represents the library
+      //  the 'ready' function is a special (and cross-browser compatible)
+      //  function that runs as soon as the web page is 'loaded enough'
+      //  to allow DOM manipulation so that the user gets the finalized
+      //  look of the web page as quickly as possible
+      $(document).ready(function() {
+
+        setTimeout(
+          function() {
+            $.get(
+              url: "https://jsonplaceholder.typicode.com/todos/1",
+              success: function(data, status) {
+                console.log(JSON.stringify(data));
+              }
+            );
+          },
+          3);
+        //document.getElementById('traditional').value = 'Keep Tradition';
+        //$('#jquery').val('Try Something New');
+      });
+    </script>
+  </head>
+  <body>
+    Traditional JavaScript - <input type="text" id="traditional" />
+    <br />
+    jQuery - <input type="text" id="jquery" />
+  </body>
+</html>
+```
+
+
+##### CORS
+CORS stands for Cross-Origin Resource Sharing and it's a way of sharing JavaScript
+and allowing AJAX calls between different web domains. For security reasons,
+browsers normally prevent a web site from one domain (like 'www.google.com')
+to make AJAX calls to another domain (like 'www.yahoo.com').
+
+CORS is an approach the browser takes where it first asks the other domain if
+AJAX calls from the original domain are allowed. If so, the AJAX call goes through,
+but otherwise it's blocked.
+
+##### Sample Vendor APIs
+
+Popular web sites publish AJAX-based JSON APIs that allow a web application
+to dynamically interact with these web sites. Here are some examples.
+
+  - Twitter - https://developer.twitter.com/en/docs/api-reference-index
+  - Facebook - https://developers.facebook.com/docs/graph-api/reference/user/
 
 //
 
