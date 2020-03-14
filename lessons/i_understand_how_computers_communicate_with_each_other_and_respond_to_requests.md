@@ -764,6 +764,8 @@ reloading._
 
 jQuery and other libraries make these calls possible.
 
+Here is an example.
+
 ```
 <html>
   <head>
@@ -779,26 +781,70 @@ jQuery and other libraries make these calls possible.
         setTimeout(
           function() {
             $.get(
-              url: "https://jsonplaceholder.typicode.com/todos/1",
-              success: function(data, status) {
-                console.log(JSON.stringify(data));
+              {
+                url: "https://jsonplaceholder.typicode.com/todos/1",
+                success: function(data, status) {
+                  console.log(JSON.stringify(data));
+                  $("#title").val(data.title);
+                }
               }
             );
           },
-          3);
-        //document.getElementById('traditional').value = 'Keep Tradition';
-        //$('#jquery').val('Try Something New');
+          3000);
       });
     </script>
   </head>
   <body>
-    Traditional JavaScript - <input type="text" id="traditional" />
-    <br />
-    jQuery - <input type="text" id="jquery" />
+    Title - <input type="text" id="title" />
   </body>
 </html>
 ```
 
+The `https://jsonplaceholder.typicode.com/todos/1` URL responds with a JSON object
+as follows.
+
+```
+{
+  "userId": 1,
+  "id": 1,
+  "title": "delectus aut autem",
+  "completed": false
+}
+```
+
+Here are key observations.
+
+  - _script src=".../jquery-3.4.1.min.js"_ - This is a very popular (though less
+  popular lately) JavaScript library called jQuery. It creates a variable `$`
+  which makes it much easier to make AJAX HTTP calls and interact with the web page.
+  - _$(document).ready(...)_ - Wait for the page to load and then execute whatever's
+  inside the `ready` function. Note - when web pages load, anytime the page encounters
+  JavaScript, the JavaScript must first be processed before the page continues loading.
+  The 'ready' function allows the page to load before executing an action.
+  - _setTimeout(...)_ - This executes a function after the submitted number
+  of milliseconds (3000 in this case, which equals 3 seconds).
+  - _$.get(...)_ - jQuery makes an HTTP GET call to the `url` value and then
+  executes the function in the `success` value once a successful
+  (usually HTTP 200 status code) response is received. Note - For JavaScript on a
+  web page, the double quotes for a JSON key value are optional, so `url` is the same
+  as `"url"` and `success` is the same as `"success"`.
+  - _JSON.stringify(data)_ - Converts variable `data` from a JSON object to a string.
+  For some browsers, strings print out in a more easy-to-understand way than JSON.
+  - _console.log(...)_ - Prints a message to the `Console` tab of Chrome Developer
+  Tools (or analogous debug console in another browser's developer tools).
+  - _$("#title").val(data.title)_ - jQuery gets (`$("#title")`) the HTML element
+  for the DOM object have `title` value for its `id` attribute (which in this case
+  is a text box). jQuery then sets (`val(data.title)`) the value of this object
+  to be the `title` field's value of the object returned by the AJAX call.
+
+##### Exercise - Type into the Google Search Box
+
+Go to https://www.google.com and start typing into the search box. Notice
+how the URL in the address bar (it's still https://www.google.com ) does not change
+even as you type your entry in and Google provides suggestions. Google is making
+AJAX calls as you type to get those suggestions. It would be a much worse user
+experience for Google to completely reload the browser as you typed to download
+those suggestions. AJAX calls enable a much smoother web-browsing experience.
 
 ##### CORS
 CORS stands for Cross-Origin Resource Sharing and it's a way of sharing JavaScript
@@ -817,30 +863,3 @@ to dynamically interact with these web sites. Here are some examples.
 
   - Twitter - https://developer.twitter.com/en/docs/api-reference-index
   - Facebook - https://developers.facebook.com/docs/graph-api/reference/user/
-
-//
-
-
-
-Web browsers are just like 'curl' command but they are much better able
-to represent server responses in a human-friendly format and transform user
-requests back to the server.
-
-AJAX call
-
-CORS
-
-//Next
-  - Static Content Versus Dynamic Content
-  - HTTP (Response Codes, Request Parameters, Request/Response Body, Request/Response Headers, Request Method)
-  - REST Standards Not Enforced
-  - Form Submission
-  - Forms Versus Ajax
-  - Vendor APIs
-
-
-Show examples of different web service APIs (Twitter, Coinbase)
-
-Redirect example with http://www.google.com
-
-https://docs.postman-echo.com/?version=latest

@@ -433,6 +433,18 @@ https://hbr.org/2017/05/the-h-1b-visa-debate-explained
 teacher's wife got laid off a few days before receiving her annual bonus
 play the game that needs to be played, not the one you want to play
 software gets increasingly harder to develop and maintain as projects get bigger
+japanese samaria losing to army
+French government agency limiting spread of scientific knowledge
+fail fast
+median age of founder of successful startup
+changes in labor market during DotCom boom/bust
+dismal science but it really isn't a science
+don't ask whether better than others, ask whether you're better than you were yesterday
+waste half my marketing on money, can't tell which half
+gender ratios at colleges
+https://www.youtube.com/watch?v=vhhgI4tSMwc
+cowboy coding
+money in bank account more influences happiness than overall savings
 //
 https://git-scm.com/download/win
 git clone https://github.com/garysteinmetz/technology_survey_study_materials.git
