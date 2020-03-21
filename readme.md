@@ -445,6 +445,36 @@ gender ratios at colleges
 https://www.youtube.com/watch?v=vhhgI4tSMwc
 cowboy coding
 money in bank account more influences happiness than overall savings
+a camel is a horse designed by a committee
+middle income trap
+quantum computing with regards to breaking encryption
+https://en.wikipedia.org/wiki/High-level_equilibrium_trap
+most US mistakes in Vietnam War happened early
+don't get arrested
+compound interest is the most powerful force in the universe
+the stories in love movies are designed to make its investors money
+those married to the spirit of the age are widows in the next
+probability of male being over 6'2"
+Gary's college roommate - 20s is when one climbs the food chain
+harder for your friends to socialize once they have kids
+wear a worn baseball cap
+meaning of term 'API'
+don't overly apply game theory to marriage
+talk to your parents now about what they value
+wages dropped by over half within a few months
+//
+  - activities after class is over
+    //
+  - boot camp
+  - online course (introductory probability, game theory, programming, accounting)
+  - phaser game
+  - economist magazine
+  - go to code-a-thons
+  - create something on GitHub
+  - study Vanguard funds
+  - ask other people about professions (along lines of experiences, finances, family/community)
+  - get an online web site going
+  - online programming problems
 //
 https://git-scm.com/download/win
 git clone https://github.com/garysteinmetz/technology_survey_study_materials.git

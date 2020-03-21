@@ -59,6 +59,7 @@ Code samples can be conveniently tested at https://www.w3schools.com/html/tryit.
   - [I can use libraries and different data types on an HTML page](lessons/i_can_use_libraries_and_different_data_types_on_an_html_page.md)
   - [Bonus: I have completed these HTML examples](lessons/bonus_i_have_completed_these_html_examples.md)
   - [I understand how computers communicate with each other and respond to requests](lessons/i_understand_how_computers_communicate_with_each_other_and_respond_to_requests.md)
+  - [I can run a web application on a local web server](lessons/i_can_run_a_web_application_on_a_local_web_server.md)
   - I am a computer programmer who has written the classic 'Hello World!' program in a browser
   - I am a server-side programmer
   - I can create an interactive web page (Form Submission, Ajax)
