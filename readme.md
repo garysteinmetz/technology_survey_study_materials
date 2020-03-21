@@ -462,6 +462,7 @@ meaning of term 'API'
 don't overly apply game theory to marriage
 talk to your parents now about what they value
 wages dropped by over half within a few months
+employers like enthusiasm
 //
   - activities after class is over
     //

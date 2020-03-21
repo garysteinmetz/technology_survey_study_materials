@@ -137,6 +137,15 @@ defined as `echo "Error: no test specified" && exit 1` which means that it will
 print 'Error: no test specified' _and_ (`&&`) then stop (`exit 1` - 1 means exit
 signaling to the command line that an error occurred (0 means no error occurred)).
 
+Note that the `test` command here represents something important - well-organized
+projects include additional code to test the application code that has been written!
+`Mocha`, `Jasmine`, and `Karma` are popular Node.js test frameworks.
+Tests come in different forms.
+
+  - `Unit Tests` - Check select portions of code
+  - `Live Tests` - Check the software application as it runs
+  - `Load Tests` - Stress (apply many calls to) the software application as it runs
+
 In 'package.json' create a line above that 'test' entry as follows.
 
 ```
@@ -150,6 +159,57 @@ console.log('Hi World!');
 ```
 
 Then run the following command which should output ... 'Hi World!'
+
+#### Exercise - Download Web Server Library
+
+NPM has the `install` command which can be used to download libraries
+and (optionally) formally declare in the 'package.json' file that the Node.js
+('Node' for short) application uses the library.
+
+`express` is a simple Node.js library used for hosting web servers. The following
+command downloads that library into the standard library subdirectory ('node_modules')
+and (using the `--save` option) formally declares that this project needs that library
+in the 'package.json' file.
+
+```
+~/Desktop/node-v12.16.1-darwin-x64/bin/npm install express --save
+```
+
+The 'package.json' file will now have this entry.
+
+```
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+```
+
+This means to download version '4.17.1' (or greater, because the optional
+'^' character is present) of the 'express' library.
+
+Note that there is an associated 'package-lock.json' file too. This locks the version
+of libraries so that '^' character doesn't change the library version between what's
+deployed, in a team developer's environment (like `stage`), and what's eventually
+deployed to Production.
+
+Why is it important to update the 'package.json' file? Because whenever another
+person downloads the source code, that person can just type `npm install`
+in the projects directory to download all the different libraries.
+
+#### Exercise - Run a Local Web Server
+
+Overwrite what's in 'index.js' with the following.
+
+```
+const express = require('express')
+const app = express()
+const port = 3000
+
+app.get('/', (req, res) => res.send('Hello World!'))
+
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+```
+
+Open a web browser and go to http://localhost:3000/ .
 
 ## Java
 
