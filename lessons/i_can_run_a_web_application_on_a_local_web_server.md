@@ -28,31 +28,45 @@ runs JavaScript server programs.
 
 ### Download Node.js
 
-Go to https://nodejs.org/en/download/ and download the 'Binary' (not the 'Installer').
-For Windows, that will be 'Windows Binary (.zip)' (64-bit). For Mac, that will be
-'macOS Binary (.tar.gz)' (64-bit).
-
-Unzip the download onto your desktop. The directory name will be something like
-'node-v12.16.1-darwin-x64' .
-
-The 'Installer' is actually better for longer-term development, but mildly harder
-to uninstall, with the 'Binary' you just delete the directory to uninstall it.
+1) _Skip this step if you are not using Windows. If you have trouble
+with this section, just assume your Windows system is 64-bit and continue
+to the next section._ Click the Windows (group of four squares) icon
+on the lower-left of your desktop, click the gear icon for 'Settings',
+on the left scroll down and click the 'About' link, look
+under 'Device specifications' and determine whether 32-bit or 64-bit
+appears under 'System type' .
+2) Go to https://nodejs.org/en/download/ and download the 'Installer'
+(not the 'Binary'). For Windows, that will be 'Windows Installer (.msi)'
+(64-bit or 32-bit, depending on what you recorded in the previous step).
+For Mac, that will be 'macOS Installer (.pkg)' (64-bit).
+3) Run this downloaded file, accept all the default settings
+(click the 'Next >' buttons), agree to the license terms, continue to accept
+all the default settings, and if Windows prompts you to agree to install
+the software click the 'Yes' button.
 
 #### Run a Simple Node.js Program
 
-Open a text editor and save file having name ending in '.js' (like 'sample11.js')
-with the following content.
+Create a file having name ending in '.js' (like 'sample11.js').
+
+For Windows, open the text editor for this file with the following steps.
+
+1) Open a command prompt.
+2) Type command `cd %HOMEPATH%\Desktop` .
+3) Type command `notepad sample11.js` .
+
+Place the following content in file, save it, then close the text editor.
 
 ```
 console.log('Hello World!');
 ```
 
-Now, from the command line, run this program by typing the location of the Node.js
-executable file (`node` which is in the 'bin' subdirectory of the Node.js directory)
-followed by the name of the Node.js file you just created. Here's an example.
+Now, from the command line, run this program by typing `node`
+followed by the name of the Node.js file you just created.
+Here's an example for Windows.
 
 ```
-~/Desktop/node-v12.16.1-darwin-x64/bin/node sample11.js
+cd %HOMEPATH%\Desktop
+node sample11.js
 ```
 
 It should print the following (just like it does in the 'Console' tab of Chrome
@@ -90,13 +104,13 @@ most often disciplined and regimented._
 #### Exercise - Create a NPM Project
 
 From the desktop, create a subdirectory (with name like 'sampleNode1')
-and using the command line go into it.
-
-The `npm` tool is in the same directory as the `node` program. Run `npm` followed
-by the word `init` to initialize the project structure. Here's an example.
+and using the command line go into it. Then run `npm init` to initialize
+the project structure. In Windows, all this can be done with the following steps.
 
 ```
-~/Desktop/node-v12.16.1-darwin-x64/bin/npm init
+mkdir %HOMEPATH%\Desktop\sampleNode1
+cd %HOMEPATH%\Desktop\sampleNode1
+npm init
 ```
 
 Keep pressing the enter or return key to accept the default value for all of the
@@ -121,6 +135,9 @@ using any libraries right now). Here is an example of its contents.
 }
 ```
 
+On Windows command line, this file can be viewed by entering either
+`notepad package.json` or just `type package.json`.
+
 #### Exercise - Create a Hi World Program within This NPM Project
 
 Notice the 'scripts' attribute in the 'package.json' file, it lists the possible
@@ -129,12 +146,12 @@ only the 'test' command is available and all it does is ... print and error mess
 stating that there are no tests to run!
 
 ```
-~/Desktop/node-v12.16.1-darwin-x64/bin/npm run test
+npm run test
 ```
 
 The output is 'Error: no test specified' - note that in this case `test` is
 defined as `echo "Error: no test specified" && exit 1` which means that it will
-print 'Error: no test specified' _and_ (`&&`) then stop (`exit 1` - 1 means exit
+print `Error: no test specified` _and_ (`&&`) then stop (`exit 1` - 1 means exit
 signaling to the command line that an error occurred (0 means no error occurred)).
 
 Note that the `test` command here represents something important - well-organized
@@ -147,12 +164,16 @@ Tests come in different forms.
   - `Load Tests` - Stress (apply many calls to) the software application as it runs
 
 In 'package.json' create a line above that 'test' entry as follows.
+(For Windows, this file can be opened with a text editor with command
+`notepad package.json` .)
 
 ```
     "start": "node index.js",
 ```
 
 Then create 'index.js' in the same directory with the following content.
+(For Windows, this file can be opened with a text editor with command
+`notepad index.js` .)
 
 ```
 console.log('Hi World!');
@@ -172,7 +193,7 @@ and (using the `--save` option) formally declares that this project needs that l
 in the 'package.json' file.
 
 ```
-~/Desktop/node-v12.16.1-darwin-x64/bin/npm install express --save
+npm install express --save
 ```
 
 The 'package.json' file will now have this entry.
@@ -197,19 +218,111 @@ in the projects directory to download all the different libraries.
 
 #### Exercise - Run a Local Web Server
 
-Overwrite what's in 'index.js' with the following.
+Another section reviewed how a web page makes an `AJAX` call to change the
+page's content after the page has loaded. In this exercise, you will do the same
+with a web server running on your local computer.
+
+##### Create 'index.html' File
+
+Create file 'index.html' with the following content. (For Windows, this file
+can be opened with a text editor with command `notepad index.html` .)
 
 ```
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
+    <script>
+      //in jQuery, the '$' character represents the library
+      //  the 'ready' function is a special (and cross-browser compatible)
+      //  function that runs as soon as the web page is 'loaded enough'
+      //  to allow DOM manipulation so that the user gets the finalized
+      //  look of the web page as quickly as possible
+      $(document).ready(function() {
+        setTimeout(
+          function() {
+            $.get(
+              {
+                url: "/todos/1",
+                success: function(data, status) {
+                  console.log(JSON.stringify(data));
+                  $("#title").val(data.title);
+                }
+              }
+            );
+          },
+          3000);
+      });
+    </script>
+  </head>
+  <body>
+    Title - <input type="text" id="title" />
+  </body>
+</html>
+```
+
+This file will be the web page that the browser downloads. The `$.get()` command
+in this file makes the `AJAX` call to `/todos/1` which will be defined
+in the '1.json' file.
+
+##### Create '1.json' File
+
+Create file '1.json' with the following content. (For Windows, this file
+can be opened with a text editor with command `notepad 1.json` .)
+
+```
+{
+  "userId": 1,
+  "id": 1,
+  "title": "delectus aut autem",
+  "completed": false
+}
+```
+
+This file will return the JSON content here used by the 'index.html' file when
+the 'index.html' file makes its JSON call.
+
+##### Update 'index.js' File
+
+Overwrite what's in 'index.js' with the following. (Again, that file can be opened
+in Windows with the `notepad index.js` command.)
+
+```
+const fs = require('fs')
 const express = require('express')
 const app = express()
 const port = 3000
 
-app.get('/', (req, res) => res.send('Hello World!'))
+app.get('/', (req, res) => res.send(fs.readFileSync('index.html')))
+
+app.get('/todos/1', (req, res) => res.send(fs.readFileSync('1.json')))
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 ```
 
-Open a web browser and go to http://localhost:3000/ .
+This file does the following things in the `Node.js` language.
+
+1) `const fs = require('fs')` accesses a library for interacting with files.
+2) `const express = require('express')` accesses a library for creating web servers.
+3) `const app = express()` creates a web server instance.
+4) `const port = 3000` is a variable stating which port the server will listen too.
+5) The first `app.get()` command will send back the contents of the `index.html`
+file when the browser goes to the `/` path.
+6) The second `app.get()` command will send back the contents of the `1.json`
+file when the browser goes (really makes an `AJAX` call) to `/todos/1`.
+7) `app.listen()` will start the web server on port 3000 and print message
+`Example app listening on port 3000!` to the console after the server starts.
+
+##### Run the Web Server
+
+From the command line, run `npm run start` to start this server.
+Open a web browser and go to `http://localhost:3000/` . The page should load
+and `delectus aut autem` should be displayed in the text box after a few seconds.
+
+Even while the server is running, you can change the `delectus aut autem` contents
+of the `1.json` file and reload the web page to get a different result
+in the text box. That's because the
+`(req, res) => res.send(fs.readFileSync('1.json'))` command is a function
+that rereads the `1.json` file for each request.
 
 ## Java
 
