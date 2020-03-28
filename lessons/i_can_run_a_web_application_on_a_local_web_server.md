@@ -179,7 +179,7 @@ Then create 'index.js' in the same directory with the following content.
 console.log('Hi World!');
 ```
 
-Then run the following command which should output ... 'Hi World!'
+Then run the command `npm run start` which should output ... 'Hi World!'
 
 #### Exercise - Download Web Server Library
 
@@ -214,7 +214,7 @@ deployed to Production.
 
 Why is it important to update the 'package.json' file? Because whenever another
 person downloads the source code, that person can just type `npm install`
-in the projects directory to download all the different libraries.
+in the project's directory to download all the different libraries.
 
 #### Exercise - Run a Local Web Server
 
@@ -287,21 +287,21 @@ Overwrite what's in 'index.js' with the following. (Again, that file can be open
 in Windows with the `notepad index.js` command.)
 
 ```
-const fs = require('fs')
+const path = require('path');
 const express = require('express')
 const app = express()
 const port = 3000
 
-app.get('/', (req, res) => res.send(fs.readFileSync('index.html')))
+app.get('/', (req, res) => res.sendFile(path.join(__dirname + '/index.html')))
 
-app.get('/todos/1', (req, res) => res.send(fs.readFileSync('1.json')))
+app.get('/todos/1', (req, res) => res.sendFile(path.join(__dirname + '/1.json')))
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 ```
 
 This file does the following things in the `Node.js` language.
 
-1) `const fs = require('fs')` accesses a library for interacting with files.
+1) `const path = require('path')` accesses a library for interacting with files.
 2) `const express = require('express')` accesses a library for creating web servers.
 3) `const app = express()` creates a web server instance.
 4) `const port = 3000` is a variable stating which port the server will listen too.
