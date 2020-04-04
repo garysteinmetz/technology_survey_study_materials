@@ -338,4 +338,80 @@ with that skill set), many existing applications have been built with it (has a 
 `installed base`), it has a large amount of tools and features, and all the 'ceremony'
 allows a software project to be better managed as it gets bigger.
 
+### Download and Install Java
+First, determine if Java is already installed. Run the command `java -version`
+on the command line - if the Java version appears then it's already installed
+and you can skip this section. Otherwise follow these steps to install Java.
+
+1) Go to https://adoptopenjdk.net/ .
+2) Under the '1. Choose a Version' column, choose 'OpenJDK 11 (LTS)' .
+3) Under the '2. Choose a JVM' column, choose 'HotSpot' .
+4) Click the 'Latest release' button.
+5) Wait a while (like a few minutes) for the file to download.
+6) Double-click the downloaded file and follow the installation instructions.
+
+Once the installation is complete, open a new command prompt and enter
+`java -version` to confirm that Java is installed (version 11 of Java
+should be installed).
+
+#### Run a Simple Java Program
+
+Create a file having name ending in '.java' (like 'sample12.java').
+
+For Windows, open the text editor for this file with the following steps.
+
+1) Open a command prompt.
+2) Type command `cd %HOMEPATH%\Desktop` .
+3) Type command `notepad sample12.java` .
+
+Place the following content in file, save it, then close the text editor.
+
+```
+public class sample12 {
+  public static void main(String[] args) {
+    System.out.println("Hello World!");
+  }
+}
+```
+
+Now, from the command line, compile this program by typing `javac sample12.java` .
+Here's an example for Windows.
+
+```
+cd %HOMEPATH%\Desktop
+javac sample12.java
+```
+
+That command will create file `sample12.class` which can now be run by Java.
+The compilation process takes a human-friendly Java source file ('sample12.java')
+and converts it into a computer-friendly Java binary file ('sample12.class').
+JavaScript is an interpreted language which means that no compilation is necessary
+but this also makes JavaScript slower. Java's compilation process makes Java
+(generally) faster but can slow down the development process.
+
+Run the 'sample12.class' file now with the following command.
+
+```
+cd %HOMEPATH%\Desktop
+java -classpath . sample12
+```
+
+The '-classpath .' part tells Java where to look for the 'sample12.class' file
+(look in the current directory). The file should print out the following
+(just like the equivalent JavaScript program).
+
+```
+Hello World!
+```
+
+Notice how much more effort (or `ceremony`) it took to get the same result
+in Java as in JavaScript. The complaint that Java has `too much ceremony`
+is common, but Java has many advantages too like better organization,
+many people proficient in the language, and powerful tools.
+
 ### Spring Boot
+
+
+open -e index.js
+
+https://www.jetbrains.com/idea/download/

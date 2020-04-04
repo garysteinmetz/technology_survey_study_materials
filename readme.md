@@ -463,6 +463,8 @@ don't overly apply game theory to marriage
 talk to your parents now about what they value
 wages dropped by over half within a few months
 employers like enthusiasm - smart and gets things done
+game developers make less even though they work longer hours
+statement most negatively-correlated with high career earnings - I want to help others
 //
   - activities after class is over
     //
@@ -476,6 +478,7 @@ employers like enthusiasm - smart and gets things done
   - ask other people about professions (along lines of experiences, finances, family/community)
   - get an online web site going
   - online programming problems
+  - language certifications
 //
 https://git-scm.com/download/win
 git clone https://github.com/garysteinmetz/technology_survey_study_materials.git
