@@ -465,6 +465,29 @@ wages dropped by over half within a few months
 employers like enthusiasm - smart and gets things done
 game developers make less even though they work longer hours
 statement most negatively-correlated with high career earnings - I want to help others
+playing the game that you want to play instead of the one that needs to be played
+looks not event in the top five
+how your project the other is very different than what the other actually is
+logistics get harder after the birth of first child
+engineers tend to be inaccurate when making larger estimates, each task is different, keep tasks smaller
+it doesn't matter whether your boss is nice in general or not when he/she is asked to lay off a fixed number of people
+as your life progresses doors will shut, mind your time well
+unseen, untold, is unsold
+opportunity cost
+https://www.theatlantic.com/magazine/archive/2008/03/marry-him/306651/
+john henry
+penny saved is a penny earned
+jwt, httponly cookie, blacklist, whitelist, saml, oauth
+You miss 100% of the shots you don't take
+the boys in the classes don't speak up enough
+principle of least interest
+importance of confidence
+difference between humans and neanderthals (socializing)
+greek versus geek
+one of the most important jobs of a quarterback is the ability to read a defense
+https://www.forbes.com/sites/lizryan/2016/06/03/hard-work-wont-make-you-successful-but-doing-this-will/#48aaf66d2bcb
+https://howtheyplay.com/team-sports/What-are-the-Qualities-of-an-Elite-NFL-Quarterback
+false positive, false negative
 //
   - activities after class is over
     //

@@ -411,7 +411,149 @@ many people proficient in the language, and powerful tools.
 
 ### Spring Boot
 
+Spring Boot is a popular Java-based web application framework. It's based off of the Spring
+framework which streamlines the integration of various frameworks (like database integration,
+logging, converting HTTP response bodies to JSON, and many other things!).
 
-open -e index.js
+#### Create Project
 
-https://www.jetbrains.com/idea/download/
+Create a project for your sample web application by doing the following.
+
+1) Go to https://start.spring.io/ .
+2) Leave the existing form values at their current settings.
+3) Under 'Dependencies', click the 'Add' button, enter 'Web', and click the 'Spring Web' option.
+4) Click the 'Generate' button.
+5) The file 'demo.zip' will be downloaded to your system. Move this file to the Desktop.
+6) Unzip this file to create the 'demo' directory on your Desktop.
+
+#### Load Project into IDE
+
+IDE stands for 'Integrated Development Environment' and it's a type of application software
+developers use to interact with the source code files in a software project. It's a much more
+organized and efficient than using basic tools like Notepad, TextEdit, and the command prompt!
+
+IntelliJ is a very popular IDE for Java developers. Install it by following these steps.
+
+1) Go to https://www.jetbrains.com/idea/download/ .
+2) Under 'Community', click the 'Download' button.
+3) Open the download and install IntelliJ.
+4) Start IntelliJ.
+5) Open the 'demo' project by clicking 'File' in the top menu, then click 'Open',
+then select the the 'demo' directory on the Desktop.
+
+#### Project Structure
+
+Java uses `build frameworks` to compile source code (like how `javac` is used above,
+but for the entire project) and assemble the overall project into the final application.
+`Maven` and `Gradle` are popular frameworks. Since they are frameworks, they dictate _how_
+one organizes the overall project and expect the project to have a certain directory structure
+('these files go here, those files go there'). (Build tools like `Ant` don't impose rules
+and leave it to the developer to explicitly construct a step-by-step approach to building
+and assembling a project.)
+
+Here are key structural aspects to a Maven-structured project.
+
+  - 'pom.xml' - (Project Object Model) defines what type of project it is (like the 'groupId',
+  'artifactId', 'version', and 'name' fields) which is essential for publishing the project
+  for others to use (if you're creating a library), lists what other projects it depends on
+  under the 'dependencies' section.
+  - 'src/main/java' - This is where the main Java source code for the project goes. This is
+  the application-specific code that gets executed when the program is run.
+  - 'src/main/resources' - This is where supporting files (like properties files
+  and HTML pages) go.
+  - 'src/test/java' - This is where `unit tests` reside which test out and confirm
+  the correctness of the source code in 'src/main/java' before the code there is built
+  and assembled into the final application. (It's code to test code!)
+  - 'target' - This is the directory where compiled Java class and other files go
+  when the project is built and assembled. Using the 'clean' command (used below)
+  deletes this directory and it's good (but not necessary) to using this command
+  before starting a project. Files in the 'target' directory should _Not_ be stored
+  in a source control system (like 'Git' - a 'target' entry should be included
+  in the '.gitignore' file to prevent saving 'target' files into Git).
+
+#### Recreate the Node.js Application
+
+##### Create 'index.html' File
+
+In the left bar, right-click over the 'src/main/resources/static' folder, select 'New',
+select 'File', then enter 'index.html'. Copy the contents below into this file
+and save it (either by selecting 'File' then 'Save' from the menu,
+or pressing-and-holding-down the 'Control' (Windows) or 'Command' (Mac) key then pressing 's').
+
+```
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
+    <script>
+      //in jQuery, the '$' character represents the library
+      //  the 'ready' function is a special (and cross-browser compatible)
+      //  function that runs as soon as the web page is 'loaded enough'
+      //  to allow DOM manipulation so that the user gets the finalized
+      //  look of the web page as quickly as possible
+      $(document).ready(function() {
+        setTimeout(
+          function() {
+            $.get(
+              {
+                url: "/todos/1.json",
+                success: function(data, status) {
+                  console.log(JSON.stringify(data));
+                  $("#title").val(data.title);
+                }
+              }
+            );
+          },
+          3000);
+      });
+    </script>
+</head>
+<body>
+Title - <input type="text" id="title" />
+</body>
+</html>
+```
+
+##### Create 'todos/1.json' File
+
+In the left bar, right-click over the 'src/main/resources/static' folder, select 'New',
+select 'Directory', then enter 'todos'. Then create and save the '1.json' file
+with the same contents as the '1.json' file from the Node.js above.
+
+```
+{
+  "userId": 1,
+  "id": 1,
+  "title": "delectus aut autem",
+  "completed": false
+}
+```
+
+#### Run Project
+
+Maven can be run on the command line, but it's much easier to just run it using IntelliJ.
+
+The 'spring-boot:run' (which runs the server) command of Maven can be executed from within
+IntelliJ using the following commands.
+
+1) Click the 'Maven' (with italicized 'm' over it) tab on the upper-right side of IntelliJ.
+This will open the 'Maven' pane on the right side.
+2) Within the 'Maven' pane, click the italicized 'm' ('Execute Maven Goal').
+3) In the 'Command line' field, enter 'clean spring-boot:run' then click 'Execute'. ('clean'
+isn't necessary but it's 'good housekeeping' and 'spring-boot:run' is what actually runs
+the project.)
+4) Open a browser and go to http://localhost:8080/ to confirm that this application works
+the same as the Node.js application above.
+5) When finished, click the red square button in the lower-left to stop the application.
+
+#### Properties
+Environment variable overrides
+
+#### Content Generated on the Server Side
+
+Dynamic Web Pages
+Web Services
+
+#### Actuator
+
+#### Unit Tests
+
