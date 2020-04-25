@@ -601,20 +601,197 @@ should simulate those systems with mocked objects that pretend to be those syste
 
 ##### Content Generated on the Server Side
 
-Spring Boot applications can (and often does) host callable web-service endpoints 
+Spring Boot applications can (and often do) host callable web-service endpoints.
+These endpoints can dynamically process a request (even a simple one, like adding two numbers)
+and provide a response.
 
-Web Services
+###### Exercise - Create a Session-Aware Web Service to Add Two Numbers
 
-Session Management with Session Cookies
+`Sessions` are ongoing conversations between a client and a server. The HTTP protocol
+by itself doesn't manage sessions, but `Cookie` headers in the requests and responses
+can inform both the client and the server that a session has started. What's contained
+in the cookie is just a code that's unique to the session
+(like '90DED3854451AA60BB03ED2B4639EBE2'). For Java web servers, the name of that cookie
+holding that value has historically been something like 'JSESSIONID' .
 
+When the client (browser) sends this code to the server, the server knows that it's the same
+client calling again and the server maps that code to configurations (`state`)
+saved for the client in the server's memory.
 
-##### Unit Tests
+To demonstrate `inversion of control`, `web service endpoints`,
+and `cookie-managed session state` follow these steps.
+
+(SuperComputer)
+Within the project, create class 'SuperComputer' in folder 'src/main/java/com/example/demo' .
+In IntelliJ, this can be done by right-clicking that folder, selecting 'New', then 'Java Class',
+then enter the name 'SuperComputer' , then clicking the 'OK' button.
+
+The file should have this content.
+
+```
+package com.example.demo;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class SuperComputer {
+    public int addNumbers(int numberOne, int numberTwo) {
+        return numberOne + numberTwo;
+    }
+}
+```
+
+Note the `@Service` annotation which notifies Spring Boot that this thing (`object`)
+should be created when Spring Boot starts.
+
+(DemoController)
+`Controllers` contain one or more callable HTTP web service endpoints. Here you will
+create an endpoint that will (A) add two numbers and (B) calculate the number of times
+the same browser has visited the web page.
+
+In the same folder, create 'DemoController' with the following content.
+
+```
+package com.example.demo;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpSession;
+
+@Controller
+public class DemoController {
+
+    @Autowired
+    SuperComputer superComputer;
+
+    @GetMapping("/addNumbers")
+    @ResponseBody
+    public String addNumbers(
+            @RequestParam(name = "numberOne") int numberOne,
+            @RequestParam(name = "numberTwo") int numberTwo,
+            HttpSession httpSession) {
+        Integer numberOfVisits = getNumberOfVisits(httpSession);
+        return "You have visit this web page " + numberOfVisits
+                + " times and the answer to your question is "
+                + superComputer.addNumbers(numberOne, numberTwo);
+    }
+    //
+    private Integer getNumberOfVisits(HttpSession httpSession) {
+        Integer numberOfVisits =
+                ((Integer)httpSession.getAttribute("numberOfVisits"));
+        if (numberOfVisits != null) {
+            numberOfVisits = numberOfVisits + 1;
+        } else {
+            numberOfVisits = 1;
+        }
+        httpSession.setAttribute("numberOfVisits", numberOfVisits);
+        return numberOfVisits;
+    }
+}
+```
+
+'addNumbers' takes two request parameters ('numberOne' and 'numberTwo'), sends those parameters
+to the super computer `@Autowired SuperComputer superComputer`, then sends back a response
+to the client (browser). It's important to note that 'DemoController' does not know anything
+about the super computer - it only knows that the super computer can add two numbers.
+
+'getNumberOfVisits' checks how many times the browser has visited the web site by looking
+into the 'HttpSession' object, specifically the 'numberOfVisits' field. This function
+adds one to that field indicating that the browser has again visited this application.
+
+Start the application. Open a browser and its (Chrome's) developer tools. Go to
+`http://localhost:8080/addNumbers?numberOne=1&numberTwo=2` and then go to 'Application' tab.
+Select 'Cookies' then 'http://localhost:8080' under it and note that a 'JSESSIONID' cookie
+has been assigned.
+
+Refresh the page several times and note how the visit count keeps going up.
+
+Now remove the 'JSESSIONID' cookie by right-clicking over it and selecting 'Delete' .
+This drops the session - the server still has a mapping of the session but the client is
+no longer passing the code for it. Refresh the page and notice how the visit count drops
+back to 1 because the server created a new session for this browser. Refresh the page
+again a few times and notice how the visit count increases just like it did before.
+
+###### Exercise - Unit Testing
+
+Create a unit test for the controller to increase your confidence that the controller will have
+correctly once the server starts. Unit tests _don't_ interact (make calls to) other servers,
+they just test that the targeted source code behaves as it should. This localized testing
+becomes very important for larger software projects where it's very difficult to test
+one small thing interacting in a very complex system.
+
+In folder 'src/test/java/com/example/demo', create class 'DemoControllerTest' with these
+contents.
+
+```
+package com.example.demo;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+import javax.servlet.http.HttpSession;
+
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
+
+public class DemoControllerTest {
+    @Test
+    public void testController() {
+        //
+        String expectedResponse = "You have visit this web page " + 6
+                + " times and the answer to your question is " + 3;
+        //
+        SuperComputer superComputer = Mockito.mock(SuperComputer.class);
+        HttpSession httpSession = Mockito.mock(HttpSession.class);
+        //
+        when(superComputer.addNumbers(eq(1), eq(2))).thenReturn(3);
+        when(httpSession.getAttribute(eq("numberOfVisits"))).thenReturn(5);
+        //
+        DemoController demoController = new DemoController();
+        demoController.superComputer = superComputer;
+        //
+        String response = demoController.addNumbers(1, 2, httpSession);
+        Assertions.assertEquals(expectedResponse, response);
+    }
+
+}
+
+```
+
+The test could be run (with other unit tests if they were also present) by running the Maven
+'test' command, but in IntelliJ it can be done by right-clicking over 'testController'
+and selecting "Run 'DemoControllerTest'" which will then run the test and output
+`Process finished with exit code 0` indicating that the test was a success (a 0 exit code
+means that the process completed without error). The actual unit test is done by the
+`Assertions.assertEquals` call which compares what was produced versus what was expected.
+If you change any of the actual inputs or the expected behaviour of mocked components
+(like `when(httpSession.getAttribute(eq("numberOfVisits"))).thenReturn(10);`),
+the tests will fail with an error message like this.
+
+```
+org.opentest4j.AssertionFailedError: 
+Expected :You have visit this web page 6 times and the answer to your question is 3
+Actual   :You have visit this web page 11 times and the answer to your question is 3
+```
+
+Note here how `Mockito` is used to `mock` both the 'SuperComputer' and 'HttpSession' -
+these objects aren't actually present but the `when` call simulates how they should act.
 
 ##### IntelliJ Advantages
+
+IntelliJ might look fancy but it shares this in common with Notepad and TextEdit -
+it's a text editor!
 
 Command Completion
 Find Usages
 Localized Unit Test Run
+GitHub Integration
+Easy Access to Different Files
 
 #### Actuator
 
