@@ -545,15 +545,98 @@ the project.)
 the same as the Node.js application above.
 5) When finished, click the red square button in the lower-left to stop the application.
 
-#### Properties
-Environment variable overrides
+#### Maven Lifecycle Commands
 
-#### Content Generated on the Server Side
+Maven comes with predefined standard commands. Here are some of the popular ones.
 
-Dynamic Web Pages
+  - clean - removes the 'target' (build work) directory.
+  - test - runs the 'unit' tests in the 'src/test/java' directory. Unit tests are code
+  that test other code.
+  - package - runs most everything (including compilation, unit testing, and packaging)
+  to create finished software, usually a web application or a library ('jar) that other
+  applications can use.
+
+The inclusion of 'spring-boot-starter-web' in the 'pom.xml' file makes additional commands
+that can be run. The
+`mvnw.cmd help:describe -Dplugin=org.springframework.boot:spring-boot-maven-plugin`
+(remove the '.cmd' part if on Linux/Mac) lists these additional commands which include
+the following.
+
+  - spring-boot:run - Runs the web server.
+  - spring-boot:repackage - Assembles all the projects into one (massive) file known
+  as a 'fat JAR' (Java ARchive) which contains all of the compiled application code
+  and All of the runtime libraries that the application depends on directly or indirectly.
+  This command ('goal') should happen after the project is assembled (with 'package' goal)
+  so the composite command to create a 'fat JAR' is
+  `mvnw.cmd clean package spring-boot:repackage` . The resulting web app (which includes
+  a web server) can be run with command `java -jar target\prime-0.0.1-SNAPSHOT.jar`.
+  Now that the application is bundled into a single file, it can be easily included onto
+  cloud resources (including a Docker image) to run in the cloud.
+
+#### Inversion of Control and Dependency Injection
+
+A critical architectural feature of Spring (including Spring Boot) is the dual concept
+of `inversion of control` and `dependency injection`. These mean that specific functionality
+'states what it wants' but doesn't actually go and explicitly get it. Instead it relies
+on the Spring framework to handle all of the details. (Recommended ways and approaches
+for writing software are known as `design patterns`.)
+
+The `@Autowired` annotation keyword is a common way of implementing
+this concept within functionality. For instance, if something processing web service calls
+(known as a `Controller`) wants to interact with a backend database, that controller
+would include a declaration like `@Autowired DatabaseInterface di` (where 'di' is the
+variable name for the database interface).
+
+The dual concept of 'inversion of control' and 'dependency injection' has these benefits.
+
+1) Less Code - Source files aren't cluttered with initialization code. They just list what
+they want (with `@Autowired` it's just one line of code) instead of several lines of code.
+2) `Lously-Coupled` Components - In software engineering, it's a better approach to only
+define the bare minimum of what something needs instead of expecting unnecessary and unneeded
+details. For instance, for a car, it expects a tire to comply with certain standards
+but the car explicitly doesn't state which kind of tire it's using.
+3) Makes Unit Testing Easier - Injected (`@Autowired`) components can be mocked (simulated)
+during unit testing. Unit tests should _Not_ interact with live systems, instead the unit tests
+should simulate those systems with mocked objects that pretend to be those systems.
+
+##### Content Generated on the Server Side
+
+Spring Boot applications can (and often does) host callable web-service endpoints 
+
 Web Services
+
+Session Management with Session Cookies
+
+
+##### Unit Tests
+
+##### IntelliJ Advantages
+
+Command Completion
+Find Usages
+Localized Unit Test Run
 
 #### Actuator
 
-#### Unit Tests
+As a framework, Spring Boot expects you to do things a certain way, but it also incorporates
+a lot of powerful tools. The 'actuator' provides informative diagnostic information about
+a running application. It can be turned on just by adding the following lines just under
+the 'dependencies' section of the 'pom.xml' file.
 
+```
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+```
+
+Once that is installed, URLs ('endpoints') like `http://localhost:8080/actuator/health`
+will be available which can be used by runtime operations to assess the health of a running
+system (the default response `{"status":"UP"}` means that the server is up-and-running okay).
+
+#### Examples of Maven Directory Structure
+
+Many or most Java projects use the traditional Maven directory structure
+(or even something more fancy and modern!), including the library used for unit testing.
+
+  - https://github.com/mockito/mockito

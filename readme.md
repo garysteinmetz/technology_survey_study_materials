@@ -488,6 +488,20 @@ one of the most important jobs of a quarterback is the ability to read a defense
 https://www.forbes.com/sites/lizryan/2016/06/03/hard-work-wont-make-you-successful-but-doing-this-will/#48aaf66d2bcb
 https://howtheyplay.com/team-sports/What-are-the-Qualities-of-an-Elite-NFL-Quarterback
 false positive, false negative
+paradox of choice
+expect to get rejected
+revolutions frequently start with financial crisis
+there is a lot of variety in what people seek
+fail fast
+do you want to have more or fewer children than your parents?
+negotiation, paradox of choice, rumination, end-run, start with small concessions, counter equally
+in a more senior staff (non-managerial) positions, one is expected to do non-technical things
+most hires are through connections
+talk is an indicator of how others feel, but talk is cheap
+herbivore men
+some men my age still single, not all necessarily by choice
+reality versus away-from-reality
+docker service discovery - https://www.youtube.com/watch?v=RQmGQgwp_ns
 //
   - activities after class is over
     //
@@ -502,6 +516,8 @@ false positive, false negative
   - get an online web site going
   - online programming problems
   - language certifications
+  - coding event
+  - innummeracy book
 //
 https://git-scm.com/download/win
 git clone https://github.com/garysteinmetz/technology_survey_study_materials.git
