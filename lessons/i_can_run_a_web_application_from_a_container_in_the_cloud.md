@@ -40,6 +40,10 @@ you can either just keep that or uninstall it and follow these instructions.
 Go to the Docker website at https://hub.docker.com/search?q=&type=edition&offering=community
 to download the 'community' (free) edition of Docker. Specifically, go to one of these URLs.
 
+Note - For Windows, either 'Pro' or 'Enterprise' edition of Windows 10 or greater is required
+to install this version of Docker, older or less capable versions (like 'Home') should be able
+to run Docker Toolbox instead.
+
   - Windows - https://hub.docker.com/editions/community/docker-ce-desktop-windows
   - Mac - https://hub.docker.com/editions/community/docker-ce-desktop-mac
 
@@ -165,6 +169,80 @@ Start the Alpine Linux container and run the command prompt using the 'sh' (shel
 ```
 docker run -it f70734b6a266 sh
 ```
+
+You are now in a shell (command prompt) of this running Alpine Linux container and can run
+Unix commands in it.
+
+##### Unix - Users, Groups, and Permissions
+
+To find out who you logged in as, run the following command.
+
+```
+whoami
+```
+
+This command should have printed `root` which is the most powerful user on a Unix system.
+`root` can do _anything_. In fact, `root` is so powerful (and dangerous) that users rarely
+operate in a shell as this user. To have the privileges of `root` when running a single command
+without being `root`, users can use the `sudo` command which allows a user to run a command
+with `root` privileges.
+
+Files and directories assign `read, write, and execute privileges` to files. Such privileges
+are assigned to owner, members of the owner's group, and everyone else.
+
+List the files in a directory with the `ls` command, but the `ls -la` command also lists
+the permissions of the file. Here's the output of that command from the current directory.
+
+```
+drwxr-xr-x    1 root     root          4096 Apr 23 06:25 usr
+```
+
+The 'd' means that 'usr' is a directory. The first 'root' means that user 'root' is the owner
+and the second 'root' means that this file belongs to the 'root' group.
+
+The 'rwx' means that the 'root' user can read, write, and execute the directory.
+The first 'r-x' means that members of the 'root' group can only read or execute the directory.
+The second 'r-x' means that anyone else can only read or execute the directory.
+
+The `chmod` command changes the permissions on a file or directory.
+
+##### Unix - Files and Directories
+
+As mentioned, the `ls` command is used to list files. Here are other file commands.
+
+`pwd` lists the current directory.
+
+`cd` is used to change to another directory. Here are examples.
+  - `cd /` - Go to the base directory of the operating system.
+  - `cd ~` - Go to the user's home directory (which is '/root' for user 'root').
+  - `cd .` - Go to the current directory (don't change directories).
+  - `cd ..` - Go to the parent directory of this directory. (For user 'root', 'cd ~'
+  followed by 'cd ..' will just take the user back to the '/' directory which is just
+  equivalent to entering 'cd /').
+
+Create a directory with the `mkdir` command and remove a file or a directory with the
+`rm` command.
+
+`cat` displays the contents of a file.
+
+`echo` just prints what is typed to the console.
+
+echo
+tail
+vi
+history
+find
+grep
+ps (with &)
+kill
+export
+top
+mv
+cp
+ifconfig
+curl
+apk add --update curl
+| and & and >
 
 create a boot Jar
 
