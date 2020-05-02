@@ -502,6 +502,13 @@ herbivore men
 some men my age still single, not all necessarily by choice
 reality versus away-from-reality
 docker service discovery - https://www.youtube.com/watch?v=RQmGQgwp_ns
+importance of hard work
+psychological definition of adulthood - being able to recognize reality
+authorization, authentication, encryption
+Ignaz Semmelweis - callously promoted hand-washing and was rejected by entrenched interests
+be yourself but expand yourself
+people like confidence, ask around too
+preferred fish color
 //
   - activities after class is over
     //
@@ -518,6 +525,9 @@ docker service discovery - https://www.youtube.com/watch?v=RQmGQgwp_ns
   - language certifications
   - coding event
   - innummeracy book
+  - assume you are studying a dual-major in college, choose the two majors
+  - fill out a chart of professional salary, training, quality-of-life, and three factors
+  - take a practice actuarial exam
 //
 https://git-scm.com/download/win
 git clone https://github.com/garysteinmetz/technology_survey_study_materials.git

@@ -792,6 +792,7 @@ Find Usages
 Localized Unit Test Run
 GitHub Integration
 Easy Access to Different Files
+Debug Mode
 
 #### Actuator
 
