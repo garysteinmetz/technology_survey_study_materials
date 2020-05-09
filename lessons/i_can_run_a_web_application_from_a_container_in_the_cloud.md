@@ -407,28 +407,61 @@ files between systems) which are also quite useful.
 Type `exit` to leave a shell.
 
 
-create a boot Jar
+### Create Docker Image for Application
 
-running the boot Jar
+This section will be run on your system and not within a Unix Docker image, but it will
+create a Unix Docker image.
 
-'fat Jar'
+Recall that for your Spring Boot application `./mvnw clean package spring-boot:repackage`
+does the following.
 
-run a Docker image locally
+  - './mvnw' - Runs Maven from the local directory
+  - 'clean' - Cleans up (deletes) any previous Maven work for this project
+  - 'package' - Builds the project
+  - 'spring-boot:repackage' - Repackages the project into a 'fat JAR' (self-running app)
+    - For the 'demo' project the resulting file is 'target/demo-0.0.1-SNAPSHOT.jar'
 
-https://hub.docker.com/r/adoptopenjdk/openjdk11/
+A `Dockerfile` defines a Docker image. Docker images can 'piggyback' off each other.
 
-docker pull adoptopenjdk/openjdk11:jdk-11.0.7_10-alpine
+For the 'demo' project created in the previous exercise, the following `Dockerfile`
+(with that filename) uses (`FROM`) an Alpine Linux system with Java 11 installed,
+copies (`COPY`) the 'fat JAR' into it, and then runs (`CMD`) the demo application.
 
-https://hub.docker.com/editions/community/docker-ce-desktop-mac
-https://docs.spring.io/spring-boot/docs/current/maven-plugin/
+```
+FROM adoptopenjdk/openjdk11:jdk-11.0.7_10-alpine
+COPY target/demo-0.0.1-SNAPSHOT.jar .
+CMD java -jar demo-0.0.1-SNAPSHOT.jar
+```
 
-shell script to build and run
+Using that `Dockerfile`, build the Docker image with the following command.
 
-./mvnw help:describe -Dplugin=org.springframework.boot:spring-boot-maven-plugin -Ddetail=true
+```
+docker build .
+```
 
-clean spring-boot:repackage
+List the Docker images which should include the one you just built. Since the previous command
+didn't 'tag' the image with a special name use the 'CREATED' time to figure out which one
+it is and its associated 'IMAGE ID' value ('3c9891bf0e87' for the example here).
 
-./mvnw clean package spring-boot:repackage
+```
+$ docker images
+REPOSITORY                                           TAG                    IMAGE ID            CREATED              SIZE
+<none>                                               <none>                 3c9891bf0e87        About a minute ago   361MB
+```
+
+Run the Docker image and map its 8080 port to your local system's ('localhost') 8080 port.
+(Docker does not allow access to a container's port without the '--publish' flag).
+
+```
+docker run --publish 8080:8080 --detach 3c9891bf0e87
+```
+
+Now, the 'demo' app can again be run from your computer by going to http://localhost:8080/
+in a browser. Note that this time it's running from a Docker container and not your local
+command prompt.
+
+This Docker image is now packaged and ready to ship to the cloud (like AWS).
+
 
 docker container rm $(docker container ls –aq)
 
