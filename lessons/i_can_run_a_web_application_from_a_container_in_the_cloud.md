@@ -221,28 +221,191 @@ As mentioned, the `ls` command is used to list files. Here are other file comman
   equivalent to entering 'cd /').
 
 Create a directory with the `mkdir` command and remove a file or a directory with the
-`rm` command.
+`rm` command. Move files with the `mv` command.
 
-`cat` displays the contents of a file.
+`cat` displays the contents of a file. The '/root/.ash_history' file lists all of the recent
+commands entered on the command line. `cat /root/.ash_history` lists out all of them.
+By the way, the `history` command does the same thing.
 
-`echo` just prints what is typed to the console.
+`find` lists all of the files in a directory and subdirectories.
+`find /` will list every file on the system (so long as the user has access to them).
 
-echo
-tail
-vi
-history
-find
-grep
-ps (with &)
-kill
-export
-top
-mv
-cp
-ifconfig
-curl
-apk add --update curl
-| and & and >
+
+##### Unix - 'Echo' Command, Environment Variables, and Appending Console Output to Files
+
+`echo` just prints what is typed to the console. `echo Hello` will print 'Hello'
+to the console.
+
+_Environment variables are a set of string key-value pairs. They help configure
+the system and (this is important) act as switches to vary the behavior of an application
+or Docker image without otherwise changing the source code. For instance,
+if an application is identical on a development server and a production server,
+but they use separate backend databases, they could/would use identical source code
+but could set a different environment variable for the URL of their respective databases._
+
+Type the `export` command to list the environment variables. Notice how `HOME`
+has a value of `/root` - that's how `cd ~` knows to go to that directory. That `HOME` value
+is specific to each user.
+
+`export` can also be used to set a value. `export FOOD=pizza` will set the `FOOD` environment
+variable to `pizza` . In string declarations (encased in double quotes), the `${}` notation
+can be used to substitute an environment variable value into the string. Here is an example.
+```
+/ # export FOOD=pizza
+/ # echo "My favorite food is ${FOOD}"
+My favorite food is pizza
+/ # 
+```
+
+The `unset` command removes an environment variable.
+
+`>` overrides the content of an existing file (or creates a new one) with console output.
+
+```
+/ # echo Hello > someFile.txt
+/ # cat someFile.txt 
+Hello
+```
+
+`>>` appends content to the end of a file (or creates a new one) with console output.
+
+```
+/ # echo Goodbye >> someFile.txt
+/ # cat someFile.txt 
+Hello
+Goodbye
+```
+
+The `grep` command scans output and only prints those lines that match a pattern.
+Patterns can include `regular expressions` .
+The `|` (pipe) character is used to route output from one command to another in Unix.
+This example outputs file content that is then piped to `grep` to examine. This technique
+is very useful when looking at logs.
+
+```
+/ # cat someFile.txt | grep oo
+Goodbye
+```
+
+##### Unix - Viewing and Editing File Contents
+`head` outputs the first lines of a file.
+```
+/ # head -1 someFile.txt 
+Hello
+```
+
+`tail` outputs the last lines of a file.
+```
+/ # tail -1 someFile.txt 
+Goodbye
+```
+
+`vi` is a ubiquitous text editor for Unix. It is _very powerful_ but is also _very unintuitive_.
+`vi` does not use a mouse and has three different modes of operation.
+
+  - Command Mode - Do something with the file without directly typing in new text.
+  - Insert Mode - Edit the exiting file character by character.
+  - Last Edit Mode - Save the file, exit the file, or similar high-level action.
+
+When `vi` first loads, it is in 'Command Mode' . To switch to 'Insert Mode' type either
+'a' (append - place cursor after highlighted character)
+or 'i' (insert - leave cursor where it is). To switch to 'Last Edit Mode' press ':' (colon).
+
+To go back to 'Command Mode' from the other two modes, press 'esc' (escape).
+
+In 'Command Mode', here are some of the other commands.
+
+  - `/ <search_string>` searches for the next occurrence of a string after the cursor.
+  Press enter after entering the command.
+  - `Control-F` (forward) page down.
+  - `Control-B` (back) page up.
+
+In 'Last Edit Mode', here are some of the commands. Press enter after each command.
+  - `w <filename>` saves the file with that name. Omit '<filename>' to just overwrite file.
+  - `q` quit out of `vi` .
+  - `set nu` list the file numbers.
+
+##### Unix - Processes
+Programs (processes) can be easily tracked in Unix. The `top` commands gives a good summary
+of the processes including processor and memory usage (press 'q' to exit).
+
+`ps -aef` also prints a table of processes including their process IDs ('PID') which is
+useful for killing of processes that should be terminated (but haven't done so already).
+
+Usually, when running a Unix command is runs in the foreground and you can't type
+any new commands until the command's associated process ends (which can usually be done
+by pressing `Control-C`). To make a process run in the background, append the `&` character
+to the end of the command. Running a process in the background allows you to do other
+things while the process is running.
+
+The following example runs `vi` in the background (there is no real reason to ever
+run `vi` in the background but it will simulate a stalled process), gets its 'PID' using
+`ps`, and then kills that process using the `kill -9` command (the '-9' means to stop
+the process without delay).
+
+```
+/ # vi &
+/ # ps -aef
+PID   USER     TIME  COMMAND
+    1 root      0:00 sh
+   28 root      0:00 vi
+   29 root      0:00 ps -aef
+[1]+  Stopped (tty output)       vi
+/ # kill -9 28
+/ # ps -aef
+PID   USER     TIME  COMMAND
+    1 root      0:00 sh
+   30 root      0:00 ps -aef
+[1]+  Killed                     vi
+/ # 
+```
+
+##### Unix - Networking
+
+Unix contains networking commands that are useful for things like figuring out
+a machines (really network card) IP address. `ifconfig -a` will list network configurations.
+
+The `/etc/hosts` file lists DNS overrides. Sometimes it's useful to substitute an actual
+website (like 'www.google.com') with a mock website for testing purposes. Note that
+this is the file where 'localhost' is formally assigned IP address '127.0.0.1'.
+
+```
+/ # cat /etc/hosts
+127.0.0.1	localhost
+::1	localhost ip6-localhost ip6-loopback
+fe00::0	ip6-localnet
+ff00::0	ip6-mcastprefix
+ff02::1	ip6-allnodes
+ff02::2	ip6-allrouters
+172.17.0.2	f58bdbfa877f
+```
+The `apk` command is available on some Linux versions (like Alpine) to install new programs.
+`curl` isn't preinstalled but can be added with this command.
+
+```
+/ # curl https://www.google.com
+sh: curl: not found
+/ # apk add --update curl
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.11/main/x86_64/APKINDEX.tar.gz
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.11/community/x86_64/APKINDEX.tar.gz
+(1/4) Installing ca-certificates (20191127-r1)
+(2/4) Installing nghttp2-libs (1.40.0-r0)
+(3/4) Installing libcurl (7.67.0-r0)
+(4/4) Installing curl (7.67.0-r0)
+Executing busybox-1.31.1-r9.trigger
+Executing ca-certificates-20191127-r1.trigger
+OK: 7 MiB in 18 packages
+/ # curl https://www.google.com
+...Content from Google...
+```
+
+There are other commands like `ssh` (shell into another system) and `sftp` (transfer
+files between systems) which are also quite useful.
+
+##### Unix - Exit Shell
+
+Type `exit` to leave a shell.
+
 
 create a boot Jar
 
@@ -270,8 +433,6 @@ clean spring-boot:repackage
 docker container rm $(docker container ls –aq)
 
 environment variables as feature flags
-
-basic unix
 
 generate certificate
 

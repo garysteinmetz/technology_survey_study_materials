@@ -509,6 +509,10 @@ Ignaz Semmelweis - callously promoted hand-washing and was rejected by entrenche
 be yourself but expand yourself
 people like confidence, ask around too
 preferred fish color
+match shallow with shallow
+other career choices - chemical engineer, management consultant, physician assistant, actuary
+more career choices - data science, sales
+bell curve and male height
 //
   - activities after class is over
     //
@@ -528,6 +532,7 @@ preferred fish color
   - assume you are studying a dual-major in college, choose the two majors
   - fill out a chart of professional salary, training, quality-of-life, and three factors
   - take a practice actuarial exam
+  - C-Span Book TV
 //
 https://git-scm.com/download/win
 git clone https://github.com/garysteinmetz/technology_survey_study_materials.git
