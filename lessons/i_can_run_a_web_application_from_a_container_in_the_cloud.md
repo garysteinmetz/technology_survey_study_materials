@@ -423,6 +423,8 @@ does the following.
 
 A `Dockerfile` defines a Docker image. Docker images can 'piggyback' off each other.
 
+ _Note that Unix commands can be, and are quite often are, used in a Dockerfile._
+
 For the 'demo' project created in the previous exercise, the following `Dockerfile`
 (with that filename) uses (`FROM`) an Alpine Linux system with Java 11 installed,
 copies (`COPY`) the 'fat JAR' into it, and then runs (`CMD`) the demo application.
@@ -462,6 +464,360 @@ command prompt.
 
 This Docker image is now packaged and ready to ship to the cloud (like AWS).
 
+
+### Databases
+
+Databases ... store data.
+
+The subject of databases is a vast one and this review of databases is not meant
+to be comprehensive or representative.
+
+Directly or indirectly, databases are central to most web applications. Without databases,
+there would be no way of storing transactions and what the web application has actually
+changed. It would be like a bank with a vault.
+
+#### Types of Databases
+
+Web applications generally use one of two different types of databases - SQL and NoSQL.
+
+##### SQL
+
+`SQL` stands for `Structured Query Language` and, in the context of NoSQL, the word
+'structured' is important. Like XML, it expects data to be formatted in a certain way.
+It's a standardized language for interacting with relational databases. SQL-compliant
+databases are relational databases.
+
+The expected format of data is known as a predefined `schema` (set of rules).
+
+By applying rules and other supporting structure, it's easier to ensure that the data
+are correct and consistent. Likewise, it's easier to bring different types of data
+together (`join` them).
+
+SQL is very good at coordinated changes between different data entities.
+These coordinations are known as `transactions` - like subtract money from one bank account
+and add it into another. There would be a problem if the logic errored-out after
+the subtract but before the add.
+
+In SQL, transactions follow the `ACID` principle - atomic, consistent, idempotent, durable.
+
+For most database data, each data entry has a unique identifier. known as `primary key` .
+Entries of a certain class (e.g. addresses, invoices) are stored in their own `table` .
+
+SQL has been around since the 1970s and is structured more along the lines of powerful
+(mainframe) computers.
+
+##### NoSQL
+
+Analogous to the structured-versus-unstructured approach between XML and JSON, `NoSQL`
+is more unstructured like JSON.
+
+NoSQL data is more flexible but that also means that, unlike SQL, it lacks structure.
+Likewise, it's less likely to have the infrastructure to bring (`join`) different types
+of data together. For advantages, it can better adapt to changing business needs
+and (growing up during a time of distributed systems and cloud computing) it's better able
+to use newer ways of querying data (like `MapReduce`).
+
+###### Key-Value Database
+
+A key-value database is like a relational database table with a `primary key` column
+and a value column.
+
+###### Document Database
+
+Document databases can come in different forms, but one popular one is to store JSON-based
+documents that be queried JSON-based query statements.
+
+###### Graph Database
+
+Graph databases consist of things (nodes) along with their relationship to other things (edges).
+Such a database is better-suited for things like social networking.
+
+###### In-Memory Database
+
+Analytics
+
+##### Other Kinds of Databases
+
+There are other kinds of databases. Here are some of them.
+
+###### Flat File
+Flat files are actually traditional but they aren't normally used in web applications.
+
+The files consist of a header row stating what each column represents. After the header row,
+each row lists a new entry either separated by commas (`CSV` file or `comma-separated value`)
+or `tab-delimited` file. Here's an example.
+
+```
+STUDENT_NAME,AGE,GRADE
+Sally,16,B
+Ahmad,17,A
+Jane,16,A+
+Chin,16,B-
+```
+
+Flat files are a great way of transferring data between unrelated systems which have
+completely different internal architectures. Data is transferred between systems
+using a `ETL` or `Extract, Transform, Load` process.
+
+Flat files might seem to be boring and that's the point - they are solid and predictable
+and leave less to chance.
+
+###### Blockchain
+
+Most databases are centrally-managed. All of the data is stored in one server or a cluster
+of servers managed by one entity which is typically a company or government.
+The entity has full control and responsibility over the data.
+
+`Blockchain` is very different. Like `Git` (for source control), all users have their own
+copies of the data and there is a periodic contest to update the data.
+(For the `cryptocurrency` `Bitcoin`, this contest occurs very 10 minutes.)
+
+Blockchain also goes by the name `distributed ledger` because it acts as a global accounting
+ledger of the different transactions (payments) between parties.
+
+AWS DynamoDB is a widely-used NoSQL database within AWS. 'NoSQL' means it lacks the structure
+of traditional 'relational' databases (which use 'SQL'). The relationship between 'NoSQL' to
+'SQL' is similar to the relationship between JSON (less structure) and XML (more structure).
+
+Download 
+
+
+#### Other Untraditional Databases
+
+Flat files
+Graph Databases
+Blockchain
+
+### SQL Databases - MySQL
+
+`MySQL` is an `open source` (free to use and change the source code) database, unlike
+commercial database like `Oracle`.
+
+#### Exercise - Use MySQL
+
+In this exercise, you will download and run a Docker image running MySQL.
+Then you will interact with the relational database, create tables, insert data with rollback,
+insert data with commit, delete data, update data, and view (`select`) data.
+
+This exercise will simulate a banking application.
+
+##### Download MySQL Image
+
+Execute the following command.
+
+```
+docker pull mysql
+```
+
+Record the `IMAGE ID` value of this image (the value 'a7a67c95e831' will be used here).
+
+##### Start the MySQL Server
+
+Start the MySQL Docker container with the following command.
+The '-e MYSQL_ALLOW_EMPTY_PASSWORD=yes' command-line switch sets the
+'MYSQL_ALLOW_EMPTY_PASSWORD' environment variable to the value of 'yes' which instructs
+the MySQL server to not require a username/password combination to log in which is bad
+practice for a production system but acceptable for local development.
+
+```
+docker run -d -e MYSQL_ALLOW_EMPTY_PASSWORD=yes a7a67c95e831
+```
+
+##### Go into the MySQL Container
+
+Docker has the 'exec' command that allows you to run a program inside the running container.
+The '/bin/bash' command is a program in the Docker container that starts a command prompt.
+
+```
+docker exec -it a7a67c95e831 /bin/bash
+```
+
+Type 'mysql' to start a program that allows you to interact with the MySQL database.
+
+```
+# mysql
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.20 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> 
+```
+
+Show which databases are available to use with the `show databases;` command.
+(Yes, multiple databases, different stores of data, are being run by this MySQL server.)
+
+```
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.28 sec)
+
+mysql> 
+```
+
+Use the 'mysql' database (second entry listed above) with the `use mysql;` command.
+
+```
+mysql> use mysql;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> 
+```
+
+Enter `show tables;` to list the tables (data entries ordered by kind) in the database.
+
+Create a table called 'accounts' to containing just two columns - an 'id' column which
+uniquely identifies each account and a 'name' column which identifies the name of the
+person who owns the account (note that two accounts can have identical names!).
+
+```
+CREATE TABLE accounts (
+    id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    name CHAR(30) NOT NULL,
+    PRIMARY KEY (id)
+);
+```
+
+The `show tables;` command now lists 'accounts' and `describe accounts;` will
+describe the table.
+
+The 'id' field is a medium-sized integer that can't be null and auto-increments
+(for each new entry, it's assigned a new value that's one higher than the previous entry).
+
+The 'name' field is a string value that can't be null and has a maximum length
+of 30 characters.
+
+Statements like `CREATE TABLE` are known as `DDL` for `Data Definition Language`.
+DDL statements happen immediately and become visible to all other database users
+instantaneously. (They can't be `rolled back` before others can access it, but other
+statements like `DELETE TABLE` can change or delete a table.)
+
+Now create a 'transactions' table which holds all of the transactions of the account.
+
+```
+CREATE TABLE transactions (
+    amount DECIMAL(6,2) NOT NULL,
+    account_id MEDIUMINT NOT NULL,
+    FOREIGN KEY (account_id)
+        REFERENCES accounts(id)
+);
+```
+
+##### Insert Data into the Tables
+
+Like the `HTTP` methods (`POST`, `GET`, `PUT`, and `DELETE`), SQL also has its set
+of `CRUD` (Create, Read, Update, Delete) with the commands `INSERT`, `SELECT`, `UPDATE`,
+and `DELETE` , respectively. Unlike `DDL` statements, these statements (known as
+`DML` for `Data Manipulation Language`) are not necessarily immediately visible to others.
+By default, MySQL has the `autocommit` flag set to 'on' which means that DML statements
+will be visible to others. Turn this value off with the following command.
+
+```
+SET autocommit = 0;
+```
+
+Now `DML` statements won't be visible to others until an explicit `commit;` statement
+is issued. This means that a group of statements that form a `transaction` will all
+succeed or fail together (following the `ACID` principle).
+
+First issue an `INSERT` statement into an account, but exit out of the `mysql` client
+before issuing a `commit`. Use the `SELECT` statement ('*' means select everything)
+to view the row you just added. Again, since no `commit` was issued, this 'INSERT'
+won't be visible by others yet. Note how the 'id' field doesn't need to be specified
+because the 'AUTO_INCREMENT' keyword was applied to that field.
+
+```
+mysql> INSERT INTO accounts(name) values ('Gary');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SELECT * FROM accounts;
++----+------+
+| id | name |
++----+------+
+|  1 | Gary |
++----+------+
+1 row in set (0.00 sec)
+
+mysql> 
+```
+
+Now type `exit;` to leave the `mysql` client. Then go back in by entering `mysql`
+and then `use mysql;` (to again select that database). Again issue the `SET autocommit = 0;`
+command to turn off autocommit.
+
+Now enter the same command to create an account.
+
+```
+INSERT INTO accounts(name) values ('Gary');
+```
+
+Now again issue the `SELECT * FROM accounts;` statement and record the 'id' field value
+(the statements below will assume this value is 2). Entries in the 'transactions' table
+will reference this entry using it as the `foreign key` .
+
+```
+mysql> SELECT * FROM accounts;
++----+------+
+| id | name |
++----+------+
+|  2 | Gary |
++----+------+
+1 row in set (0.00 sec)
+```
+
+Now issue two more `INSERT` statements to represent the deposit of $100 and a withdrawal
+of $9 from that account. Then issue a `commit;` to complete the transaction and allow
+others to see it.
+
+```
+mysql> INSERT INTO transactions(amount, account_id) VALUES (100, 2);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO transactions(amount, account_id) VALUES (-9, 2);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.01 sec)
+```
+
+Again enter `exit;` to leave the MySQL client but then immediately return by entering
+`mysql` from the command line. Again enter `use mysql;` to use that database and
+then use a `SELECT` command involving both tables which are properly `joined`
+with the 'account.id = transactions.account_id' clause. The 'accounts.id = 2' clause
+ensures that only the account 'Gary' is the one chosen. The `SUM(amount)` adds up
+all the amounts for 'Gary' in the 'transactions' table to get that accounts current
+balance (of $91).
+
+```
+mysql> select SUM(amount) from accounts, transactions where accounts.id = transactions.account_id and accounts.id = 2;
++-------------+
+| SUM(amount) |
++-------------+
+|       91.00 |
++-------------+
+1 row in set (0.01 sec)
+```
+
+Notice how the `commit;` command caused the transaction (entries) not to be lost.
+
+Type 'exit;' to exit the 'mysql' client and the enter 'exit' to leave the MySQL Docker
+container.
 
 docker container rm $(docker container ls –aq)
 

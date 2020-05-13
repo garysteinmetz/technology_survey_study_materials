@@ -513,6 +513,16 @@ match shallow with shallow
 other career choices - chemical engineer, management consultant, physician assistant, actuary
 more career choices - data science, sales
 bell curve and male height
+first question to ask when starting a business - what's your exit strategy?
+the most expensive common activity for a young family - loading children into a car
+start a business - average outcome is to make about 70% of what you've been making for last 10 years
+before buying a house, understand school-transportation options
+https://en.wikipedia.org/wiki/John_Rous_(historian)
+employers generally care primarily about last assignment and years of experience
+jobs that require a security clearance make more money
+don't borrow more than salary
+make hay while the sun shines
+people measure happiness buy the amount of money in their bank accounts, not total assets
 //
   - activities after class is over
     //
@@ -533,6 +543,7 @@ bell curve and male height
   - fill out a chart of professional salary, training, quality-of-life, and three factors
   - take a practice actuarial exam
   - C-Span Book TV
+  - read a book on probability (discrete probability)
 //
 https://git-scm.com/download/win
 git clone https://github.com/garysteinmetz/technology_survey_study_materials.git
