@@ -819,12 +819,11 @@ Notice how the `commit;` command caused the transaction (entries) not to be lost
 Type 'exit;' to exit the 'mysql' client and the enter 'exit' to leave the MySQL Docker
 container.
 
-
 ### NoSQL Databases - DynamoDB
 
-DynamoDB is a key-value database supported in AWS. As will be shown, interaction is
-much simpler than with SQL - lacking table joins, transactions involving multiple changes,
-precise data definitions and constraints.
+DynamoDB is a key-value database supported in AWS. It also has characteristics of a document
+database. As will be shown, interaction is much simpler than with SQL - lacking table joins,
+transactions involving multiple changes, precise data definitions and constraints.
 
 That doesn't mean that all NoSQL databases are simple. SQL defines feature-rich and
 well-defined means of interacting with data. NoSQL just means 'no SQL' - the extensive ruleset
@@ -981,7 +980,173 @@ The parts beyond the shell script are as follows.
 'AWS_ACCESS_KEY_ID' states who you are, 'AWS_SECRET_ACCESS_KEY' confirms who you are,
 and '--region' states the region where you want your command to take place.
 
+#### Design Database Table
 
+Now comes an important part - what will layout of the database table be?
+
+For NoSQL databases, this can be more difficult because the primary key is less flexible
+(able to be changed) once the table has been created.
+
+Remember the concept of `primary key` for a database entry. The `primary key` is the field
+or combination of fields that collectively identifies an entry as unique
+(e.g. for a person in the United States that could be social security number).
+Other things can necessarily be unique about an entry (e.g. person's fingerprint scan),
+but the `primary key` is the necessarily unique identifier and registered with the
+database as being so.
+
+_For this exercise, you will consider an application where a user (author) is allowed to make
+application's for other users to use (play). Each user (player) is allowed database space
+for each game developed by the author. You don't want an individual author 'hogging'
+too much space in the overall database._
+
+A key concept in DynamoDB is the `partition key`. This is the column value that is either
+a `primary key` by itself or one of the columns of that (when combined with the `sort key`
+which will be discussed shortly). All database entries with the same `partition key`
+are stored in the same location in AWS and the total entries having the same `partition key`
+cannot exceed (as of May 2020) 10 GB of space. By the way, each individual entry can be
+no larger than 400 KB .
+
+An optional `sort key` can combine with the `partition key` to act together as the whole
+`primary key` for an entry. If there is no `sort key` then the `partition key` by itself
+is the primary key. When searching for data, the `sort key` can be used to sort and filter
+results (like 'get me report cards between these two years, sorted by marking period date').
+
+You want to impose the 10 GB overall limit on an individual author, but each entry should be
+uniquely identified by (author, application name, user) and also contain whatever data
+a user has stored for that application.
+
+Here's a possible way of organizing that data.
+
+  - `author_id` (`partition key`, String) - This uniquely identifies the author of the app.
+  - `user_app_id` (`sort key`, String) - This identifies a user's application data. When
+  combined with 'author_id', both fields act as a `primary key`.
+  - `data` (String) - This is the user's data for the author's application.
+
+The `user_app_id` field actually combines two values - the application's name and the unique
+identifier of the user who created the application. For this exercise, the '|' (pipe)
+character will 'glue' these two values. Note that for NoSQL databases, it's common for
+a field to contain two or more values (like app name and user are here).
+
+For the `user_app_id` field, the application's name will be listed first since DynamoDB
+supports the `begins_with` operator which can be useful for getting all the user's of
+an application (like gathering their high scores). So if a user has an ID of '123'
+and the name of the application is 'slapjack', then the value of the field for the entry
+would be 'slapjack|123' .
+
+  - _Key Point in This Discussion_ - It's important to understand business requirements
+  before developing.
+
+#### Create Database Table
+
+When creating a DynamoDB table, it's important to note that a column that isn't searched
+against or part of the `primary key` should _Not_ be included in the tables definition.
+(This is one example of the flexibility of a NoSQL DB like DynamoDB.) Therefore, the 'data'
+column does not need to be included in the table's definition.
+
+The `create-table` command creates a DynamoDB table.
+
+Based on the design issue this command for Windows.
+
+```
+.\runAws.bat dynamodb --region us-east-1 create-table --table-name UserAppData --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 --attribute-definitions AttributeName=author_id,AttributeType=S AttributeName=user_app_id,AttributeType=S --key-schema AttributeName=author_id,KeyType=HASH AttributeName=user_app_id,KeyType=RANGE --endpoint-url http://localhost:8000
+```
+
+Based on the design issue this command for Mac/Linux.
+
+```
+./runAws.sh dynamodb --region us-east-1 create-table --table-name UserAppData --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 --attribute-definitions AttributeName=author_id,AttributeType=S AttributeName=user_app_id,AttributeType=S --key-schema AttributeName=author_id,KeyType=HASH AttributeName=user_app_id,KeyType=RANGE --endpoint-url http://localhost:8000
+```
+
+The individual parts of that (lengthy) command are as follows.
+
+  - `dynamodb` - This issues an AWS CLI command specific to DynamoDB .
+  - `--region us-east-1` - Again, the AWS CLI requires this value, even if it doesn't
+  mean anything when running DynamoDB locally.
+  - `create-table` - This is the DynamoDB command to create a table.
+  - `--table-name UserAppData` - This specifies the table name as 'UserAppData' .
+  - `--provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5` - This setting
+  specifies that the number of table reads and writes can be no more than 5 per second each.
+  These limits are important to prevent surprise spikes in usage and resulting costs.
+  - `--attribute-definitions AttributeName=author_id,AttributeType=S AttributeName=user_app_id,AttributeType=S` -
+  This specifies that the 'author_id' column is a String and the 'user_app_id' column is
+  also a String. Again note that the 'data' column isn't listed here because it isn't
+  used in any searches.
+  - `--key-schema AttributeName=author_id,KeyType=HASH AttributeName=user_app_id,KeyType=RANGE` -
+  This declares the 'author_id' column to be the `partition key` ('HASH')
+  and the 'user_app_id' column to be the `sort key` ('RANGE').
+
+List the tables now and confirm that 'UserAppData' is a defined table.
+
+  - `Windows` - `./runAws.sh dynamodb --region us-east-1 list-tables --endpoint-url http://localhost:8000`
+  - `Mac/Linux` - `.\runAws.bat dynamodb --region us-east-1 list-tables --endpoint-url http://localhost:8000`
+
+That command will produce this output.
+
+```
+{
+    "TableNames": [
+        "UserAppData"
+    ]
+}
+```
+
+Now get the description of the table with this command.
+
+  - `Windows` - `.\runAws.bat dynamodb --region us-east-1 describe-table --table-name UserAppData --endpoint-url http://localhost:8000`
+  - `Mac/Linux` - `./runAws.sh dynamodb --region us-east-1 describe-table --table-name UserAppData --endpoint-url http://localhost:8000`
+
+That command will produce output that's similar to this.
+
+```
+{
+    "Table": {
+        "AttributeDefinitions": [
+            {
+                "AttributeName": "author_id",
+                "AttributeType": "S"
+            },
+            {
+                "AttributeName": "user_app_id",
+                "AttributeType": "S"
+            }
+        ],
+        "TableName": "UserAppData",
+        "KeySchema": [
+            {
+                "AttributeName": "author_id",
+                "KeyType": "HASH"
+            },
+            {
+                "AttributeName": "user_app_id",
+                "KeyType": "RANGE"
+            }
+        ],
+        "TableStatus": "ACTIVE",
+        "CreationDateTime": "2020-05-15T21:29:46.935000+00:00",
+        "ProvisionedThroughput": {
+            "LastIncreaseDateTime": "1970-01-01T00:00:00+00:00",
+            "LastDecreaseDateTime": "1970-01-01T00:00:00+00:00",
+            "NumberOfDecreasesToday": 0,
+            "ReadCapacityUnits": 5,
+            "WriteCapacityUnits": 5
+        },
+        "TableSizeBytes": 0,
+        "ItemCount": 0,
+        "TableArn": "arn:aws:dynamodb:ddblocal:000000000000:table/UserAppData"
+    }
+}
+
+```
+
+get-item
+
+put-item
+
+update-item
+
+tag-resource
+
+query
 
 
 environment variables as feature flags
