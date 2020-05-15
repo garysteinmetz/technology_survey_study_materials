@@ -511,7 +511,7 @@ people like confidence, ask around too
 preferred fish color
 match shallow with shallow
 other career choices - chemical engineer, management consultant, physician assistant, actuary
-more career choices - data science, sales
+more career choices - data science, sales, robotics
 bell curve and male height
 first question to ask when starting a business - what's your exit strategy?
 the most expensive common activity for a young family - loading children into a car
@@ -523,6 +523,8 @@ jobs that require a security clearance make more money
 don't borrow more than salary
 make hay while the sun shines
 people measure happiness buy the amount of money in their bank accounts, not total assets
+history of technology - rubber bands invented before rubber shoe soles
+you want a vast budget to prepare for first child
 //
   - activities after class is over
     //

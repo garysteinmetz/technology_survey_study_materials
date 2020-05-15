@@ -423,7 +423,7 @@ does the following.
 
 A `Dockerfile` defines a Docker image. Docker images can 'piggyback' off each other.
 
- _Note that Unix commands can be, and are quite often are, used in a Dockerfile._
+_Note that Unix commands can be, and are quite often are, used in a Dockerfile._
 
 For the 'demo' project created in the previous exercise, the following `Dockerfile`
 (with that filename) uses (`FROM`) an Alpine Linux system with Java 11 installed,
@@ -818,6 +818,45 @@ Notice how the `commit;` command caused the transaction (entries) not to be lost
 
 Type 'exit;' to exit the 'mysql' client and the enter 'exit' to leave the MySQL Docker
 container.
+
+
+### NoSQL Databases - DynamoDB
+
+docker exec -u 0 -it ceeec46982c4 sh
+
+yum update
+
+yum install -y procps
+
+docker run -p 8000:8000 -d 2908e5ceb67a
+
+https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html
+
+
+docker pull amazon/aws-cli
+docker pull amazon/dynamodb-local
+
+docker run -p 8000:8000 amazon/dynamodb-local
+
+yum install curl
+yum install unzip
+yum install groff
+yum install less
+yum install net-tools
+
+export AWS_ACCESS_KEY_ID=DoesNotMatter
+export AWS_SECRET_ACCESS_KEY=DoesNotMatter
+
+  - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  - unzip awscliv2.zip
+  - ./aws/install
+
+aws dynamodb list-tables --endpoint-url http://localhost:8000 --region us-east-1
+
+http://localhost:8000/shell/
+
+docker run --rm -it --network host -e AWS_ACCESS_KEY_ID=DoesNotMatter \
+  -e AWS_SECRET_ACCESS_KEY=DoesNotMatter amazon/aws-cli --region us-east-1 dynamodb list-tables --endpoint-url http://localhost:8000
 
 docker container rm $(docker container ls –aq)
 
