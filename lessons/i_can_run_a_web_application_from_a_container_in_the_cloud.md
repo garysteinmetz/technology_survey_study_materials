@@ -822,43 +822,167 @@ container.
 
 ### NoSQL Databases - DynamoDB
 
-docker exec -u 0 -it ceeec46982c4 sh
+DynamoDB is a key-value database supported in AWS. As will be shown, interaction is
+much simpler than with SQL - lacking table joins, transactions involving multiple changes,
+precise data definitions and constraints.
 
-yum update
+That doesn't mean that all NoSQL databases are simple. SQL defines feature-rich and
+well-defined means of interacting with data. NoSQL just means 'no SQL' - the extensive ruleset
+of SQL is not necessarily adhered to.
 
-yum install -y procps
+DynamoDB supports the four `CRUD` operations, but the read ('R') operation returns all
+entries in the table. For reads, it's up to the client (usually a program) to interpret
+the response (unlike SQL in which the 'where' clause filters what's returned).
 
-docker run -p 8000:8000 -d 2908e5ceb67a
+#### Exercise - Use DynamoDB
 
-https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html
+In this exercise, you will download a Docker image for AWS DynamoDB, run it locally,
+and execute commands against it.
 
+#### Download AWS CLI and DynamoDB Docker Images
 
+This exercise uses not one, but two Docker images.
+
+  - AWS CLI - The AWS CLI (command-line interface) is a command line program for interacting
+  with AWS. It (specifically, the `aws` command) allows you to perform most activities
+  permitted in the AWS console (at https://aws.amazon.com ) user interface. You could
+  download and install the AWS CLI onto your local system but it's more convenient
+  (and more educational) to download the AWS CLI Docker image and use that.
+  - AWS DynamoDB - This is the Docker image to run a local version of AWS DynamoDB.
+  While it supports standard DynamoDB commands, you would _Not_ run this in Production
+  because it lacks the security, scalability, and other features you'd want in a Production
+  component.
+
+Download ('pull') both images with these two commands.
+
+```
 docker pull amazon/aws-cli
 docker pull amazon/dynamodb-local
+```
 
-docker run -p 8000:8000 amazon/dynamodb-local
+The regular (non-Docker) AWS CLI can be downloaded and installed by following instructions at
+https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html , but using Docker
+here is actually easier for setup instructions (and is mostly OS-independent). If that
+regular (non-Docker) AWS CLI where to be installed, the script program below
+('runAws.sh' or 'runAws.bat', depending on your OS) wouldn't be needed and the `aws`
+could be used instead after running the `aws configure` command to configure
+the 'access key', 'secret key', and AWS region.
 
-yum install curl
-yum install unzip
-yum install groff
-yum install less
-yum install net-tools
+#### Start Local DynamoDB
 
-export AWS_ACCESS_KEY_ID=DoesNotMatter
-export AWS_SECRET_ACCESS_KEY=DoesNotMatter
+Start the local DynamoDB container with the following command.
 
-  - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-  - unzip awscliv2.zip
-  - ./aws/install
+```
+docker run -d --rm -p 8000:8000 amazon/dynamodb-local
+```
 
-aws dynamodb list-tables --endpoint-url http://localhost:8000 --region us-east-1
+  - `-d` instructs Docker to run the container 'in the background' (which means that you can
+  continue typing other commands after the container has started running).
+  - `--rm` automatically removes the container when it stops. Normally, Docker saves a stopped
+  container just in case additional analysis is needed, but that's not necessary here.
+  - `-p 8000:8000` instructs Docker to join port 8000 on the local computer ('localhost')
+  to port 8000 of the container. Normally, Docker _does not_ allow a port in a container
+  to be accessible outside of it. The `-p` option makes the port accessible.
 
-http://localhost:8000/shell/
+Optionally run `docker ps -a` afterwards to confirm that the container is running.
 
-docker run --rm -it --network host -e AWS_ACCESS_KEY_ID=DoesNotMatter \
-  -e AWS_SECRET_ACCESS_KEY=DoesNotMatter amazon/aws-cli --region us-east-1 dynamodb list-tables --endpoint-url http://localhost:8000
+This local DynamoDB actually hosts an interactive web page at
+http://localhost:8000/shell/ but that won't be used for this exercise.
 
-docker container rm $(docker container ls –aq)
+#### Create Script File to Simplify Interacting with the Local DynamoDB
+
+To properly run the AWS CLI client _and_ execute the DynamoDB command requires a lengthy
+command-line command. Much of this command (the prefix part) is the same no matter which
+command is being run. Therefore, it's a good idea to place this prefix in a shell script
+file to save that typing and reduce the likelihood of error.
+
+Here's an example of the full command which lists all of the tables in the local DynamoDB.
+
+```
+docker run --rm -it --network host -e AWS_ACCESS_KEY_ID=DoesNotMatter -e AWS_SECRET_ACCESS_KEY=DoesNotMatter amazon/aws-cli --region us-east-1 dynamodb list-tables --endpoint-url http://localhost:8000
+```
+
+As you can see, it's 200 characters long!
+
+This lengthy command consists of two parts.
+
+  - The first part runs the AWS CLI Docker container with the proper settings.
+  - The second part runs the Dynamo DB command.
+
+Here's the output of the command which indicates that there are no tables at present.
+```
+{
+    "TableNames": []
+}
+```
+
+Here's the first part of the command which just starts the AWS CLI.
+```
+docker run --rm -it --network host -e AWS_ACCESS_KEY_ID=DoesNotMatter -e AWS_SECRET_ACCESS_KEY=DoesNotMatter amazon/aws-cli
+```
+
+  - `docker run` runs the Docker container.
+  - `--rm` automatically removes the container when it stops. Normally, Docker saves a stopped
+  container just in case additional analysis is needed, but that's not necessary here.
+  - `-it` prints the output to the console in a certain format.
+  - `--network host` means that the container will have (share) the same network settings as
+  the local computer. In other words, when DynamoDB accesses the 'localhost' that
+  the local DynamoDB publishes to (at http://localhost:8000 ), that 'localhost' will be
+  the same 'localhost' as the one this Docker container uses.
+  - `-e AWS_ACCESS_KEY_ID=DoesNotMatter` is needed because AWS CLI expects the login
+  credentials (the pair consisting of an 'access key' and 'secret key') to be present.
+  These credentials are usually listed in the '~/.aws/credentials' file on your local
+  system but the AWS CLI Docker image doesn't have this file. But the 'AWS_ACCESS_KEY_ID'
+  environment variable can substitute for the 'access key' value. Note that the value
+  of this variable doesn't matter because the local DynamoDB server doesn't have security
+  but the AWS CLI expects a value and will generate an error otherwise. Therefore,
+  'DoesNotMatter' is a good-enough value to get this to work. These useless but necessary
+  value settings are called `dummy values` .
+  - `-e AWS_SECRET_ACCESS_KEY=DoesNotMatter` is the 'dummy value' for the secret key.
+  - `amazon/aws-cli` is the AWS CLI Docker image to run.
+
+This first part can be placed in a shell script file (known as a batch file on Windows).
+
+Here is the file (call it 'runAws.sh') for Mac or Linux. It's the same command as
+the first part above but adds ` "$@"` to the end so that all command-line parameters
+passed into this script
+(like '--region us-east-1 dynamodb list-tables --endpoint-url http://localhost:8000')
+are submitted as parameters at the end of the `aws` command.
+```
+docker run --rm -it --network host -e AWS_ACCESS_KEY_ID=DoesNotMatter -e AWS_SECRET_ACCESS_KEY=DoesNotMatter amazon/aws-cli "$@"
+```
+Run `chmod 777 runAws.sh` after creating this file so that it can be executed.
+
+Here is the file (call it 'runAws.bat') for Windows. Instead of ` "$@"` at the end,
+the equivalent value in Windows is ` %*` .
+```
+docker run --rm -it --network host -e AWS_ACCESS_KEY_ID=DoesNotMatter -e AWS_SECRET_ACCESS_KEY=DoesNotMatter amazon/aws-cli
+```
+
+Now use the script to execute the same 'list-tables' command as above - with fewer keystrokes!
+
+  - `Windows` - `.\runAws.bat --region us-east-1 dynamodb list-tables --endpoint-url http://localhost:8000`
+  - `Mac/Linux` - `./runAws.sh --region us-east-1 dynamodb list-tables --endpoint-url http://localhost:8000`
+
+The parts beyond the shell script are as follows.
+
+  - `--region us-east-1` - For most AWS components (like virtual computers and databases),
+  the component must be placed in a specific region where Amazon stores its actual assets
+  (like real computers). Like 'access key' and 'secret key', this value doesn't matter
+  in this case because you are trying to connect to a local DynamoDB, but the AWS CLI
+  still expects a value. 'us-east-1' is a real region value that corresponds to several
+  large datacenters in northern Virginia.
+  - `dynamodb` - States the type of AWS CLI command to run, in this case it's a DynamoDB
+  command.
+  - `list-tables` - Lists the tables in the database.
+  - `--endpoint-url http://localhost:8000` - States where ('localhost:8080') the database is
+  and how ('http://') to communicate with it.
+
+'AWS_ACCESS_KEY_ID' states who you are, 'AWS_SECRET_ACCESS_KEY' confirms who you are,
+and '--region' states the region where you want your command to take place.
+
+
+
 
 environment variables as feature flags
 
