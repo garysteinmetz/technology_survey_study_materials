@@ -620,8 +620,12 @@ the MySQL server to not require a username/password combination to log in which 
 practice for a production system but acceptable for local development.
 
 ```
-docker run -d -e MYSQL_ALLOW_EMPTY_PASSWORD=yes a7a67c95e831
+docker run -d -e MYSQL_ALLOW_EMPTY_PASSWORD=yes mysql
 ```
+
+Now run `docker ps -a` and record the 'CONTAINER ID' value that's in the same row as
+the 'IMAGE' value of 'mysql' . (These directions will assume that that value is
+'a7a67c95e831' .)
 
 ##### Go into the MySQL Container
 
@@ -758,8 +762,18 @@ mysql>
 ```
 
 Now type `exit;` to leave the `mysql` client. Then go back in by entering `mysql`
-and then `use mysql;` (to again select that database). Again issue the `SET autocommit = 0;`
-command to turn off autocommit.
+and then `use mysql;` (to again select that database).
+
+Again enter `SELECT * FROM accounts;` and notice that no rows are returned (the account
+for 'Gary' isn't present). The `INSERT` statement wasn't followed by a `commit` so that
+statement 'rolled back' once you left the 'mysql' client. Changes to the database,
+like `INSERT` , aren't finalized until a `commit` is issued when 'autocommit = 0' .
+In many situations (like transferring money between bank accounts),
+it's frequently important to not commit changes until all associated SQL statements
+have run (e.g. don't want to delete money from one bank account then stop before
+adding the same money to another bank account).
+
+Again issue the `SET autocommit = 0;` command to turn off autocommit.
 
 Now enter the same command to create an account.
 
