@@ -1020,7 +1020,7 @@ Here's a possible way of organizing that data.
   - `author_id` (`partition key`, String) - This uniquely identifies the author of the app.
   - `user_app_id` (`sort key`, String) - This identifies a user's application data. When
   combined with 'author_id', both fields act as a `primary key`.
-  - `data` (String) - This is the user's data for the author's application.
+  - `app_data` (String) - This is the user's data for the author's application.
 
 The `user_app_id` field actually combines two values - the application's name and the unique
 identifier of the user who created the application. For this exercise, the '|' (pipe)
@@ -1040,8 +1040,8 @@ would be 'slapjack|123' .
 
 When creating a DynamoDB table, it's important to note that a column that isn't searched
 against or part of the `primary key` should _Not_ be included in the tables definition.
-(This is one example of the flexibility of a NoSQL DB like DynamoDB.) Therefore, the 'data'
-column does not need to be included in the table's definition.
+(This is one example of the flexibility of a NoSQL DB like DynamoDB.) Therefore,
+the 'app_data' column does not need to be included in the table's definition.
 
 The `create-table` command creates a DynamoDB table.
 
@@ -1069,16 +1069,18 @@ The individual parts of that (lengthy) command are as follows.
   These limits are important to prevent surprise spikes in usage and resulting costs.
   - `--attribute-definitions AttributeName=author_id,AttributeType=S AttributeName=user_app_id,AttributeType=S` -
   This specifies that the 'author_id' column is a String and the 'user_app_id' column is
-  also a String. Again note that the 'data' column isn't listed here because it isn't
+  also a String. Again note that the 'app_data' column isn't listed here because it isn't
   used in any searches.
   - `--key-schema AttributeName=author_id,KeyType=HASH AttributeName=user_app_id,KeyType=RANGE` -
   This declares the 'author_id' column to be the `partition key` ('HASH')
   and the 'user_app_id' column to be the `sort key` ('RANGE').
+  - `--endpoint-url http://localhost:8000` - States where ('localhost:8080') the database is
+  and how ('http://') to communicate with it.
 
 List the tables now and confirm that 'UserAppData' is a defined table.
 
-  - `Windows` - `./runAws.sh dynamodb --region us-east-1 list-tables --endpoint-url http://localhost:8000`
-  - `Mac/Linux` - `.\runAws.bat dynamodb --region us-east-1 list-tables --endpoint-url http://localhost:8000`
+  - `Windows` - `.\runAws.bat dynamodb --region us-east-1 list-tables --endpoint-url http://localhost:8000`
+  - `Mac/Linux` - `./runAws.sh dynamodb --region us-east-1 list-tables --endpoint-url http://localhost:8000`
 
 That command will produce this output.
 
@@ -1138,16 +1140,216 @@ That command will produce output that's similar to this.
 
 ```
 
-get-item
+#### Insert Items into Database Table
 
-put-item
+DynamoDB supports the `put-item` which is used to both create and update items in the table.
 
-update-item
+Run these (4) `put-item` to insert (4) entries into the table. Here are the Windows commands.
 
-tag-resource
+```
+.\runAws.bat dynamodb --region us-east-1 put-item --table-name UserAppData --item '{"author_id": {"S": "123"}, "user_app_id": {"S": "slapjack|456"}, "app_data": {"S": "{\"highScore\" : 5}"}}' --endpoint-url http://localhost:8000
+.\runAws.bat dynamodb --region us-east-1 put-item --table-name UserAppData --item '{"author_id": {"S": "123"}, "user_app_id": {"S": "slapjack|def"}, "app_data": {"S": "{\"highScore\" : 7}"}}' --endpoint-url http://localhost:8000
+.\runAws.bat dynamodb --region us-east-1 put-item --table-name UserAppData --item '{"author_id": {"S": "abc"}, "user_app_id": {"S": "slapjack|456"}, "app_data": {"S": "{\"highScore\" : 2}"}}' --endpoint-url http://localhost:8000
+.\runAws.bat dynamodb --region us-east-1 put-item --table-name UserAppData --item '{"author_id": {"S": "abc"}, "user_app_id": {"S": "slapjack|def"}, "app_data": {"S": "{\"highScore\" : 6}"}}' --endpoint-url http://localhost:8000
+```
 
-query
+Here are the Mac/Linux commands.
 
+```
+./runAws.sh dynamodb --region us-east-1 put-item --table-name UserAppData --item '{"author_id": {"S": "123"}, "user_app_id": {"S": "slapjack|456"}, "app_data": {"S": "{\"highScore\" : 5}"}}' --endpoint-url http://localhost:8000
+./runAws.sh dynamodb --region us-east-1 put-item --table-name UserAppData --item '{"author_id": {"S": "123"}, "user_app_id": {"S": "slapjack|def"}, "app_data": {"S": "{\"highScore\" : 7}"}}' --endpoint-url http://localhost:8000
+./runAws.sh dynamodb --region us-east-1 put-item --table-name UserAppData --item '{"author_id": {"S": "abc"}, "user_app_id": {"S": "slapjack|456"}, "app_data": {"S": "{\"highScore\" : 2}"}}' --endpoint-url http://localhost:8000
+./runAws.sh dynamodb --region us-east-1 put-item --table-name UserAppData --item '{"author_id": {"S": "abc"}, "user_app_id": {"S": "slapjack|def"}, "app_data": {"S": "{\"highScore\" : 6}"}}' --endpoint-url http://localhost:8000
+```
+
+Except for the data inserted, these commands are identical so only the first one will be
+examined.
+
+  - `dynamodb` - This issues an AWS CLI command specific to DynamoDB .
+  - `--region us-east-1` - Again, the AWS CLI requires this value, even if it doesn't
+  mean anything when running DynamoDB locally.
+  - `--table-name UserAppData` - This specifies the table name as 'UserAppData' .
+  - `--item '{"author_id": {"S": "123"}, "user_app_id": {"S": "slapjack|456"}, "app_data": {"S": "{\"highScore\" : 5}"}}'` -
+  This creates a new entry with each field having a String ('S') value.
+  Fields 'author_id', 'user_app_id', and 'app_data' have values '123', 'slapjack|456',
+  and '{\"highScore\" : 5}', respectively.
+  - `--endpoint-url http://localhost:8000` - States where ('localhost:8080') the database is
+  and how ('http://') to communicate with it.
+
+The `scan` command will show all of the values in the table. Run it.
+
+  - `Windows` - `.\runAws.bat dynamodb --region us-east-1 scan --table-name UserAppData --endpoint-url http://localhost:8000`
+  - `Mac/Linux` - `./runAws.sh dynamodb --region us-east-1 scan --table-name UserAppData --endpoint-url http://localhost:8000`
+
+It will produce output similar to the following.
+
+```
+{
+    "Items": [
+        {
+            "author_id": {
+                "S": "abc"
+            },
+            "user_app_id": {
+                "S": "slapjack|456"
+            },
+            "app_data": {
+                "S": "{\"highScore\" : 2}"
+            }
+        },
+        {
+            "author_id": {
+                "S": "abc"
+            },
+            "user_app_id": {
+                "S": "slapjack|def"
+            },
+            "app_data": {
+                "S": "{\"highScore\" : 6}"
+            }
+        },
+        {
+            "author_id": {
+                "S": "123"
+            },
+            "user_app_id": {
+                "S": "slapjack|456"
+            },
+            "app_data": {
+                "S": "{\"highScore\" : 5}"
+            }
+        },
+        {
+            "author_id": {
+                "S": "123"
+            },
+            "user_app_id": {
+                "S": "slapjack|def"
+            },
+            "app_data": {
+                "S": "{\"highScore\" : 7}"
+            }
+        }
+    ],
+    "Count": 4,
+    "ScannedCount": 4,
+    "ConsumedCapacity": null
+}
+```
+
+#### Search for Items in Database Table
+
+Search (`query`) for the first item you entered (put).
+
+  - `Windows` - `.\runAws.bat dynamodb --region us-east-1 query --table-name UserAppData --key-condition-expression "author_id = :authorId and user_app_id = :userAppId" --expression-attribute-values '{":authorId":{"S":"123"}, ":userAppId":{"S":"slapjack|456"}}' --endpoint-url http://localhost:8000`
+  - `Mac/Linux` - `./runAws.sh dynamodb --region us-east-1 query --table-name UserAppData --key-condition-expression "author_id = :authorId and user_app_id = :userAppId" --expression-attribute-values '{":authorId":{"S":"123"}, ":userAppId":{"S":"slapjack|456"}}' --endpoint-url http://localhost:8000`
+
+Here is what the parts of these commands mean.
+
+  - `dynamodb` - This issues an AWS CLI command specific to DynamoDB .
+  - `--region us-east-1` - Again, the AWS CLI requires this value, even if it doesn't
+  mean anything when running DynamoDB locally.
+  - `--table-name UserAppData` - This specifies the table name as 'UserAppData' .
+  - `--key-condition-expression "author_id = :authorId and user_app_id = :userAppId"` -
+  This is a template (parameterized query) of what you are going to query. In SQL,
+  something like this would be known as a `prepared statement` . You still need to submit
+  specific parameters _but_ you will be expecting that 'author_id' will equal something
+  and 'user_app_id' will equal something else. This type of parameterized query can be
+  helpful in (A) resolving special characters in syntax (like double-quotes) and (B) helping
+  improve the performance of a query (if a parameterized query is used repeatedly, much
+  of the infrastructure is already in place even if the parameterized values change).
+  - `--expression-attribute-values '{":authorId":{"S":"123"}, ":userAppId":{"S":"slapjack|456"}}'` -
+  This submits the parameters to the query. ':authorId' will equal '123' and ':userAppId'
+  will equal 'slapjack|456' .
+  - `--endpoint-url http://localhost:8000` - States where ('localhost:8080') the database is
+  and how ('http://') to communicate with it.
+
+
+You should receive output like the following. Since you searched for an entry with specific
+`partition key` and `sort key` values which collectively constitute a `primary key`, no
+more than one result should be returned which is as follows.
+
+```
+{
+    "Items": [
+        {
+            "author_id": {
+                "S": "123"
+            },
+            "user_app_id": {
+                "S": "slapjack|456"
+            },
+            "app_data": {
+                "S": "{\"highScore\" : 5}"
+            }
+        }
+    ],
+    "Count": 1,
+    "ScannedCount": 1,
+    "ConsumedCapacity": null
+}
+```
+
+To get information about all the players in a game, search in the same partition (author)
+but just check the first part of the `sort key` like in the following way.
+
+
+  - `Windows` - `.\runAws.bat dynamodb --region us-east-1 query --table-name UserAppData --key-condition-expression "author_id = :authorId and begins_with(user_app_id, :userAppIdPrefix)" --expression-attribute-values '{":authorId":{"S":"123"}, ":userAppIdPrefix":{"S":"slapjack|"}}' --projection-expression "user_app_id,app_data" --endpoint-url http://localhost:8000`
+  - `Mac/Linux` - `./runAws.sh dynamodb --region us-east-1 query --table-name UserAppData --key-condition-expression "author_id = :authorId and begins_with(user_app_id, :userAppIdPrefix)" --expression-attribute-values '{":authorId":{"S":"123"}, ":userAppIdPrefix":{"S":"slapjack|"}}' --projection-expression "user_app_id,app_data" --endpoint-url http://localhost:8000`
+
+Here is what the parts of these commands mean.
+
+  - `dynamodb` - This issues an AWS CLI command specific to DynamoDB .
+  - `--region us-east-1` - Again, the AWS CLI requires this value, even if it doesn't
+  mean anything when running DynamoDB locally.
+  - `--table-name UserAppData` - This specifies the table name as 'UserAppData' .
+  - `--key-condition-expression "author_id = :authorId and begins_with(user_app_id, :userAppIdPrefix)"` -
+  This is a template (parameterized query) of what you are going to query. In SQL,
+  something like this would be known as a `prepared statement` . You still need to submit
+  specific parameters _but_ you will be expecting that 'author_id' will equal something
+  and 'user_app_id' will start with something else. This type of parameterized query can be
+  helpful in (A) resolving special characters in syntax (like double-quotes) and (B) helping
+  improve the performance of a query (if a parameterized query is used repeatedly, much
+  of the infrastructure is already in place even if the parameterized values change).
+  - `--expression-attribute-values '{":authorId":{"S":"123"}, ":userAppIdPrefix":{"S":"slapjack|"}}'` -
+  This submits the parameters to the query. ':authorId' will equal '123' and ':userAppId'
+  will start with 'slapjack|' (so that all of the data for users who have saved application
+  data will be returned).
+  - `--projection-expression "user_app_id,app_data"` - This informs the query that only
+  data from the 'user_app_id' and 'app_data' fields should be returned since the 'author_id'
+  field is already known. In `SQL`, this type of filtering of fields in the response
+  is known as a `projection`.
+  - `--endpoint-url http://localhost:8000` - States where ('localhost:8080') the database is
+  and how ('http://') to communicate with it.
+
+
+Here is what is returned.
+
+```
+{
+    "Items": [
+        {
+            "user_app_id": {
+                "S": "slapjack|456"
+            },
+            "app_data": {
+                "S": "{\"highScore\" : 5}"
+            }
+        },
+        {
+            "user_app_id": {
+                "S": "slapjack|def"
+            },
+            "app_data": {
+                "S": "{\"highScore\" : 7}"
+            }
+        }
+    ],
+    "Count": 2,
+    "ScannedCount": 2,
+    "ConsumedCapacity": null
+}
+```
 
 environment variables as feature flags
 
