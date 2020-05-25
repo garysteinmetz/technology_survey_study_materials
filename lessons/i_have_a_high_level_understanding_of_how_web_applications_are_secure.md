@@ -271,21 +271,240 @@ command is used) and `AWS` uses `CloudTrail` for auditing.
 
 ### Encryption
 
+Encryption is the attempt to prevent unauthorized people from understanding what is publicly
+visible. The `HTTP` protocol is unencrypted while the `HTTPS` protocol is.
+
 #### HTTPS
+
+`HTTPS` uses `public-key encryption` to encrypt messages.
 
 ##### Public-Key Encryption
 
-Hashing
-NP-Complete
-Encryption
-Certificates
-Trust Store
-encryption types
-quantum computing to break encryption
+Central to `public-key encryption` is that it's very hard to factor the product of two
+very large prime numbers, but it's relatively easy to stumble on those prime numbers.
+
+  - Example - A computer could randomly pick several large numbers and do some
+  (not utterly perfect, but quite reliable) checks on them to determine that the numbers
+  101281 and 89839 are prime numbers. Finding these numbers and multiplying them together
+  (101281*89839 = 9098983759) doesn't take a computer very long _but_ it would take another
+  computer much longer to figure out that 9098983759 is the product of 101281 and 89839.
+    - Takeaway - It's much easier for the encrypt program to 'outrace' the decrypt program.
+    If the decrypt program can decrypt a large number like 9098983759, the encryption
+    program can spend slightly more time creating much bigger prime numbers.
+    - Analogy - For this type of encryption, it's far easier to scramble the egg
+    than to unscramble it.
+  - Note - At present, key sized for `HTTPS` are 2048 bits (string of 0s and 1s) in length.
+  This is a number with over 600 digits!
+
+Clients then encrypt messages with the product (`public key`) of the two very large prime
+numbers while the server decrypts the message with one of the prime numbers (`private key`).
+
+For convention contemporary computers, it's practically impossible to break a call made
+over `HTTPS` .
+
+Note that (as of 2020) the nascent field of `quantum computing` may have the potential
+of cracking computationally-difficult problems like finding private keys.
+
+##### Certificates
+
+While engaged in an HTTPS-based conversation with a client, a server will present
+a `certificate` containing identification information about a server as well as its
+public key. The goal identification information is to assure that the server is what it
+states what it is. (The client (browser) wants to ensure that it isn't dealing with an
+impostor.)
+
+###### Exercise - Study the Certificate of Google
+
+  - Open Chrome and go to https://www.google.com
+  - Click the lock icon just to the left of the address bar
+  - Note that 'Connection is secure' is stated meaning that the browser trusts the certificate
+  - Click the 'Certificate (Valid)' option
+  - Note the top part of the window listing 'GlobalSign', 'GTS CS 101', and '*.google.com'
+    - These three components come together to form a valid `certificate chain`
+    - Think of 'GlobalSign' as the root of a tree, 'GTS CS 101' as a branch, and
+    '*.google.com' as a leaf - 'GlobalSign' created each of these three certificates
+      - The browser wants the leaf to be valid and to determine that it assesses
+      whether the branch and root are also valid
+      - 'GlobalSign' is known as a `root certificate authority`
+        - On Mac, using the 'Keychain Access' program and looking at 'All Items'
+        of the 'System Roots' keychain, search for ones labeled 'GlobalSign'
+        and note that one of them will start with the same public-key value
+        (like 'A6 CF 24 0E') as the 'GlobalSign' certificate
+          - The certificate manager program (which is 'Keychain Access' in Mac) can be
+          opened by opening Chrome setting, clicking 'You and Google', under
+          'Privacy and security' click 'More', scroll down and click 'Manage certificates'
+      - Since each certificate chain is trusted by the next most-senior certificate
+      and your system trusts the root certificate, then the '*.google.com'
+      certificate is also trusted
+  - Click on the '*.google.com' certificate, click the 'Details' arrow, scroll down
+  to 'Public Key Info' and note the 'Public Key' value
+
+###### Exercise - Start Local Server with Self-Signed Certificate
+
+In this exercise, you will create a local (Docker-based) Node.js HTTPS-based web server
+using a `self-signed certificate` which is a certificate that you will wholly create
+and not have the backing of a valid `root certificate authority` - your browser will complain.
+Lacking a `root certificate authority` and using a `self-signed certificate` instead
+is like showing up to an international airport with a homemade passport.
+
+  - Download base Linux Docker image with this command - `docker pull alpine`
+  - Run that image and start a shell with this command - `docker run -p 8000:8000 -it alpine sh`
+  - Update the installer by running `apk update` then `apk upgrade`
+  - Run `apk add --update nodejs npm` to install both Node.js and NPM
+    - Node.js is needed to run a local server, NPM may or may not be needed
+  - Run `apk add --update openssl` to install OpenSSL
+    - OpenSSL is used to generate `public keys`, `private keys`, and `certificates`
+
+Now generate the `private key` with command `openssl genrsa -out key.pem` - note that you
+absolutely do _Not_ want the contents of the 'key.pem' (private key) file that's created
+to be viewable by anyone who's not supposed to properly need it. Run `cat key.pem` to view
+the contents of this file. Here is an example of what the contents could be.
+
+```
+-----BEGIN RSA PRIVATE KEY-----
+MIIEpAIBAAKCAQEApchplDbDcXg8eRSWViFWYB7Aq+o/vub3kQzSScwHi3KZt7sc
+j6LoxR7OLiqo62xXc5hXQ3LuwdXgrb4UzjFQCMLxXxEUuEA2flU2aBffU4FCVnnw
+nhGDFrMf53H5wdrpX87hTpSlqFFAmfXL0eGV+bNId4yVqLGUNWZyCRaVnj3HWXV2
+ichKOea0gHVvVkJKiWfM7RxCrL0Uk2Jy7y0TvzljCJlhRvgMq9wdx0pexPxiN3+F
+poc00bRBU1CyDOcPR1VCHWsDhAMxfyf1yHpFZBq2x/15evI7uCFLnEnNI9dKw3Uq
+J2Z7GBIOSCrWvD9NHSmXmFhutZbX1zHRYl0zHQIDAQABAoIBAQCfwTsMmqFITSdp
+Po+IvGNyCPB+OiPnoMbcvlA+0SBMHslGpkblm4VXv1HMZ0uUYjj7qcgdtTmjDKmQ
+g+WktRx89O6IP/uJekeJAjCFqsuIurzkfGmEyTdbvo12CP028++EZeX0RYZFZtcs
+BhK9U/ekQkIJAi6N+2Ho+6nUXDEd5LkcXyr9rJz3GVlGqD3m/sAU01wNXniZn+tW
+nb9frcxgddrK+QjQi1bHRK096b0Fxn5o7hrewFFNCtuxQgkOEAnids8dYXPXr8Pp
+q5xqEPf/Wz9D4XCkSzmkLCdHQrWQhuRfcPu4NjMQpx1yi3iPw3Z2OhSSdgFGoSAI
+rYwNMoDBAoGBANhBYjL8mWELsTY4NDwsZqr1semHkBYNkr0WHq0IizbFrH5PoCs/
+yfdJIXP/xu9lgJvs4pheMtXNQzxpRWROaYnQaOnjoVpgb+9RYYx20/h43RBDBmt8
+DxeVD1pmq0zuMQMK9n6olDWsI4W73mSTWMCzD1krDrNExz/9VQmNnQAZAoGBAMRA
+V6iUYDt2GAvqF4bZSUbJ/YDgHA1kfeHYE6pIOLquMXz4xw+cIeKPMvzZ4VpQAkWP
+Yk4Fmk+86UtM2OiEgvQPeydxs1hGAglVabSixb1jaIbZJaLmq/S4elcmvhdSd/n6
+zlFvpzeJ5zp6N0YNQUqFSrBlL8YsBzB+WbWFpZulAoGBAJNLRXVw849UBWnmsj1i
+CLPdEUb8nLlImW/NByvYK+osjaai2XdbxVZ3Kx/1USxxuD18BYK+dmWFn4wgL7F4
+bw39M9hKwPXrxZH9njGsJgiRWhDfdhnzr9viHUj3sSl++0cVSntOm1RLYQ6PvZRH
+gCYQUB3t499as1P0Wt1c5VjRAoGAbsdrM+vdjnMRC9iuQx5wcJcglBjtfNnW/R89
+qoduDmK56LN9mmAl+H+g5n4O6S30ulM/yI79Fjmq7yiH4Gi8iwwaFp/l/tQ13hLq
+wl6HhGqS3FvDFPtk4ZUo6f0inIOe2esrf2ipWX5smePXQ6HD007+ZCgaGaFMxaDs
+/rxcSUkCgYBTRqP/2Z9kFL4PbdGRAhy2vLOFlhOW9Bc0jhyYfxngMrAT21vUKut4
+wZaLqo1xxzhONcWS/bVaHYW4kLbhcUjN4ghT2uvnsw4cyTyY/NRmKJaZ4iap5Zgo
+bXg7CJ4PG1fDvRMKja2XioxNYsSu3mMmLOdOjTSPdXufJx1ivJ9zCg==
+-----END RSA PRIVATE KEY-----
+```
+
+Now generate an intermediary certificate-information file with command
+`openssl req -new -key key.pem -out csr.pem` and just accept (press enter or return)
+the default values for all the prompts. View the contents of file with the `cat csr.pem`
+command. Here is an example of what the contents could be.
+
+```
+-----BEGIN CERTIFICATE REQUEST-----
+MIICijCCAXICAQAwRTELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUx
+ITAfBgNVBAoMGEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDCCASIwDQYJKoZIhvcN
+AQEBBQADggEPADCCAQoCggEBAKXIaZQ2w3F4PHkUllYhVmAewKvqP77m95EM0knM
+B4tymbe7HI+i6MUezi4qqOtsV3OYV0Ny7sHV4K2+FM4xUAjC8V8RFLhANn5VNmgX
+31OBQlZ58J4RgxazH+dx+cHa6V/O4U6UpahRQJn1y9HhlfmzSHeMlaixlDVmcgkW
+lZ49x1l1donISjnmtIB1b1ZCSolnzO0cQqy9FJNicu8tE785YwiZYUb4DKvcHcdK
+XsT8Yjd/haaHNNG0QVNQsgznD0dVQh1rA4QDMX8n9ch6RWQatsf9eXryO7ghS5xJ
+zSPXSsN1KidmexgSDkgq1rw/TR0pl5hYbrWW19cx0WJdMx0CAwEAAaAAMA0GCSqG
+SIb3DQEBCwUAA4IBAQBZpd4kIFXlF+7D0dMGlPdmdwEiIbUA7VnKaJXvlIfQvsi6
+mttvScDJfHH2q25Dod2VEt5t6WeSGFtKG2/knIN4PASb2C0jAjnKMk5RRWRpH4Nf
+tqTjRsLL2lRUsubvnIz/HC2MNu45r/VvtvHbSp4YojBEwAxJOYZxsp6FO0InWKPk
+VLmbtvVs2m2bmGeYLA8btDd8jxKWIipBiczzgfR8CMzLn88Mk+l3yVyJj7AY1BIk
+IcEjv0EEzeDWTQsqPwM1udDEPecbwdiaEHFZ9eVdG7XJdbAyeaGBGXdGIha+ZGkL
+3hws0cKDmgmYmBS3hy2jWQMO2v6dL2hE8uU3YXNP
+-----END CERTIFICATE REQUEST-----
+```
+
+Now create the certificate with this command.
+
+```
+openssl x509 -req -days 9999 -in csr.pem -signkey key.pem -out cert.pem
+```
+
+View the certificate with command `cat cert.pem` .
+Here is an example of what the contents could be.
+
+```
+-----BEGIN CERTIFICATE-----
+MIIDETCCAfkCFAWNBRAZ2YBHZfWEWbWdiheK05YwMA0GCSqGSIb3DQEBCwUAMEUx
+CzAJBgNVBAYTAkFVMRMwEQYDVQQIDApTb21lLVN0YXRlMSEwHwYDVQQKDBhJbnRl
+cm5ldCBXaWRnaXRzIFB0eSBMdGQwHhcNMjAwNTI1MTgzMDU0WhcNNDcxMDEwMTgz
+MDU0WjBFMQswCQYDVQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTEhMB8GA1UE
+CgwYSW50ZXJuZXQgV2lkZ2l0cyBQdHkgTHRkMIIBIjANBgkqhkiG9w0BAQEFAAOC
+AQ8AMIIBCgKCAQEApchplDbDcXg8eRSWViFWYB7Aq+o/vub3kQzSScwHi3KZt7sc
+j6LoxR7OLiqo62xXc5hXQ3LuwdXgrb4UzjFQCMLxXxEUuEA2flU2aBffU4FCVnnw
+nhGDFrMf53H5wdrpX87hTpSlqFFAmfXL0eGV+bNId4yVqLGUNWZyCRaVnj3HWXV2
+ichKOea0gHVvVkJKiWfM7RxCrL0Uk2Jy7y0TvzljCJlhRvgMq9wdx0pexPxiN3+F
+poc00bRBU1CyDOcPR1VCHWsDhAMxfyf1yHpFZBq2x/15evI7uCFLnEnNI9dKw3Uq
+J2Z7GBIOSCrWvD9NHSmXmFhutZbX1zHRYl0zHQIDAQABMA0GCSqGSIb3DQEBCwUA
+A4IBAQCdKceMUxpqXyP5pTERwO6LJW99qJ4C11Hw2BIG3L+qUI8YZPjfgWoa3VRs
+dluqSaUuvF1lrzr1XpbC0KKrBg6yQDOc3yrQC27moBSnxuWbAlRltN+1/UpBg9mP
+qZd/GuH5GeW34kpXKCMkMBCvD99GVXzHHZ7Ar/nrbWLH+eInciwBLeuwMo79B/Ec
+xpHkx0ACRDwpIooFEoVBIKvJnYPPft43ZoXhlltibEcfu0/pGMzOoFKxzHy4xNR4
+kWnHF2UR8kHDuEpanr4rdedZEI8lOhkgCihMZTv8KSp0c5Ii2j4nwa+3TdMKJWuC
+x4+xRSS0m1QmKt4ayZShU4A57LWL
+-----END CERTIFICATE-----
+```
+
+Notice here that the contents _don't really make sense to the human reader_ .
+
+Important Note - It's okay for the public to view the `certificate` (which contains
+the `public key`) but _it's not okay_ for the public to view the `private key` .
+
+Now (using 'vi') create a file 'webserver.js' with the following contents.
+
+```
+const https = require('https');
+const fs = require('fs');
+
+const options = {
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem')
+};
+
+https.createServer(options, function (req, res) {
+  res.writeHead(200);
+  res.end("hello world\n");
+}).listen(8000);
+```
+
+Run this local server with command `node webserver.js &` (the `&` character means that
+the web server will run in the background so that you can keep typing other commands).
+
+Install the `curl` command by using command `apk add --update curl` .
+
+Now run command `curl https://localhost:8000` - instead of getting 'hello world'
+in the response, the following error message is displayed instead because the 'curl'
+command doesn't trust the self-signed certificate.
+
+```
+/ # curl https://localhost:8000
+curl: (60) SSL certificate problem: self signed certificate
+More details here: https://curl.haxx.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+how to fix it, please visit the web page mentioned above.
+```
+
+`curl` has the '--insecure' option which will allow it to accept invalid or self-signed
+certificates. Running `curl --insecure https://localhost:8000` will give the expected
+'hello world' response.
+
+Now open Chrome and go to https://localhost:8000 . The web page should not display, instead
+message 'Your connection is not private' should appear with error code
+'NET::ERR_CERT_AUTHORITY_INVALID' . Click the 'Advanced' button then click the
+'Proceed to localhost (unsafe)' link to view the simple web page with 'hello world' .
+
+In the Docker shell, enter `exit` to leave and stop the Docker container.
+
+## Hashing
+
+### Uses of Hashes
 
 ## Web-Browser Security
 
 ### Within Browser
+CORS
 http-only cookie
 Client-side scripting
 httponly cookie
@@ -296,20 +515,13 @@ Denial-of-service attack
 Brute-force attack
 blacklist and whitelist
 
-
-
 ## Human Element
 
 Inside Job
-
 Bamford's Theorem
 
 ### Outside Organization
 Cross-site scripting
-captcha
-two-factor authentication
 
 
 Hashing prevents outsiders from guessing the next number in the sequence
-
-Bit coin
