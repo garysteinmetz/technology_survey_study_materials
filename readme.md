@@ -287,6 +287,9 @@ shawn smith "Surviving Aggressive People" (desperate aggression (shutting down o
     - don't shame aggressor or yourself
     - know what you want to accomplish
     - listen to intuition
+  //
+  - https://www.forewordreviews.com/reviews/surviving-aggressive-people/
+    - listening, empathizing, and providing options
 a judge is a lawyer who knows a politician
 start career as a generalist, not a specialist
 four great inventions of Chinese civilization
@@ -525,6 +528,15 @@ make hay while the sun shines
 people measure happiness buy the amount of money in their bank accounts, not total assets
 history of technology - rubber bands invented before rubber shoe soles
 you want a vast budget to prepare for first child
+better to beg for forgiveness than ask permission
+those who started in engineering but then left did the best
+attributed to Albert Einstein - 'compound interest is the most powerful force in the universe'
+https://mannerofspeaking.org/2011/06/20/analysis-of-a-speech-by-conan-obrien/
+https://jamesclear.com/great-speeches/enough-by-john-c-bogle
+penny saved is a penny earned
+family will help you in difficult circumstances, but generally won't care about your challenges in life
+Importance of getting feedback from peers (failed startup attempt, M. Night Shyamalan’s recent movies)
+Generals are always fighting the last war
 //
   - activities after class is over
     //
