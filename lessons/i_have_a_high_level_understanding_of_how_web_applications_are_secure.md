@@ -499,29 +499,137 @@ In the Docker shell, enter `exit` to leave and stop the Docker container.
 
 ## Hashing
 
-### Uses of Hashes
+Hashing is about taking something and scrambling it up ... just for the sake of mixing it up!
+
+### Exercise - Use SHA-256
+
+There are many different approaches to hashing. Each approach (to scrambling) usually
+produces a wildly different result from another approach.
+
+SHA-256 is a very popular approach to hashing. The Unix `sha256` command executes this
+hashing algorithm. Follow these steps.
+
+  - Download base Linux Docker image with this command - `docker pull alpine`
+  - Run that image and start a shell with this command - `docker run -it alpine sh`
+  - Update the installer by running `apk update` then `apk upgrade`
+  - Run `apk add --update outils-sha256` to install the `sha256` command
+  - Execute command `echo -n Hello`
+    - 'Hello' won't be printed on its own line because of the '-n' option
+    - Putting 'Hello' on it's own line would include an invisible whitespace character
+    (a 'carriage return') that shouldn't be included in this hashing example
+  - Execute command `echo -n Hello | sha256`
+    - Confirm that the output is `185f8db32271fe25f561a6fc938b2e264306ec304eda518007d1764826381969`
+  - Execute command `echo -n hello | sha256`
+    - Confirm that the output is `2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824`
+  - Execute command `echo -n MyFavoriteFoodIsPeanutButterAndJellyWithWhippedCream | sha256`
+    - Confirm that the output is `984a5f6b7a87bd913d4efe25fa42b74b29292f492dadb8ff6b429d196a55206d`
+
+Notice how these instructions knew what the result would be ahead of time, that small
+differences in the input produced wildly different outputs, and that the length of each output
+was the same size.
+
+Repeat this exercise by going to one of the following web sites.
+
+  - https://emn178.github.io/online-tools/sha256.html
+  - https://xorbin.com/tools/sha256-hash-calculator
+
+Submit the same inputs used by the `sha256` command into the web form. Notice how the same
+hashes are produced.
+  - Hello
+  - hello
+  - MyFavoriteFoodIsPeanutButterAndJellyWithWhippedCream
+
+SHA-256 is a well-known hashing algorithm that produces consistent results.
+
+### Hashing Versus Encryption
+
+Hashing and encryption have these things in common.
+
+  - Consistent Result - A given hashing or encryption algorithm will generally produce
+  the same output when given the same inputs
+  - Scrambles Things Up - A given hashing or encryption algorithm will produce output
+  that isn't readable
+
+Hashing and encryption differ in the following ways.
+
+  - Consistent Output Size - Hashing algorithms tend to produce output with a predefined
+  fixed length (for instance, SHA-256 _always_ produces output that can be represented
+  by 64 hexadecimal digits), encryption algorithm output has to adjust to whatever the input
+  is (it's quite unlikely that megabytes of input would produce output that's only
+  64 hexadecimal digits in length)
+  - Can't Be Unscrambled - Hashing produces something that's scrambled but
+  unlike encryption it can't be unscrambled, in fact two or more inputs could have
+  the same hash so any attempt to 'decrypt' in that circumstance wouldn't be able to know
+  the original input, the inability to unscramble can be a 'good thing' in some instances
+  (like storing previous passwords to an account without actually storing the password)
+
+### How on Earth Is Hashing Useful?
+
+Hashing is actually quite useful. Here are important use cases.
+
+  - Generating Unique Identifiers in Distributed Systems - When data is consolidated
+  all in one database it's easy to assign unique identifiers (like 1, 2, 3, ...) but this
+  can't be done when many different programs are updating distributed data so each assigns
+  a hash value to new entries that _probably won't_ collide with other entries elsewhere,
+  both `Git` and `Bitcoin` manage distributed data and both use `SHA-256`
+  - Validation of Transmission - When data is transmitted from one system to another it's
+  impractical for the receiver to know 'Did I get everything okay?' by having followup
+  calls to confirm the correctness of each-and-every byte transferred, but the sender can
+  send a hash of what was sent and the receiver then compare that hash to the one it generated
+  to determine if the values are the same (if not, a transmission error occurred)
+  - Detect Presence of Something - `Java` has a `hashCode()` function for all of it objects
+  which can be used to quickly check whether (for instance) an object is not in a set
+  - Detect Past Use of Something - When a system asks a user to change a password it often
+  requires that the user not use a recent previous password but it's probably wise not
+  to store previous passwords, instead the hashes of previous passwords can be stored
+  and the hash of a candidate new password can be compared against them
+  - Validity of Data - A `JWT` includes a hash at the end of it which only the server
+  can generate, if the server receives a `JWT` it can quickly check whether it's valid or not
 
 ## Web-Browser Security
 
-### Within Browser
-CORS
-http-only cookie
-Client-side scripting
-httponly cookie
+Web browsers and web standards like the following try to protect browser users
+from security attacks.
 
+  - CORS - This prevents web servers from receiving unexpected web-service calls
+  - 'HttpOnly' Cookie - This flag can be used when declaring the server declares a cookie
+  for the client to use but ensures that the cookie isn't accessible by JavaScript
 
 ## Network Security
-Denial-of-service attack
-Brute-force attack
-blacklist and whitelist
+
+Network security is a vast subject but here are samples of key topics.
+
+### Adversaries
+Adversaries can attempt to attack a server in many ways including the following.
+
+  - `Denial-of-Service Attack` - This is when an adversary overwhelms a server with bogus
+  calls.
+  - `Brute-Force Attack` - This is when an adversary attempts to try different combinations
+  of something (like a password) in an attempt to break in to a system
+
+### Blacklists and Whitelists
+
+A network or an application can decide to outright reject (`blacklist`) some IPs or decide
+to accept only certain IPs (`whitelist`).
 
 ## Human Element
 
-Inside Job
-Bamford's Theorem
+It's difficult or impossible to 'human-proof' a system.
 
-### Outside Organization
-Cross-site scripting
+### Inside Job
 
+People working in a company can become disgruntled or be bribed then damage a company.
+Proper auditing and an approval process lower the likelihood of an `inside job` .
 
-Hashing prevents outsiders from guessing the next number in the sequence
+### Benford's Law
+
+When dealing with house numbers or receipt amounts for a travel-reimbursement report,
+human intuition suggests that the first digit of an entry should be equally '1' as for
+the other digits '2' through '9' but mathematical analysis and real-world studies have shown
+that '1' should appear around 30% of the time. If the occurrence of '1' doesn't appear
+about that often, then it could indicate that the data are fraudulent.
+
+  - Example - Chad submits a travel-expense report to a company with a very large total
+  amount of money spent. Analyzing the first digit of each receipt shows that its value
+  is '1' about 12 percent of the time. The accounting department challenges Chad about
+  the submission and Chad admits to making the numbers up.
