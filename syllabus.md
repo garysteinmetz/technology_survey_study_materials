@@ -62,6 +62,7 @@ Code samples can be conveniently tested at https://www.w3schools.com/html/tryit.
   - [I can run a web application on a local web server](lessons/i_can_run_a_web_application_on_a_local_web_server.md)
   - [I can run a web application from a container in the cloud](lessons/i_can_run_a_web_application_from_a_container_in_the_cloud.md)
   - [I have a high-level understanding of how web applications are secure](lessons/i_have_a_high_level_understanding_of_how_web_applications_are_secure.md)
+  - [Bonus: I have used the online authoring tool to create a simple game](lessons/bonus_i_have_used_the_online_authoring_tool_to_create_a_simple_game.md)
   - I am a computer programmer who has written the classic 'Hello World!' program in a browser
   - I am a server-side programmer
   - I can create an interactive web page (Form Submission, Ajax)
