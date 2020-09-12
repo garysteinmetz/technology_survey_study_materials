@@ -1370,3 +1370,5 @@ environment variables as feature flags
 generate certificate
 
 billing
+
+C:\Users\Brian\Desktop>docker run --rm -it --network host -e AWS_ACCESS_KEY_ID=DoesNotMatter -e AWS_SECRET_ACCESS_KEY=DoesNotMatter amazon/aws-cli dynamodb --region us-east-1 put-item --table-name UserAppData --item "{\"author_id\": {\"S\": \"123\"}, \"user_app_id\": {\"S\": \"slapjack-456\"}, \"app_data\": {\"S\": \"{\\\"highScore\\\" : 5}\"}}" --endpoint-url http://localhost:8000

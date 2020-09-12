@@ -63,13 +63,45 @@ Create a text file (using a text editor!) with "Hello World" as its only content
 From the command line, use the `cat` command (in Mac/Unix) to output the file's contents
 (use the `type` command instead on Windows). The output should exactly match the file's contents.
 
-## Exercise - Output the Contents of a Text File onto Command Prompt
+On Windows, do the following -
+
+1) Open a command prompt (enter `command prompt` in the Windows search bar).
+2) Type command `cd %HOMEPATH%\Desktop` .
+3) Type command `notepad sample1.txt` .
+4) In the application, enter some text, save the file, then close the application.
+5) On the command prompt, type command `type sample1.txt` . Confirm that what is displayed by this command exactly matches what was entered into the file.
+
+On Mac, do the following -
+
+1) Open a command prompt (enter `terminal` in the Mac search bar).
+2) Type command `cd ~/Desktop` .
+3) Type command `touch sample1.txt` . (The Unix `touch` command creates an empty file if it doesn't exist already.)
+4) Type command `open -e sample1.txt` .
+5) In the application, enter some text, save the file, then close the application.
+6) On the command prompt, type command `cat sample1.txt` . Confirm that what is displayed by this command exactly matches what was entered into the file.
+
+## Exercise - Output the Contents of a Non-Text File onto Command Prompt
 
 Create a word processor file (using a word processor!) with "Hello World" as its only contents.
 From the command line, use the `cat` command (in Mac/Unix) to output the file's contents
 (use the `type` command instead on Windows). The output should look strange.
 
 ## Exercise - Use a Text Editor to Create a Shell Script to Output 'Hello World'
+
+Executing (running) the following (batch) file will print 'Hello World' to the console with the `echo` command.
+
+### On Windows
+
+On Windows, use a text editor to create file 'hello_world.bat' with the following content.
+
+```
+echo Hello World
+pause
+```
+
+Run it by entering `.\hello_world.bat` .
+
+### On Mac
 
 On Mac/Unix, use a text editor to create file 'hello_world.sh' with the following content.
 Note, to be able to execute (run) the file
@@ -79,14 +111,8 @@ echo 'Hello World'
 read -rsp $'Press any key to continue...\n' -n 1 key
 ```
 
-On Windows, use a text editor to create file 'hello_world.bat' with the following content.
-
-```
-echo 'Hello World'
-pause
-```
-
-Execute (run) the file and 'Hello World' should appear in the output.
-Note - running the file might require enabling 'execute' privileges,
-on Mac/Unix this is achieved by executing the `chmod 777 hello_world.sh` command
+This file requires 'execute' privileges to run. Grant those permissions to the file
+by running the `chmod 777 hello_world.sh` command from the command line
 (which gives read, write, and execute privileges to everyone).
+
+Run it by entering `./hello_world.bat` .

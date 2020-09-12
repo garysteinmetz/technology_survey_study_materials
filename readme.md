@@ -538,6 +538,8 @@ family will help you in difficult circumstances, but generally won't care about 
 Importance of getting feedback from peers (failed startup attempt, M. Night Shyamalan’s recent movies)
 Generals are always fighting the last war
 //
+https://news.gallup.com/opinion/gallup/173249/higher-education-work-preparation-paradox.aspx
+//
   - activities after class is over
     //
   - boot camp
