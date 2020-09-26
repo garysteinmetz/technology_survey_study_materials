@@ -1,5 +1,34 @@
 # I know the parts of an HTML file
 
+## Note - How to Run HTML Examples in This Lesson
+
+For the HTML examples in this lesson, they can be implemented in the following ways.
+
+  - Go to https://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic .
+    - Delete all the contents in the left text area. Paste the example contents
+    into the left text area then click the 'Run >>' button.
+    - The rendering of that HTML content will appear in the right area.
+  - Create a local text file with a '.html' file extension (like 'sample1.html'
+  as shown here). Open that file in the browser. (Either double click the file
+  in a file explorer or (for Chrome) select 'File' then 'Open File' in the browser
+  menu and choose the file.)
+    - On Windows, do the following (to create file 'sample1.html' on the Desktop) -
+      - Open a command prompt (enter `command prompt` in the Windows search bar).
+      - Type command `cd %HOMEPATH%\Desktop` .
+      - Type command `notepad sample1.html` .
+      - In the application, enter some text, save the file, then close the application.
+      - On the command prompt, type command `type sample1.html` . Confirm that what is displayed by this command exactly matches what was entered into the file.
+    - On Mac, do the following (to create file 'sample1.html' on the Desktop) -
+      - Open a command prompt (enter `terminal` in the Mac search bar).
+      - Type command `cd ~/Desktop` .
+      - Type command `touch sample1.html` . (The Unix `touch` command creates an empty file if it doesn't exist already.)
+      - Type command `open -e sample1.html` .
+      - In the application, enter some text, save the file, then close the application.
+      - On the command prompt, type command `cat sample1.html` . Confirm that what is displayed by this command exactly matches what was entered into the file.
+
+Note that these ways are interchangeable - implementing the example in a local file
+or on a remote web site will produce the same result.
+
 ## What are HTML files?
 HTML files are -the- main types of files that produce the web pages
 viewed in web browsers.

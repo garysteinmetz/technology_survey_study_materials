@@ -106,3 +106,73 @@ Code samples can be conveniently tested at https://www.w3schools.com/html/tryit.
   - I write programs that react to cloud events
   - I know how to prevent my cloud bill from getting too big
   - I understand object-oriented concepts
+
+# First Class Discussion
+
+
+//Overall
+What are you trying to accomplish?
+Who am I?
+Need laptop (Windows or MacBook, but not a Chromebook or a tablet)
+Lots of topics (and boring in this class)
+Need buy-in of your parents/guardians
+Lots of software installations (like Git, Docker, IntelliJ)
+Not the video game class, but there's an emerging online framework I'm creating that could allow Simple video game creation with Phaser
+There is no homework (yet), there's just one (intense but inconsequential) exam (the final), but this isn't an 'autopilot' class
+
+//Topic for Today
+Duck Typing (and its analogy to software engineering)
+Text Files
+Failure to Launch
+
+//Overall Topics in This Class
+  //Syllabus
+    - https://github.com/garysteinmetz/technology_survey_study_materials/blob/master/syllabus.md
+      - Bookmark this page!
+  //Final Exam
+    - https://chhcsfun.com/content/garysteinmetz/ChhcsFinalExam2020.results.html
+  //Possible New Topics
+    - Good Chance
+      - Terraform ('Infrastructure-As-Code')
+      - UI Frameworks (Vue)
+      - Cryptocurrencies (Bitcoin)
+    - Some Chance
+      - Data Science
+      - Search Engines
+      - Data Structures and Algorithms
+      - Project Management
+      - Continuous Integration, Continuous Deployment
+      - Accessibility and Internationalization
+      - Behavioral Testing
+      - Patterns and Anti-Patterns********
+  //SAT Math
+    - Duck typing
+    - Text files, editors, batch files
+    - XML, HTML, CSS, JavaScript, regular expressions, responsive web design
+    - Advantages of cloud computing
+    - AWS concepts including regions, S3, ECS, DynamoDB
+    - Source code, source control, libraries
+    - Business requirements, technical specifications, wireframes
+    - Hexadecimal, computer networking, HTTP, client/server, URLs, mime types, cookies, AJAX
+    - Server-side programming, Node, Java, SpringBoot
+    - Unit Testing and Mock Objects
+    - Docker, Unix, environment variables
+    - SQL, NoSQL, CSV
+    - Security, OAuth2, JWT, CAPTCHA, AWS Policies, Cryptography, Certificates, Hashing, Browser Vulnerabilities, Web Site Vulnerabilities
+  //SAT Verbal
+    - Failure to Launch
+    - Rule of 72 (Compound Interest) and Retirement Savings
+    - Expected Salary and Career for a Software Engineer
+    - Expect Work to Be Boring, Importance of Work
+    - How Invention (TV dinner) Shaped Society
+    - Sales Versus Engineering
+    - How Power Impacts Relationships (Emperor's New Clothes)
+    - Origins of Industrial Revolution
+    - (Experiences, Career, Family/Community) Axis of Early Adulthood (and what to avoid)
+    - Immigration in Tech
+    - Game Theory
+    - Probability
+    - Social Class
+    - Negotiating
+    - Corporate Culture
+    - Taking Chances and Accepting Outcomes
