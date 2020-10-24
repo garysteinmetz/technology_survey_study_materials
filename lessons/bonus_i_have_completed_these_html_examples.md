@@ -101,3 +101,115 @@ element that contains it).
     </body>
 </html>
 ```
+
+## Cartoon Strip
+
+```
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      //var imageHeight = 200;
+      //var imageWidth = 300;
+      //Note - Use website like 'https://jspaint.app/' to create images used by 'images' variable immediately below
+      var images = ["heads.png", "tails.png", "z.png"];
+      var captions = ["Heads!", "Tails!", "Neither!"];
+      var captionStyles = ["style0", "style1", "style2"];
+      function initialize() {
+        var errorFound = (images.length !== captions.length || captions.length !== captionStyles.length);
+        if (!errorFound) {
+          for (var i = 0; i < images.length; i++) {
+            var innerFrame = $("<div/>");
+            $(innerFrame).attr("id", "frame" + i);
+            $(innerFrame).attr("class", "innerFrame");
+            $("#frameContainer").append(innerFrame);
+            //
+            var img = $("<img/>");
+            $(img).attr("id", "image" + i);
+            $(img).attr("src", images[i]);
+            if (typeof imageHeight !== "undefined") {
+              $(img).attr("height", imageHeight);
+            }
+            if (typeof imageWidth !== "undefined") {
+              $(img).attr("width", imageWidth);
+            }
+            $(innerFrame).append(img);
+            //
+            var br = $("<br/>");
+            $(innerFrame).append(br);
+            //
+            var span = $("<span/>");
+            $(span).attr("id", "text" + i);
+            $(span).text(captions[i]);
+            $(span).attr("class", captionStyles[i]);
+            $(innerFrame).append(span);
+          }
+          //Each loop in the 'for loop' above should produce an HTML block like the following
+          //  <div id="frame0" class="innerFrame">
+          //    <img id="image0"/>
+          //    <br />
+          //    <span id="text0" />
+          //  </div>
+        } else {
+          alert("Setup is not correct!");
+        }
+      }
+      $(document).ready(
+        function() {
+          initialize();
+        }
+      );
+    </script>
+    <style>
+      body {
+        align: center;
+      }
+      .outerFrame {
+        border: 1px solid black;
+        align: center;
+        display: flex;
+      }
+      .innerFrame {
+        border: 1px dashed black;
+        flex: 1;
+        text-align: center;
+      }
+      .fadeOutInTwoSeconds {
+        transition: visibility 0s 2s, opacity 2s linear;
+        visibility: hidden;
+        opacity: 0;
+      }
+      /*
+        Note - Customize Below (especially those CSS classes beginning with 'style')
+          Refer to 'color' values for text at https://htmlcolorcodes.com/color-chart/
+          Refer to 'font-family' values for text at https://www.w3schools.com/cssref/css_websafe_fonts.asp
+      */
+      .style0 {
+        font-family: Serif;
+        color: #FF0000;
+        font-size: 22pt;
+      }
+      .style1 {
+        font-family: Sans-Serif;
+        color: #00FF00;
+        font-size: 16pt;
+      }
+      .style2 {
+        font-family: Monospace;
+        color: #0000FF;
+        font-size: 18pt;
+      }
+    </style>
+    <script>
+      //here's a fun function that causes the comic strip to disappear in two seconds
+      function fadeOutCartoon() {
+        $("#frameContainer").addClass("fadeOutInTwoSeconds");
+      }
+    </script>
+  </head>
+  <body>
+    <div id="frameContainer" class="outerFrame" onclick="fadeOutCartoon();">
+    </div>
+  </body>
+</html>
+```
