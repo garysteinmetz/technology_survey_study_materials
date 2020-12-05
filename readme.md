@@ -539,6 +539,28 @@ Importance of getting feedback from peers (failed startup attempt, M. Night Shya
 Generals are always fighting the last war
 //
 https://news.gallup.com/opinion/gallup/173249/higher-education-work-preparation-paradox.aspx
+
+//Actuary versus Data Scientist
+
+https://www.slideshare.net/hughterry/webinar-replay-for-feb-2019-the-digital-actuary-preparing-for-the-future-now
+  - Slide 34
+https://proactuary.com/wp-content/uploads/2018/04/Acts-V-DS_Final-Copy.png
+
+//Chinese Empire Stagnation
+
+https://en.wikipedia.org/wiki/High-level_equilibrium_trap
+https://www.businessinsider.com/china-zhenge-he-treasure-fleet-elite-free-trade-2017-2
+Fractured-Land Hypothesis
+https://www.youtube.com/watch?v=bbGOXnElJeU
+https://en.wikipedia.org/wiki/High-level_equilibrium_trap
+
+//Hire for integrity
+https://www.inc.com/marcel-schwantes/warren-buffett-hiring-top-talent-characteristics.html
+
+//Combine Software with Real World
+
+https://www.youtube.com/watch?v=Nr-EWZF11pI
+
 //
 Phaser
 Free Online Book - https://blog.ourcade.co/
