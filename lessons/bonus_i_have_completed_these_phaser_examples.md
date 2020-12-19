@@ -164,3 +164,42 @@ or 'Command' (Mac) button then click the 'image' word in this command.
 This will open another file (called 'phaser.d.ts') that explains what the
 'image' function does. IDEs are text editors but have powerful tools that
 aid the developer.
+
+## Important Phaser Resources
+
+  - https://examples.ourcade.co/phaser3-typescript
+  - https://ourcade.co/books/infinite-runner-phaser3/ (get TypeScript version)
+  - https://ourcade.co/
+  - https://www.youtube.com/channel/UCJyrgLkI9LcwzUhZXxrwpyA
+  - https://gamedevacademy.org/phaser-progressive-web-apps-tutorial/
+  - https://phaser.io/tutorials/getting-started-phaser3/part5
+
+## Incremental Upkeep of Local TypeScript Phaser Project
+
+These steps will incorporate the latest changes from your project on GitHub
+and the one that you inherited ('forked') from.
+
+If you are the only one working on the project and all the work is done on the
+same computer, you may only need to run these steps rarely if ever,
+but it's good to follow these steps as good practice to confirm that you've
+incorporated the latest changes as they become available.
+
+  - Open a command prompt enter the following commands
+    - cd Desktop
+    - cd phaser3-typescript-project-template
+    - git fetch --all
+    - git merge upstream/master
+    - git merge origin/master
+    - git push origin master
+
+Note that the 'git merge upstream/master' command might cause a 'merge conflict'
+(a clash between your local files and one from the original project which
+you inherited from). If this happens, run the following command first then reissue
+the 'git merge origin/master' command and continue.
+
+  - git reset --hard
+
+Finally, run the following command to ensure that the latest versions of JavaScript
+libraries are installed.
+
+  - npm install

@@ -554,12 +554,32 @@ Fractured-Land Hypothesis
 https://www.youtube.com/watch?v=bbGOXnElJeU
 https://en.wikipedia.org/wiki/High-level_equilibrium_trap
 
+'Extractionary Elite'
+
+"The best thing that ever happened to the Roman Empire is that it fell"
+
+//
+
+- planning still subjecting but there is a common reference (defined story with assigned story points)
+- merged pull request constitutes completion of work
+- technical team verifies work
+- 'had to look up' how to add favicon (didn't study that in school)
+- tolerated criticism of work
+- 'creeper' visited work
+
+
 //Hire for integrity
 https://www.inc.com/marcel-schwantes/warren-buffett-hiring-top-talent-characteristics.html
 
 //Combine Software with Real World
 
 https://www.youtube.com/watch?v=Nr-EWZF11pI
+
+//Coworkers interviews for new job
+  - 1st Interview - data structures and algorithms with coding interview
+  (arraylist, linkedlist, circular linked list, time complexity)
+  - 2nd Interview - general questions about thread safety, previous work and practices
+  - 3rd Interview - beans, team player, problem solver
 
 //
 Phaser
