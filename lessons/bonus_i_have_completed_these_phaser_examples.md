@@ -199,7 +199,118 @@ the 'git merge origin/master' command and continue.
 
   - git reset --hard
 
+If the 'git merge origin/master' command keeps causing merge conflicts,
+just ignore running it (skip it).
+
 Finally, run the following command to ensure that the latest versions of JavaScript
 libraries are installed.
 
   - npm install
+
+## Running Local Server
+
+  - Open a command prompt enter the following commands
+    - cd Desktop
+    - cd phaser3-typescript-project-template
+    - npm run watch
+
+As documented in the 'package.json' file, the 'watch' command will compile
+(really 'transpile' since this is TypeScript) and also watch for new edits
+to the project which it quickly incorporates (re-compiles) project code changes
+that are saved. This command (in 'package.json') references
+the 'rollup.config.dev.js' file in the same directory which includes a 'serve'
+command which starts a local server on port 10001 (URL http://localhost:10001/ ).
+
+Whenever you save a change to your project, wait about 15 seconds for the 'watch'
+command to compile ('transpile') the change, then refresh the browser to review it.
+
+## Stopping Local Server
+
+After finishing development work, press Control-C (hold down the 'Control' button
+then press the 'c' character) to stop the server. Rerun the 'npm run watch' command
+to restart the server.
+
+## Exercise - Update the Images of the Default Application
+
+### Setup - How to Create Images
+
+Go to https://jspaint.app/ or use the local Windows 'Paint' program to create
+two images - the 'head' side of a coin and the 'tail' side of a coin.
+
+#### Set Dimension Boundaries and (Optionally) Make the Background Transparent
+
+In the menu, click 'Image' then 'Attributes' then do the following.
+
+  - For 'Units', select 'Pixels'
+  - For 'Width', enter the desired width (like 100) in pixels
+    - Review next subsection to get specific pixel recommendations for each image
+  - For 'Height', enter the desired height (like 100) in pixels
+  - (Optional) To make sure that the unpainted parts of the image don't cover
+  up what's behind it, select 'Transparent' under 'Transparency'
+
+Once this is done, click the 'Okay' button.
+
+  - If you selected the 'Transparency' button, clear the existing (white) background
+  by selecting 'Image' then 'Clear Image' . The image should now look somewhat like
+  a checkerboard (this is the representation of a transparent background,
+  but it (the unpainted parts) will be 'see through' once rendered on a web page).
+
+##### Image Pixel Dimension Recommendations
+
+  - dist/assets/phaser3-logo.png
+    - Width - 412
+    - Height - 93
+
+  - dist/assets/libs.png
+    - Width - 800
+    - Height - 600
+      - Note - The content for this image should appear below
+      (approximately) y-coordinate 425, all area above this should be transparent
+
+##### Importance of Transparency
+
+For a PNG image, pixels marked as transparent are invisible and whatever is behind
+it when rendered on a web page will be displayed instead (for a plain web page,
+the default background color is white).
+
+When the server is running, notice how the 'PHAZ3R' letters are Not changed
+by the swirling colors. Likewise, the stylized red 'R' letter, 'rollup.js' text,
+and 'TypeScript' text are also unaffected by the swirling colors.
+
+### Step 1 - Create Images
+
+  - Using https://jspaint.app/ or another graphical application, create images
+  with the same dimensions (and transparency) as 'dist/assets/phaser3-logo.png'
+  and 'dist/assets/libs.png'
+  - Save these images into the 'dist/assets' subdirectory of the project
+  - In the 'src/game.ts' file of the project, update the second parameter
+  of each of the two 'this.load.image()' statements to reference these new images
+  - (If not running already) Run the local server and verify your work
+  by going to web page http://localhost:10001/
+
+### Step 2 - Commit and Push Changes to GitHub
+
+Using the 'add', 'commit', and 'push' commands of Git, commit and push these
+changes to your repository in GitHub.
+
+### Step 3 - Copy 'dist/' Subdirectory Contents to Your GitHub Pages Repository
+
+First, issue the following commands in your GitHub Pages repository to ensure
+that you're on the 'main' branch with the latest source code.
+
+  - git checkout main
+  - git fetch --all
+  - git pull origin main
+
+Copy the contents of the 'dist/' subdirectory into your GitHub pages repository.
+
+  - Note - The copied contents should be copied directory into the base directory
+  of this repository, not into a 'dist/' subdirectory
+    - For instance, 'dist/index.html' in the Phaser project should just be
+    'index.html' in the GitHub Pages project
+
+Then commit and push these changes in your GitHub pages project.
+Now, open a browser and go to your GitHub pages base address to review your
+work that has now been published to the internet.
+
+  - https://<your_github_username>.github.io
