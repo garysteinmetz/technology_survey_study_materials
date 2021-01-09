@@ -314,3 +314,52 @@ Now, open a browser and go to your GitHub pages base address to review your
 work that has now been published to the internet.
 
   - https://<your_github_username>.github.io
+
+## If Applicable, Change the 'master' Branch to the 'main' Branch
+
+Towards the end of 2020, it became increasingly popular to rename the 'master'
+branch of a repository to the 'main' branch. Here are the steps for doing that.
+
+Reference - https://stevenmortimer.com/5-steps-to-change-github-default-branch-from-master-to-main/
+
+  1) Locally copy the 'master' branch to the 'main' branch with this command
+    - git branch -m master main
+  2) Upload this new 'main' branch to the remote repository with this command
+    - git push -u origin main
+  3) Update the local repository to state that 'main' is the default remote branch with this command
+    - git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/main
+  4) Follow the steps at this link to state that 'main' is the default branch on the remote server
+    - https://docs.github.com/en/github/administering-a-repository/setting-the-default-branch
+  5) Delete the 'master' branch both on the local server and the remote server with this command
+    - git push origin --delete master
+
+As you make these changes, consider doing one or more of the following to verify
+that both the local and remote repositories have changed.
+
+  - `git status`
+    - This will list the current branch that's checked out into the local file system
+  - `git branch -a`
+    - This will list all branches in the local repository
+  - Using a browser, view your repository on GitHub and the branches it contains
+
+//
+
+https://stackoverflow.com/questions/46559795/how-to-use-js-cookie-in-a-typescript-project
+https://www.npmjs.com/package/js-cookie
+
+//
+
+TypeScript versus JavaScript
+Transpiling (Babel)
+How TypeScript becomes JavaScript which can run in a browser
+Switch from 'master' branch to 'main' branch
+Sprites and scenes
+Deploying to GitHub Pages
+Cookies
+Gimp (with transparency)
+Import Images (including ones from another web site)
+Phaser Component Lifecycle
+Effects with sprites and scenes
+Events with sprites
+Classes including - Phaser.Math, tile image, spritesheet, 'anims' function
+Cursor keys
