@@ -342,6 +342,53 @@ that both the local and remote repositories have changed.
     - This will list all branches in the local repository
   - Using a browser, view your repository on GitHub and the branches it contains
 
+## Use Gimp to Create Image Files
+
+Gimp is a tool for creating and editing image files, especially PNG files.
+
+PNG files are standard graphical files used on web pages. Each `pixel` (smallest
+square of consistent color which, along with all other pixels, compose the image)
+can be composed of distinct concentrations of the three primary colors of light -
+red, green (not yellow!), and blue.
+
+PNG also supports the `alpha channel` feature, which allows a pixel to be partially
+or completely invisible. This is important when developing games and general
+graphical content because (A) graphical images tend to be rectangular and most
+objects aren't rectangular and (B) when one image is on top of another the top
+image's invisible pixels shouldn't overwrite the pixels of the image below it.
+
+### Exercise - Create an Image with Transparent Pixels Using Gimp
+
+1) Open Gimp
+2) In the top menu, select 'File' then 'New'
+3) In the 'Create a New Image' window, set the 'Width' and 'Height' values to 200,
+then click the 'OK' button
+4) In the top menu, select 'Layer', then 'Transparency', then click 'Add Alpha Channel'
+5) Click the large black-circle-on-white-square in the top-right, then in the
+top-left click the erase tool (which is below the 'A' and above the band-aid images),
+then click and swipe over the entire image (an image like a checkerboard should
+appear under it, this checkerboard is the way Gimp and other tools represent
+an area as being transparent)
+6) In the top-left, click the pencil then click the red rectangle below it to change
+the color written by it
+7) In the 'Change Foreground Color' window, enter a 'hexadecimal' code into the
+'HTML notation' field for the color you want to draw with, then click the 'OK'
+button (codes can be obtained from sites like
+https://www.rapidtables.com/web/color/RGB_Color.html#color-chart under 'Hex')
+8) Draw on the image and switch colors as desired, to change paintbrush size
+click the desired paintbrush shape in the top-right
+9) To fill an area, click the paint can next to the 'A' image in the top-left
+then click the area to fill on the image
+10) Save the image, in the top menu click the 'File' then 'Export' (not 'Save'!)
+to save the image to the local file system
+
+### Exercise - Create a Web Page Where One Image Partially Covers Another
+
+
+Gimp has many features for creating, editing, and transforming images. Consider
+playing around with the tool and reviewing online resources (including
+YouTube videos) to learn more about it.
+
 //
 
 https://stackoverflow.com/questions/46559795/how-to-use-js-cookie-in-a-typescript-project
