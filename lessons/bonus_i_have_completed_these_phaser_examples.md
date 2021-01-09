@@ -382,12 +382,44 @@ then click the area to fill on the image
 10) Save the image, in the top menu click the 'File' then 'Export' (not 'Save'!)
 to save the image to the local file system
 
-### Exercise - Create a Web Page Where One Image Partially Covers Another
-
-
 Gimp has many features for creating, editing, and transforming images. Consider
 playing around with the tool and reviewing online resources (including
 YouTube videos) to learn more about it.
+
+### Exercise - Create a Web Page Where One Image Partially Covers Another
+
+Using Gimp, create two 200-pixel-by-200-pixel images with non-overlapping
+transparent areas then save them to your Desktop, one named '1.png' and the
+other named '2.png' . Then create an HTML file (with a name like 'overlap.html')
+on the Desktop with this content.
+
+```
+<html>
+  <head>
+    <style>
+      img.over {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        z-index: 1;
+      }
+      img.under {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        z-index: -1;
+      }
+    </style>
+  </head>
+  <body>
+    <img src="1.png" class="over" />
+    <img src="2.png" class="under" />
+  </body>
+</html>
+```
+
+Open the HTML file in a browser and notice how all the content of '1.png'
+is shown and, where it overlaps with '2.png', the content of '2.png' isn't shown.
 
 //
 
