@@ -585,6 +585,112 @@ console.log(person);//[object]
 console.log(person.name);//Srini
 ```
 
+## Control Structures
+
+Control structures determine (A) if logic will be executed and (B) how many times
+it will be executed. A logical statement (evaluating to `true` or `false`) determines
+how these determinations are made. These are the main control structures.
+
+### If-ElseIf-Else Statements
+
+This structure is covered in the 'I Know the Parts of an HTML File' section
+and the 'Truthy/Falsey' subsection above.
+
+### While Loops
+
+'While loops' are like 'if' statements (without the 'else if' and 'else') where the
+condition is continuously reevaluated after the statements of the loop
+have completed. If the condition reevaluates to true then the statements are
+executed again. This process continues until the condition evaluates to false.
+
+Here's an example of a function representing a cashier finishing the end
+of his/her shift. The cashier puts up a sign so no one else will enter
+the line, then `while` there is still someone in the front of the line check out
+that person, then once there is no one in line turn off the register and end shift.
+
+```
+closeCheckoutCounter() {
+
+  putUpSignSoNoOneElseEntersLine();
+
+  while (someoneStillInLine()) {
+    checkoutPurchaseOfCustomerInFrontOfLine();
+  }
+
+  turnOffRegisterAndEndShift();
+}
+```
+
+#### Exercise - Simple 'While'
+
+```
+<html>
+  <head>
+    <script>
+      var partyGuests = ["Liesheng", "Barbara", "Raul"];
+      console.log("Let's introduce the party guests");
+      while (partyGuests.length != 0) {
+        console.log("Introducing " + partyGuests.shift());
+      }
+      console.log("Everyone's here, let's start the party!");
+    </script>
+  </head>
+</html>
+```
+
+#### Do-While Loops
+
+'Do while loops' are nearly identical to 'while loops' but 'do while loops' always
+execute at least once. This control statement is rarely used but are useful
+when they're needed.
+
+```
+do {
+  digForGold();
+} while (goldNotFound());
+```
+
+### For Loops
+
+'For loops' are like 'while loops' but contains three parts in the form
+`for (A ; B ; C)` where 'A' can be used to initialize a variable, 'B' is the
+evaluation condition (like a 'while loop'), and 'C' can be used to change
+the variable.
+
+Here's an example.
+
+```
+<html>
+  <head>
+    <script>
+      var count = 10;
+      console.log("Let's count to " + count);
+      for (var i = 1; i <= count; i++) {
+        console.log(i);
+      }
+      console.log("That was fun!");
+    </script>
+  </head>
+</html>
+```
+
+Here's another example.
+
+```
+<html>
+  <head>
+    <script>
+      var partyGuests = ["Liesheng", "Barbara", "Raul"];
+      console.log("Let's introduce the party guests");
+      for (var i = 0; i < partyGuests.length; i++) {
+        console.log("Introducing " + partyGuests[i]);
+      }
+      console.log("Everyone's here, let's start the party!");
+    </script>
+  </head>
+</html>
+```
+
 ## Libraries
 Libraries are collections of functionality (for JavaScript)
 and styling (for CSS). For web pages, they reside outside of the source
