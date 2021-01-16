@@ -236,6 +236,53 @@ if (car && car.gasTankFull) {
 }
 ```
 
+####### Exercise - Compare Regular and 'Short Circuit' Logical Evaluations
+
+Create the following web page then open it in a browser.
+
+```
+<html>
+  <head>
+    <script>
+      function goToGasStation(car) {
+        return !car.gasTankFull;
+      }
+      function goToGasStationShortCircuit(car) {
+        return car && !car.gasTankFull;
+      }
+      function takeBus(car) {
+        return car.uninsured;
+      }
+      function takeBusShortCircuit(car) {
+        return !car || car.uninsured;
+      }
+    </script>
+  </head>
+</html>
+```
+
+Now open the browser's developer tools and enter these commands one by one.
+
+  - `goToGasStation({"gasTankFull": true})` - should return `false`
+  - `goToGasStation({"gasTankFull": false})` - should return `true`
+  - `goToGasStation(null)` - should return an error!
+  - `goToGasStation()` - should return an error ('car' argument will be `undefined`)!
+  - `goToGasStationShortCircuit({"gasTankFull": true})` - should return `false`
+  - `goToGasStationShortCircuit({"gasTankFull": false})` - should return `true`
+  - `goToGasStationShortCircuit(null)` - should return `null` (which is `falsey`)
+  - `goToGasStationShortCircuit()` - should return `undefined` (which is `falsey`)
+
+Now try these commands.
+
+  - `takeBus({"uninsured": true})` - should return `true`
+  - `takeBus({"uninsured": false})` - should return `false`
+  - `takeBus(null)` - should return an error!
+  - `takeBus()` - should return an error ('car' argument will be `undefined`)!
+  - `takeBusShortCircuit({"uninsured": true})` - should return `true`
+  - `takeBusShortCircuit({"uninsured": false})` - should return `false`
+  - `takeBusShortCircuit(null)` - should return `true`
+  - `takeBusShortCircuit()` - should return `true`!
+
 #### Number
 Numbers are numbers - either integers or numbers with decimal points.
 Here are examples.
