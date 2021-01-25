@@ -53,10 +53,63 @@ better stylized UI experience available to native mobile apps.
 
 ## Web Page Optimization
 
+Web developers, content managers, and product managers spend a lot
+of time to ensure that (A) the web application can easily be
+discovered in a web search and (B) the web application efficiently
+(quickly) renders and updates.
+
 ### SEO
+
+Search engine optimization (SEO) is the attempt to improve
+the likelihood that a web site will be listed at the top of a search.
+Improving a web application's listing in search results is a great
+way to increase the popularity of a web application.
+
+While search engines (like Google) don't reveal all the details
+of how they curate search results, here are well-known methods
+for attempting to improve the searchability of a web application.
+
+1) Explicitly include words in the URL that accurately represent
+the purpose of the web page. For a department store,
+getting a higher profile for a 'buy books' search is probably easier
+for the URL like `https://somestore.com/books` than
+`https://somestore.com/asdabdaosbdoa`
+2) Correctly describing the purpose of the web page in its HTML,
+including in 'title' and 'meta' tags
+3) Having quick load times, employing a responsive web design,
+and avoid inclusion of annoying ads
+
+#### 'robots.txt'
+
+The 'robots.txt' file informs a search engine which files
+on a web site should not be scanned
+(e.g. `https://www.google.com/robots.txt`) by a search engine.
+
+#### 'sitemap.xml'
+
+The 'sitemap.xml' file informs a search engine which file
+on a web site are important and should be given priority
+(e.g. `https://www.ford.com/sitemap.xml` and
+`https://www.bbc.com/sitemap.xml`).
 
 ### Page-Load Times
 
+There are (free) products, like `http://yslow.org/`, which can
+be used to investigate ways to improve a page's speed. Here are
+common recommendations.
+
+1) Condense images into one composite image and then use CSS
+to determine which sub-image is selected from the composite image
+for a specific component on the HTML page. When the web page reduces
+the number of server calls it needs to get things (like images),
+the web page renders more quickly.
+2) Reduce the size of the files downloaded by the HTML page,
+especially JavaScript files. For instance, 'var bankBalance'
+can be renamed 'var bb' .
+3) Put JavaScript at the bottom of a web page. When JavaScript
+is encountered, the web page will stop processing the web page
+until the JavaScript is executed. Displaying the full page first
+allows the user view it without more delays.
 
 ### Accessibility
 
@@ -70,6 +123,13 @@ that the browser uses to render the web page.
 
 ##### Browser Fingerprinting
 
-### Internationalization
 
+## Internationalization
 
+## Content Management Systems
+
+## Web Frameworks
+
+SPA - web page doesn't reload as the user uses it
+
+Vue
