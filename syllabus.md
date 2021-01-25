@@ -61,6 +61,7 @@ Code samples can be conveniently tested at https://www.w3schools.com/html/tryit.
   - [Bonus: I have used the online authoring tool to create a simple game](lessons/bonus_i_have_used_the_online_authoring_tool_to_create_a_simple_game.md)
   - [Bonus: I can integrate project management methods into a project](lessons/bonus_i_can_integrate_project_management_methods_into_a_project.md)
   - [Bonus: I have completed these Phaser examples](lessons/bonus_i_have_completed_these_phaser_examples.md)
+  - [Bonus: I have reviewed these additional front-end UI topics](lessons/bonus_i_have_reviewed_these_additional_front_end_ui_topics.md)
   - I am a computer programmer who has written the classic 'Hello World!' program in a browser
   - I am a server-side programmer
   - I can create an interactive web page (Form Submission, Ajax)
