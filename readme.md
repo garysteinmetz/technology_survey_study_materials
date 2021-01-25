@@ -538,6 +538,12 @@ family will help you in difficult circumstances, but generally won't care about 
 Importance of getting feedback from peers (failed startup attempt, M. Night Shyamalan’s recent movies)
 Generals are always fighting the last war
 //
+In-Class exercises
+  - promises, Cookies, Accessibility, Curl, Internationalization
+  - Bitcoin, web socket, Terraform, Vue, R example, Jupiter notepad
+  - support vector machine, random forest, search engines
+  - sorting algorithms
+//
 https://news.gallup.com/opinion/gallup/173249/higher-education-work-preparation-paradox.aspx
 
 //Actuary versus Data Scientist
