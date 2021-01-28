@@ -542,7 +542,7 @@ In-Class exercises
   - promises, Cookies, Accessibility, Curl, Internationalization
   - Bitcoin, web socket, Terraform, Vue, R example, Jupiter notepad
   - support vector machine, random forest, search engines
-  - sorting algorithms
+  - sorting algorithms, regular expressions
 //
 https://news.gallup.com/opinion/gallup/173249/higher-education-work-preparation-paradox.aspx
 

@@ -31,3 +31,5 @@ Unspent Transaction Outputs
 Soft Fork versus Hard Fork
 
 https://en.wikipedia.org/wiki/Tulip_mania
+
+Different uses of blockchain technology
