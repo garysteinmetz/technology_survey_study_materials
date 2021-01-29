@@ -203,6 +203,15 @@ other tab.
 To reset the cookie count back to 8, completely shutdown the browser software
 (this will close all tabs) then restart it and go back to the page.
 
+_It's important to note that a client sends any unexpired cookies back to the server
+whenever it calls the server._ In this example, repeat calls from the browser
+print a "Great, you already have a cookie jar" message on the server's console.
+
+Also note that it's the browser that determines whether cookies are sent. If the
+server is rebooted, but the browser had cookies for the server before reboot,
+then the browser will send those same cookies back to the server if the browser
+contacts the server after it has been rebooted.
+
 ##### 'client.js'
 
 ```
@@ -241,6 +250,9 @@ var webpage = `
 
 var http = require('http');
 http.createServer(function(request, response) {
+  if (request.headers.cookie) {
+    console.log("Great, you already have a cookie jar - " + request.headers.cookie);
+  }
   response.writeHead(200, {
     'Content-Type': 'text/html'
   });
@@ -365,6 +377,78 @@ outputs.
 Reference - https://webpack.js.org/configuration/
 
 ## Internationalization
+
+Web sites commonly support languages beyond English.
+
+### It All Comes Down to Bytes
+
+A byte is a number from 0 to 255, inclusive. Servers send a sequence ('stream')
+of bytes to a client (e.g. browser) when the client requests information
+(like loading a web page into a browser).
+
+For web browsers, each of these bytes is like syllables in a word.
+
+### The Meaning of 'Hi'
+
+If you were walking down a street in New York City and
+someone spoke a word that sounded like 'hi', you could be confident
+that someone was greeting you or another person. But what instead if
+you were walking down a street in Tokyo?
+
+The Japanese word for the English word 'yes' sounds very much like 'hi',
+but you'd be confident that someone was saying 'yes' .
+
+Likewise, browsers can conclude (guess) the character set (like the Latin
+alphabet used for English) by understanding context - if a browser in
+the United States calls an English-language web site (like the BBC), the
+browser could likely conclude that the Latin alphabet is being used unless
+the server explicitly stated that another character set (like simplified
+Chinese) was being used.
+
+For instance, if someone on a street in Japan said 'I speak English. Hi.',
+you could be confident that the 'Hi.' was a greeting, not 'yes'. Likewise,
+web pages and servers can explicitly state which language character set
+is being used.
+
+#### Exercise - Listen to the Japanese Word for 'Yes' Be Spoken
+
+Go to `https://translate.google.com/`, select 'English' as the source
+language, 'Japanese' as the translation language, and enter 'Yes' as the
+word to translate. Then click the volume icon for the translated word.
+
+### Character Sets
+
+Just like the sound of 'hi' can mean one word or another _or even_
+just one syllable of a multi-syllabic word, bytes can represent one
+character or another _or even_ just one byte of a multi-byte character
+in an HTML file.
+
+The _character set_ assigned to a web page determines how individual
+bytes and groupings of bytes are converted into the characters
+(like '<', '/', 'a', '5', '?') which together constitute an HTML page.
+
+#### Popular Character Sets
+
+https://www.w3schools.com/html/html_charset.asp
+
+'printf' unix command
+
+https://www.w3.org/International/questions/qa-html-encoding-declarations
+
+dingbats
+
+#### Popular Character Sets
+
+ascii table
+ISO-8859-1
+UTF-8
+Shift-JS
+https://en.wikipedia.org/wiki/GB_2312
+
+### Character Encoding Set By Server
+
+### Unicode
+
 
 ## Content Management Systems
 
