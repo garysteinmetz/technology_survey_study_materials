@@ -114,9 +114,53 @@ is encountered, the web page will stop processing the web page
 until the JavaScript is executed. Displaying the full page first
 allows the user view it without more delays.
 
-### Accessibility
+## Accessibility
 
-### Cookies
+High-profile public web pages are supposed to be prepared to service
+a mass audience, including those with disabilities. In fact, in the
+United States, the Americans with Disabilities Act mandates that
+web sites in general incorporate mechanisms which will allow those
+with disabilities to use them.
+
+In HTML, the ARIA (Accessible Rich Internet Applications) extensions
+can be used to ensure ADA compliance.
+
+### Exercise - VoiceOver Mode
+
+This exercise can be run on a Mac.
+
+Create the following web page and load it into a browser.
+
+```
+<html>
+  <body>
+    <div>
+      <button aria-label="Quick table of popular search engines">Hello</button>
+      <ul>
+        <li><a href="https://www.google.com">Google</a></li>
+        <li><a href="https://www.yahoo.com">Yahoo</a></li>
+        <li><a href="https://www.bing.com">Bing</a></li>
+      </ul>
+    </div>
+  </body>
+</html>
+```
+
+In Mac, go to settings (click apple icon in top-left), then click
+'System Preferences', then click 'Accessibility', then click 'VoiceOver',
+then click the 'Enable VoiceOver' checkbox.
+
+Now reload the page and repeatedly click the tab character to navigate
+the page as if using the browser with a visual impairment. While a user
+without VoiceOver mode enabled will only see a button with 'Hello', someone
+with VoiceOver mode enabled will hear 'Quick table of popular search engines'.
+
+ARIA standards and ADA compliance are a specialty in themselves and the topic
+is extensive.
+
+Make sure to unclick the 'Enable VoiceOver' checkbox when finished!
+
+## Cookies
 
 Cookies are pieces of information stored in a browser when a web page
 is visited. Normally, when a browser returns to a web site, the browser
@@ -133,14 +177,14 @@ Cookies can be set both within the web page (meta tag and JavaScript)
 and also in the server's HTTP response which delivers the HTML
 that the browser uses to render the web page.
 
-#### Exercise - Server-Generated Persistent Cookie
+### Exercise - Server-Generated Persistent Cookie
 
 Create a file named 'server.js' with the contents below. Then start the server
 with command `node server.js` . Then open a browser, go to `http://localhost:2080`,
 then repeatedly click the 'Check Cookie Status' button for about 25 seconds and note how
 the cookie expires after 20 seconds.
 
-##### 'server.js'
+#### 'server.js'
 
 ```
 var webpage = `
@@ -186,7 +230,7 @@ http.createServer(function(request, response) {
 }).listen(2080);
 ```
 
-#### Exercise - Client-Generated Session Cookie
+### Exercise - Client-Generated Session Cookie
 
 Create a file named 'client.js' with the contents below. Then start the server
 with command `node client.js` . Then open a browser, go to `http://localhost:3080`,
@@ -212,7 +256,7 @@ server is rebooted, but the browser had cookies for the server before reboot,
 then the browser will send those same cookies back to the server if the browser
 contacts the server after it has been rebooted.
 
-##### 'client.js'
+#### 'client.js'
 
 ```
 var webpage = `
@@ -260,7 +304,7 @@ http.createServer(function(request, response) {
 }).listen(3080);
 ```
 
-##### Incognito Mode
+#### Incognito Mode
 
 Browsers support tabs that are 'incognito' (or 'private'). These browser tabs don't inherit
 the cookie settings of the main set of browser tabs.
@@ -268,7 +312,7 @@ the cookie settings of the main set of browser tabs.
 Open an 'Incognito' (Chrome) or 'Private' (Safari) browser window and confirm that
 '8' is the number of cookies in the cookie jar.
 
-##### Browser Fingerprinting
+#### Browser Fingerprinting
 
 Servers often use cookies to track whether the browser has previously accessed the server
 (like whether the user has logged in at a previous web page on the site).
@@ -288,7 +332,7 @@ about someone with the same characteristics who just entered the store, but the 
 doesn't describe the person's face (which in this case is the unique identifier, like a
 cookie). In this situation, you probably the this man's credit card information.
 
-###### Exercise - Browser Fingerprinting
+##### Exercise - Browser Fingerprinting
 
 Go to https://amiunique.org/fp , then go to the same page in an incognito tab.
 Compare the same information between the tabs.
