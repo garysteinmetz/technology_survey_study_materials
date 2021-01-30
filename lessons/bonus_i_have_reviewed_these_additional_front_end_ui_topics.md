@@ -429,6 +429,75 @@ bytes and groupings of bytes are converted into the characters
 
 #### Popular Character Sets
 
+They are many different character sets, but here are some of the most
+popular.
+
+  - ASCII - This character set was the first major one to be introduced.
+  The traditional part of this character set only has character assignments
+  for byte values 0 through 127. Most traditional characters on an American
+  keyboard (like 'a', 'Z', and '%') have corresponding numbers in ASCII.
+  - ISO-8859-1 - Extends ASCII by assigning values 128 to 255 with other
+  characters, many of them non-English alphabet letters found in other
+  European languages (like 'ñ' from the Spanish alphabet).
+  - UTF-8 - This is the main character set for internet text communication.
+  As of 2021, this is the most popular character encoding for major web
+  sites and the default character set for important internet standards
+  (like URLs). Each character uses between one and four bytes, with ASCII
+  characters keeping their original values and only using a single byte each.
+  All of the alphabets ('scripts') of the major world languages, including
+  Chinese, are supported.
+  - GB2312 - This is the official character set of the Chinese government.
+
+##### Exercise - Create HTML Pages in ISO-8859-1 and UTF-8
+
+This exercise can only be done on a Mac or Linux system.
+
+The `printf` command is a way of formatting a string. With it, numbers
+and others strings can be inserted into a template string. Here's an example
+using decimal ('floating point') formatting which prints the first four
+decimals ('%.4f') of Pi (rounded up - so 3.1416) followed by a new line ('\n')
+- this will print 'Pi is approximately 3.1416' .
+
+```
+printf "Pi is approximately %.4f\n" "3.141592653589793"
+```
+
+The '>' character can be used at the end of a command to redirect output
+from the console (terminal) to a file. If the file exists already, it will be
+overwritten.
+
+The `charset` attribute of the HTML `meta` tag can inform the browser which
+character set is being used on an HTML page.
+
+Create file 'happynewyear.html' with the following command then open the file
+with a browser. These UTF-8 (hexadecimal) codes correspond to three symbols
+('glyphs') in simplified Chinese to state 'happy new year'. The '\x' directive
+of 'printf' inserts a byte into the string (and two hexadecimal digits
+correspond to one byte).
+
+  - e8bf87
+  - e5a5bd
+  - e5b9b4
+
+```
+printf "<html><head><meta charset=\"utf-8\" /></head><body>\xe8\xbf\x87\xe5\xa5\xbd\xe5\xb9\xb4</body></html>" > happynewyear.html
+```
+
+Create and open file 'confusednewyear.html' with the following command which
+substitutes out 'utf-8' for 'iso-8859-1', which doesn't support simplified
+Chinese characters.
+
+```
+printf "<html><head><meta charset=\"iso-8859-1\" /></head><body>\xe8\xbf\x87\xe5\xa5\xbd\xe5\xb9\xb4</body></html>" > confusednewyear.html
+```
+
+
+
+Character encodings extend beyond internet communication
+echo ${LANG}
+iconv -l
+
+https://www.google.cn - character encoding
 https://www.w3schools.com/html/html_charset.asp
 
 'printf' unix command
@@ -437,13 +506,6 @@ https://www.w3.org/International/questions/qa-html-encoding-declarations
 
 dingbats
 
-#### Popular Character Sets
-
-ascii table
-ISO-8859-1
-UTF-8
-Shift-JS
-https://en.wikipedia.org/wiki/GB_2312
 
 ### Character Encoding Set By Server
 
