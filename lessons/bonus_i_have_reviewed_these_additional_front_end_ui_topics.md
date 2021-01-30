@@ -491,26 +491,55 @@ Chinese characters.
 printf "<html><head><meta charset=\"iso-8859-1\" /></head><body>\xe8\xbf\x87\xe5\xa5\xbd\xe5\xb9\xb4</body></html>" > confusednewyear.html
 ```
 
+##### Exercise - Alibaba's Character Set
 
+In addition to declaring the character set in the web page, the server can
+indicate what it is by including it in the `content type` response header.
 
-Character encodings extend beyond internet communication
-echo ${LANG}
-iconv -l
+https://www.alibaba.com/ is an web site hosted by Alibaba, a large technology
+company founded by one of the world's most successful entrepreneurs, Jack Ma.
 
-https://www.google.cn - character encoding
-https://www.w3schools.com/html/html_charset.asp
+In your browser, open Developer Tools, then go to `https://www.alibaba.com/` .
+Open the 'Network' tab, click the 'www.alibaba.com' entry at the top,
+click the 'Headers' sub-tab, scroll down to 'Response Headers'
+and note the entry `content-type: text/html;charset=UTF-8` .
 
-'printf' unix command
+##### Exercise - Unicode Escape Characters
 
-https://www.w3.org/International/questions/qa-html-encoding-declarations
+Even if the native character set of an HTML page can't support a specific
+letter/symbol ('glyph'), HTML allows its display through HTML's `escape code`
+feature. Instead of putting the bytes of the glyph directly into the page
+content, using characters `&#x<unicode_code>;` where 'unicode_code' corresponds
+to the 4-digit hexadecimal code. The two codes '597d' then '73a9' correspond
+to the word 'fun' in Simplified Chinese.
 
-dingbats
+Using the 'HTML' column in the table at
+http://www.alanwood.net/demos/webdings.html insert one or more
+symbols into the following HTML file.
 
+```
+<html>
+  <body>
+    It's time for some &#x597d;&#x73a9; with Unicode symbols!
+    <br />
+    <!-- Place symbols under this line -->
+    The compass was invented in this &#x1F30F; part of the world!
+  </body>
+</html>
+```
 
-### Character Encoding Set By Server
+### Useful Commands
 
-### Unicode
+Internationalization and character sets don't just apply to internet
+technologies, but apply to everyday computer interaction too.
 
+Here are some useful (Unix/Linux/Mac) commands.
+
+  - `iconv` - converts text from one character encoding to another
+  - `echo ${LANG}` - 'LANG' is the environment variable which informs
+  the terminal which character encoding should be the default encoding
+  for command line (terminal) interactions
+  - `hexdump` - prints out the byte values (in hexadecimal) in a file
 
 ## Content Management Systems
 
