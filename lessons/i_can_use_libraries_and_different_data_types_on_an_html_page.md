@@ -738,6 +738,129 @@ Here's another example.
 </html>
 ```
 
+### Try/Catch/Finally Blocks
+
+This control structure is used to deal with errors, which are better known
+to programmers as `exceptions`.
+
+When a function does something that _generates_ (_throws_) an exception,
+it can use a `try/catch` block to _handle_ (_catch_) that exception,
+which means do something about it. Once an exception is generated,
+no programming instruction beyond it within the function is thrown unless
+it is _caught_ in a `catch` block. Uncaught exceptions leave a function
+and continue to skip programming instructions. So if A calls B which
+calls C which calls D and D generates an uncaught exception, then all
+of the rest of the programming instructions of C, B, and A will be skipped
+unless one of them has a _catch_ block. A single exception can stop
+an entire program!
+
+#### Exercise - 'JSON.parse(value)' without 'try/catch' Block
+
+The 'JSON.parse(value)' function will throw an exception if the submitted
+string value isn't a valid string representation of a JSON entity
+(like 'abc').
+
+In the (Chrome) browser's developer tools, enter the following statement
+under the 'Console' tab. Note that an 'ugly' message will appear in red.
+
+```
+JSON.parse("abc");
+```
+
+#### Exercise - 'JSON.parse(value)' with 'try/catch' Block
+
+In the (Chrome) browser's developer tools, create the following function.
+
+```
+function getJson(value) {
+  try {
+    var outValue =  JSON.parse(value);
+    console.log("Congratulations, you submitted a valid value");
+    return outValue;
+  } catch (e) {
+    console.log("Received error - " + e);
+    console.log("Invalid input, try again");
+  }
+}
+```
+
+Now enter the following command and confirm the output.
+
+```
+getJson('{"abc": 123}')
+
+Congratulations, you submitted a valid value
+```
+
+Now enter the following command and confirm the output.
+
+```
+getJson('Invalid')
+
+Received error - SyntaxError: Unexpected token I in JSON at position 0
+Invalid input, try again
+```
+
+#### Exercise - 'JSON.parse(value)' with 'finally' and 'throw'
+
+For a `try` block, a `finally` section may be added to it and all
+statements in this section are executed, even if an exception isn't caught.
+`finally` sections are commonly used for cleaning up resources used
+in the `try` block (like connections to remote servers). If resources
+aren't cleaned up, this can often harm the performance of a program
+(e.g. resource memory leaks).
+
+If a `finally` section is present then a `catch` section doesn't need
+to be present (but it often is).
+
+A `throw` statement is used to generate an exception.
+
+In the (Chrome) browser's developer tools, create the following function.
+
+```
+function getJson(value) {
+  if (!value) {
+    throw "Come on, you have to give me something";
+  }
+  try {
+    var outValue =  JSON.parse(value);
+    console.log("Congratulations, you submitted a valid value");
+    return outValue;
+  } catch (e) {
+    console.log("Received error - " + e);
+    console.log("Invalid input, try again");
+  } finally {
+    console.log("Hope you enjoyed calling this function");
+  }
+}
+```
+
+Now enter the following command and confirm the output.
+
+```
+getJson('{"abc": 123}')
+
+Congratulations, you submitted a valid value
+Hope you enjoyed calling this function
+```
+
+Now enter the following command and confirm the output.
+
+```
+getJson('Invalid')
+
+Received error - SyntaxError: Unexpected token I in JSON at position 0
+Invalid input, try again
+Hope you enjoyed calling this function
+```
+
+Now enter the following command and confirm the output.
+
+```
+getJson(null)
+Uncaught Come on, you have to give me something
+```
+
 ## Libraries
 Libraries are collections of functionality (for JavaScript)
 and styling (for CSS). For web pages, they reside outside of the source
