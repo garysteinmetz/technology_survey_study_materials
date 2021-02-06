@@ -601,6 +601,166 @@ it is published).
 
 ## Web Frameworks
 
-SPA - web page doesn't reload as the user uses it
+As web development matured, much or most of web development has transitioned
+from raw JavaScript development to the incorporation of popular utility
+libraries, like jQuery.
 
-Vue
+In recent years, formal UI frameworks, which further facilitate development
+and provide welcome structure, are now standard in most professional
+development. While utility libraries are tools to assist web development,
+frameworks define _how_ the work will get done.
+
+For instance, accessing a DOM object is possible in raw JavaScript with the
+`document.getElementById('id')` and simplified in the jQuery utility
+library with `$('#id')[0]` , but with frameworks (in theory) you never have
+to directly interact with the DOM - generic objects have an HTML template
+with associated code and, as the code executes, the framework makes the
+needed `document.getElementById('id')` calls to update the HTML template.
+
+Here's an example from the Vue framework at
+https://class-component.vuejs.org/ . It's just one component
+but when displayed it will initially print '- 0 +' to the UI.
+As the user presses the '-' button, the count will go down
+and as the user presses the '+' button the number will go up. Again,
+the Vue framework makes the necessary `document.getElementById('id')`
+in the background when the 'count' value is supposed to be updated.
+
+```
+<template>
+  <div>
+    <button v-on:click="decrement">-</button>
+    {{ count }}
+    <button v-on:click="increment">+</button>
+  </div>
+</template>
+
+<script>
+import Vue from 'vue'
+import Component from 'vue-class-component'
+
+// Define the component in class-style
+@Component
+export default class Counter extends Vue {
+  // Class properties will be component data
+  count = 0
+
+  // Methods will be component methods
+  increment() {
+    this.count++
+  }
+
+  decrement() {
+    this.count--
+  }
+}
+</script>
+```
+
+### Popular Web Frameworks
+
+As of 2021, these are many different web frameworks but the most popular
+ones are React (supported by Facebook), Angular (supported by Google),
+and Vue.
+
+### SPA
+
+From the perspective of a user's experience, downloading and initializing
+a web page is very time consuming. As a user switches between different
+views (like from main page to a 'begin order' page), it's better to update
+the UI without having to load in an entirely new page.
+
+`SPAs` (single-page applications) download the entire web application
+when the web page is initially downloaded and then change the view
+as needed without completely reloading the web page.
+
+Web frameworks make it easier to create a SPA and are often designed
+to do just that.
+
+### Exercise - Use the Vue CLI
+
+The Vue CLI (command-line interface) is a program that can be run on the
+command line to conveniently create a new Vue project. Use NPM to download
+this CLI and create a project.
+
+While you could develop a basic Vue project on your own by creating
+the minimum number of necessary files, it's easier to use a tool
+like the Vue CLI (or download a starter project from GitHub) to create
+an initial project and start editing it instead. These pre-generated
+projects often have the latest recommended settings and configurations
+(including and especially 'build' configuration which generate the final
+JavaScript files).
+
+Do the following to generate a ready-made Vue project. It's based off of
+instructions found at https://cli.vuejs.org/guide/ .
+
+1) Open a command prompt and enter `cd Desktop` to go to the Desktop
+directory.
+2) Enter `mkdir vue_cli` then `cd vue_cli` to make a new project directory
+then go into it.
+3) Enter `npm init` and press enter for each prompt to create a Node
+project in that directory.
+4) Enter `npm install @vue/cli @vue/cli-service-global --save-dev`
+to install the '@vue/cli' and '@vue/cli-service-global' libraries
+into the 'node_modules' subdirectory. The optional '--save-dev' parameter
+creates an entry in 'package.json' under 'devDependencies' so that
+in the future these libraries can to be re-downloaded using the
+`npm install` command.
+5) The previous command installed the `vue` command in the
+`node_modules/.bin` subdirectory. (The `npm bin` command will list
+this subdirectory.) On Windows, enter
+`.\node_modules\.bin\vue create sample_project` to run
+this command. On Mac, enter `./node_modules/.bin/vue create sample_project`
+or `$(npm bin)/vue create sample_project` to run this command.
+For the 'Pick a preset' prompt, press enter on the first option
+(which should be 'n') and let it build the project for you.
+6) Wait several minutes for the installation to complete. This ('n')
+option seems to install _everything_ with much or most of it not
+being needed.
+7) Enter 'cd sample_project' to go into the main directory of the
+newly created project.
+8) Open 'VS Code' and create a new project with this 'sample_project'
+directory as its base directory. This directory can be found by going
+to the Desktop directory, then the 'vue_cli' subdirectory and the
+'sample_project' subdirectory will be found under it. A new project
+can be opened in VS Code by selecting the 'File' option then selecting
+the 'Open' option.
+9) In VS Code, briefly review the files and directory structure
+of the project.
+10) From the command line, type `npm run serve` to run the project locally.
+In a web browser, go to `http://localhost:8080/` to view and interact
+with the sample project. Click the 'About' link at the top of the page
+and notice that the browser instantly renders the
+`http://localhost:8080/#/about` . This is a SPA because the page updated
+but only `#/about` was added to the address - this is known as the 'anchor'
+part of a URL and this part isn't sent to the server, it traditionally
+informs a browser where to scroll to on a web page, but web frameworks
+use it to notify that a different view of the SPA should be rendered.
+
+Add line `<button v-on:click="changeMessage()">Change Message</button>`
+after line `<h1>{{ msg }}</h1>` at the top of file
+`src/components/HelloWorld.vue` as follows.
+
+```
+<template>
+  <div class="hello">
+    <h1>{{ msg }}</h1>
+    <button v-on:click="changeMessage()">Change Message</button>
+```
+
+The `v-on:click` directive instructs view that the `changeMessage()`
+function should be called whenever the 'Change Message' button is clicked.
+Insert that function below the `@Prop() private msg!: string;` member
+variable declaration in the `HelloWorld` class as follows.
+
+```
+@Component
+export default class HelloWorld extends Vue {
+  @Prop() private msg!: string;
+  changeMessage() {
+    this.msg = "New Message";
+  }
+}
+```
+
+Now reload the page and click the 'Change Message' button and notice
+that the main message on the page is now 'New Message' .
