@@ -213,3 +213,110 @@ element that contains it).
   </body>
 </html>
 ```
+
+## Saint Valentine's Day Card
+
+```
+<html>
+  <head>
+    <!--
+      Source - https://www.thinkful.com/learn/valentines-day-ecard/
+      Source - https://css-tricks.com/stripes-css/
+    -->
+    <style>
+      div.generalBackground {
+        background: repeating-linear-gradient(
+          45deg,
+          #f12469,
+          #f12469 10px,
+          #fcd2d8 10px,
+          #fcd2d8 20px
+        );
+        height: calc(100% - 42px);
+        width: calc(100% - 42px);
+        padding: 20px;
+        margin: auto;
+        align: center;
+        display: flex;
+        align-items: center;
+        vertical-align: center;
+        text-align: center;
+      }
+      div.outerPageBack {
+        height: calc(100% - 42px);
+        width: calc(50% - 21px);
+        display: inline-block;
+      }
+      div.outerPageFront {
+        background: #eca2a8;
+        height: calc(100% - 44px);
+        width: calc(50% - 23px);
+        display: inline-block;
+        margin: auto;
+        border: 1px black solid;
+      }
+      table.outerPageFrontInner {
+        margin: auto;
+      }
+      div.innerPage {
+        background: #eca2a8;
+        height: 100%;
+        width: 100%;
+        border: 1px black solid;
+      }
+      .heart {
+        background-color: red;
+        display: inline-block;
+        height: 100px;
+        margin: 0 10px;
+        position: relative;
+        top: 0;
+        transform: rotate(-45deg);
+        width: 100px;
+      }
+      .heart:before,
+      .heart:after {
+        content: "";
+        background-color: red;
+        border-radius: 50%;
+        height: 100px;
+        position: absolute;
+        width: 100px;
+      }
+      .heart:before {
+        top: -50px;
+        left: 0;
+      }
+      .heart:after {
+        left: 50px;
+        top: 0;
+      }
+      .lettering {
+        font-family: Apple Chancery;
+        font-size: 20pt;
+      }
+      .letterSpacing {
+        font-size: 16pt;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="generalBackground">
+      <div class="outerPageBack"></div>
+      <div class="outerPageFront">
+        <p class="letterSpacing">&nbsp;</p>
+        <p class="lettering">Happy Valentine's Day!</p>
+        <p class="letterSpacing">&nbsp;</p>
+        <p class="letterSpacing">&nbsp;</p>
+        <div class="heart"></div>
+        <p class="letterSpacing">&nbsp;</p>
+        <p class="letterSpacing">&nbsp;</p>
+      </div>
+    </div>
+    <p style="page-break-before: always" />
+    <div class="generalBackground">
+      <div class="innerPage"></div>
+    </div>
+  </body>
+</html>
+```
