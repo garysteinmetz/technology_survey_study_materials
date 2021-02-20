@@ -60,3 +60,44 @@ Then run command `docker ps -a` and if any containers are still listed
 remove them one-by-one with this command.
 
   - docker rm <hexadecimal_code>
+
+#### Remove Unused Docker Images
+
+Entering `docker images` will list all Docker images. Remove all unused
+Docker images with the following command. (Unused means that there is
+no active container running that image.)
+
+  - `docker rmi $(docker images -a -q)`
+
+### Zork
+
+Text-based adventure games are games that where the user interacts by
+entering in commands (e.g. types words). If there are graphics,
+they generally don't move and the user isn't pressured to enter a command
+in quickly.
+
+These games were especially popular in the early 1980s and they made
+money for gaming companies. They are still played today and represent
+a valid genre of gaming.
+
+A text-based adventure can involve just about any scenario -
+like fighting mythical monsters, solving a crime, escaping a spaceship.
+
+`Zork` is one of the best-known games of this genre. And there's a
+Docker image for it!
+
+#### Zork Docker Image and Play
+
+There is a Docker image which includes the game Zork at
+https://github.com/clockworksoul/docker-zork1 . Install and run
+the image with the following command.
+
+  - `docker run -it -v ~/saves/zork1:/save clockworksoul/zork1`
+
+#### Playing and Winning Zork
+
+A command list can be found at https://zork.fandom.com/wiki/Command_List .
+
+A good workthrough of Zork can be found at
+https://gamefaqs.gamespot.com/pc/564446-zork-i/faqs/20848 .
+
