@@ -250,11 +250,25 @@ curl -v https://jsonplaceholder.typicode.com/posts/1
 
 ### 'POST' Call
 
+```
+curl -v -X POST -H "Content-Type: application/json" -d "{ \"title\": \"foo\", \"body\": \"bar\", \"userId\": 1 }" https://jsonplaceholder.typicode.com/posts
+```
+
 #### HTML Form
 
 ### 'PUT' Call
 
+```
+curl -v -X PUT -H "Content-Type: application/json" -d "{ \"id\": 1, \"title\": \"foo\", \"body\": \"bar\", \"userId\": 1 }" https://jsonplaceholder.typicode.com/posts/1
+```
+
+
 ### 'DELETE' Call
+
+```
+curl -v -X DELETE https://jsonplaceholder.typicode.com/posts/1
+```
+
 
 ### 'PATCH' Call
 
