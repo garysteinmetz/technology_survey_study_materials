@@ -597,8 +597,6 @@ and supports 'workflow' capabilities (e.g. both an author's manager
 and someone from corporate branding have to approve an image before
 it is published).
 
-## Promises
-
 ## Web Frameworks
 
 As web development matured, much or most of web development has transitioned
@@ -764,3 +762,181 @@ export default class HelloWorld extends Vue {
 
 Now reload the page and click the 'Change Message' button and notice
 that the main message on the page is now 'New Message' .
+
+## Callbacks, Promises, and WebSockets
+
+https://developer.twitter.com/en/portal/dashboard
+https://developer.twitter.com/en/docs/authentication/api-reference
+
+https://developer.twitter.com/en/docs/authentication/oauth-2-0/bearer-tokens
+
+export "OAUTH2_TOKEN=<API_KEY>:<API_KEY_SECRET>"
+curl -v -u "${OAUTH2_TOKEN}" -F "grant_type=client_credentials" https://api.twitter.com/oauth2/token
+curl -H "Authorization: Bearer ${OAUTH2_TOKEN}" https://api.twitter.com/2/tweets/search/recent?query=from:faucifan
+
+Server credentials are most definitely _NOT_ normally made
+available to the client (e.g. browser HTML)
+
+Instead, web servers create their own web services called by
+clients, and these web servers themselves call backend systems
+
+https://developer.twitter.com/en/docs/twitter-api/tweets/sampled-stream/api-reference/get-tweets-sample-stream
+
+API - Application Programming Interface
+
+
+https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf
+"Allow CORS: Access-Control-Allow-Origin"
+
+
+https://www.websocket.org/echo.html
+
+Libraries like 'Axios' make executing HTTP/HTTPS calls easier than the native 'https' library
+
+
+```
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
+    <script>
+      //Reference - https://www.websocket.org/echo.html
+      var webSocket = new WebSocket("wss://echo.websocket.org/");
+      webSocket.onopen = function() {
+        webSocket.send("Testing 1, 2, 3 ...");
+        webSocket.send("Testing 1, 2, 3 ...");
+        webSocket.send("Testing 1, 2, 3 ...");
+      };
+      webSocket.onmessage = function(event) {
+        console.log("Received - " + event.data);
+      };
+    </script>
+  </head>
+  <body>
+    Hello
+  </body>
+</html>
+```
+Ran into CORS problem trying to run code similar to this on the client side (within a web page's JavaScript)
+
+```
+//https://nodejs.org/api/http.html#http_http_request_url_options_callback
+//https://stackoverflow.com/questions/6158933/how-is-an-http-post-request-made-in-node-js
+//https://www.valentinog.com/blog/http-js/
+
+const querystring = require("querystring");
+const https = require("https");
+
+const apiKey = "";
+const apiKeySecret = "";
+
+let oauthTwoTokenUrl = "https://api.twitter.com/oauth2/token";
+
+let formData = querystring.stringify({
+  "grant_type": "client_credentials"
+});
+
+function printTwitterResponseEntry(responseData) {
+  for (let i = 0; i < responseData.data.length; i++) {
+    console.log("  - Entry - " + responseData.data[i].text);
+  }
+}
+
+let oauthTwoResponseData = "";
+let oauthTwoRequest = https.request(
+  oauthTwoTokenUrl,
+  {
+    "method": "POST",
+    "headers": {
+      "Authorization": "Basic " + Buffer.from(apiKey + ":" + apiKeySecret).toString("base64"),
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Length": Buffer.byteLength(formData)
+    }
+  },
+  function(response) {
+    response.setEncoding('utf8');
+    response.on(
+      'data',
+      function(chunk) {
+        oauthTwoResponseData += chunk;
+      }
+    );
+    response.on(
+      'end',
+      function() {
+        const oauthTwoResponseObj = JSON.parse(oauthTwoResponseData);
+        const oauthTwoAccessToken = oauthTwoResponseObj.access_token;
+        console.log();
+        console.log();
+        console.log("OAuth2 Access Token - " + oauthTwoAccessToken);
+        let fauciResponseData = "";
+        let fauciRequest = https.request(
+          "https://api.twitter.com/2/tweets/search/recent?query=from:faucifan",
+          {
+            "method": "GET",
+            "headers": {
+              "Authorization": "Bearer " + oauthTwoAccessToken
+            }
+          },
+          //
+          function(response) {
+            response.setEncoding('utf8');
+            response.on(
+              'data',
+              function(chunk) {
+                fauciResponseData += chunk;
+              }
+            );
+            response.on(
+              'end',
+              function() {
+                const fauciResponseObj = JSON.parse(fauciResponseData);
+                console.log();
+                console.log();
+                console.log("Fauci Response -");
+                printTwitterResponseEntry(fauciResponseObj);
+              }
+            );
+          }
+          //
+        );
+        fauciRequest.end();
+        //
+        let yeohResponseData = "";
+        let yeohRequest = https.request(
+          "https://api.twitter.com/2/tweets/search/recent?query=from:michelleyeoh_fp",
+          {
+            "method": "GET",
+            "headers": {
+              "Authorization": "Bearer " + oauthTwoAccessToken
+            }
+          },
+          //
+          function(response) {
+            response.setEncoding('utf8');
+            response.on(
+              'data',
+              function(chunk) {
+                yeohResponseData += chunk;
+              }
+            );
+            response.on(
+              'end',
+              function() {
+                const yeohResponseObj = JSON.parse(yeohResponseData);
+                console.log();
+                console.log();
+                console.log("Yeoh Response -");
+                printTwitterResponseEntry(yeohResponseObj);
+              }
+            );
+          }
+          //
+        );
+        yeohRequest.end();
+      }
+    );
+  }
+);
+oauthTwoRequest.write(formData);
+oauthTwoRequest.end();
+```
