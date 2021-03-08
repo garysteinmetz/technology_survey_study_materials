@@ -1024,3 +1024,39 @@ axios.post(
 console.log("Done executing instructions, nothing should be printed below this like, right?");
 
 ```
+
+Conflict with CORS (HTTP 'OPTIONS' call is made)
+
+```
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
+    <script>
+      var apiKey = "";
+      var apiKeySecret = "";
+      console.log(btoa(apiKey + ":" + apiKeySecret));
+      $(document).ready(function() {
+            $.post(
+              {
+                url: "https://api.twitter.com/oauth2/token",
+                headers: {
+                  Authorization: "Basic " + btoa(apiKey + ":" + apiKeySecret)
+                },
+                data: {
+                  grant_type: "client_credentials"
+                },
+                success: function(data, status) {
+                  console.log(JSON.stringify(data));
+                  //$("#title").val(data.title);
+                }
+              }
+            );
+          },
+      );
+    </script>
+  </head>
+  <body>
+    Hello
+  </body>
+</html>
+```
