@@ -940,3 +940,87 @@ let oauthTwoRequest = https.request(
 oauthTwoRequest.write(formData);
 oauthTwoRequest.end();
 ```
+
+Yeoh's output tends to appear before Fauci's output!
+
+Wait for both calls to complete first, then print them in the order they were listed
+
+`async` keyword, `await` keyword
+//
+
+npm init
+npm install axios --save
+
+```
+const querystring = require("querystring");
+const axios = require('axios');
+
+const apiKey = "";
+const apiKeySecret = "";
+
+//const oauthTwoFormData = new FormData();
+//oauthTwoFormData.append("grant_type", "client_credentials");
+
+let formData = querystring.stringify({
+  "grant_type": "client_credentials"
+});
+
+function printTwitterResponseEntry(responseData) {
+  for (let i = 0; i < responseData.data.length; i++) {
+    console.log("  - Entry - " + responseData.data[i].text);
+  }
+}
+
+axios.post(
+  "https://api.twitter.com/oauth2/token",
+  formData,
+  {
+    "headers": {
+      "Authorization": "Basic " + Buffer.from(apiKey + ":" + apiKeySecret).toString("base64")
+    }
+  }
+).then(
+  function(oauthTwoResponse) {
+    const oauthTwoAccessToken = oauthTwoResponse.data.access_token;
+    console.log();
+    console.log();
+    console.log("OAuth2 Token - " + oauthTwoAccessToken);
+    //
+    Promise.all(
+      [
+        axios.get(
+          "https://api.twitter.com/2/tweets/search/recent?query=from:faucifan",
+          {
+            "headers": {
+              "Authorization": "Bearer " + oauthTwoAccessToken
+            }
+          }
+        ),
+        axios.get(
+          "https://api.twitter.com/2/tweets/search/recent?query=from:michelleyeoh_fp",
+          {
+            "headers": {
+              "Authorization": "Bearer " + oauthTwoAccessToken
+            }
+          }
+        )
+      ]
+    ).then(
+      function(results) {
+        console.log();
+        console.log();
+        console.log("Fauci Response -");
+        printTwitterResponseEntry(results[0].data);
+        console.log();
+        console.log();
+        console.log("Yeoh Response -");
+        printTwitterResponseEntry(results[1].data);
+      }
+    );
+    //
+  }
+);
+
+console.log("Done executing instructions, nothing should be printed below this like, right?");
+
+```
