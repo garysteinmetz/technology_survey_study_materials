@@ -763,7 +763,142 @@ export default class HelloWorld extends Vue {
 Now reload the page and click the 'Change Message' button and notice
 that the main message on the page is now 'New Message' .
 
-## Callbacks, Promises, and WebSockets
+## JavaScript-Based HTTP Calls
+
+While loading a web page or submitting a form will initiate an HTTP request,
+JavaScript can also be used to make client HTTP calls. These types of
+calls are known as AJAX calls, for Asynchronous JavaScript and XML, but
+instead of XML these calls nearly always use JSON to transmit data,
+whether to the server (POST call) or receive it from the server (GET call).
+
+### Simple AJAX GET Call using jQuery Using Callbacks
+
+Because web pages want to get many things done as quickly as possible
+while also processing user requests, they try to do several things at once
+and not be held up by any one task.
+
+Calling a remote web site (like by making an HTTP call to a web service)
+could take several seconds and holding up the entire web page would create
+a very bad customer experience.
+
+AJAX calls allow (even expect) that web page processing will continue
+with other things after the HTTP call is made. `Callbacks` are functions
+submitted to other functions that get called when certain events happen.
+Consider this example.
+
+```
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
+    <script>
+      console.log("About to make AJAX call");
+      $.get(
+        {
+          url: "https://jsonplaceholder.typicode.com/todos/1",
+          success: function(data, status) {
+            console.log("Here is the response");
+            console.log(JSON.stringify(data));
+            console.log("The response should be on the previous line");
+          }
+        }
+      );
+      console.log("Start doing other things");
+    </script>
+  </head>
+  <body>Check the 'Network' Tab of Developer Tools</body>
+</html>
+```
+
+Note here how the 'Start doing other things' is printed _before_
+the 'Here is the response' message.
+
+Likewise the response is printed by the function assigned to the `success`
+key. Also note that, in the JavaScript language, the `"` which should
+surround a key name of a JSON object are optional (so `success` in this case
+is equivalent to `"success"`).
+
+### WebSockets
+
+AJAX calls are one-to-one - for each request sent, exactly one response
+is received. It's like a boomerang - each one thrown will return.
+
+Other scenarios require on ongoing conversation between client and server
+where each party can send a message to the other at anytime without
+request. `WebSockets` are good for these scenarios. Here's an example.
+
+```
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
+    <script>
+      //Reference - https://www.websocket.org/echo.html
+      var webSocket = new WebSocket("wss://echo.websocket.org/");
+      webSocket.onopen = function() {
+        webSocket.send(" Testing 1, 2, 3 ...");
+        webSocket.send(" Testing 4, 5, 6 ...");
+        webSocket.send(" Testing 7, 8, 9 ...");
+        console.log("Sent All Three Messages at " + new Date());
+      };
+      webSocket.onmessage = function(event) {
+        console.log("Received at " + new Date() + " - " + event.data);
+      };
+    </script>
+  </head>
+  <body>
+    Hello
+  </body>
+</html>
+
+```
+
+Note in this example that the server only responds to the client without
+initiating its own call to the client - but with WebSockets servers
+can call the client first. For example, consider a stock quotes application
+where the server keeps sending updated stock prices to the client without
+the formality of the client constantly asking the server for these prices.
+
+### CORS
+
+curl -v -u "${OAUTH2_TOKEN}" -F "grant_type=client_credentials" https://api.twitter.com/oauth2/token
+
+```
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
+    <script>
+      var apiKey = "";
+      var apiKeySecret = "";
+      console.log(btoa(apiKey + ":" + apiKeySecret));
+      $(document).ready(function() {
+            $.post(
+              {
+                url: "https://api.twitter.com/oauth2/token",
+                headers: {
+                  Authorization: "Basic " + btoa(apiKey + ":" + apiKeySecret)
+                },
+                data: {
+                  grant_type: "client_credentials"
+                },
+                success: function(data, status) {
+                  console.log(JSON.stringify(data));
+                  //$("#title").val(data.title);
+                }
+              }
+            );
+          },
+      );
+    </script>
+  </head>
+  <body>
+    Hello
+  </body>
+</html>
+```
+
+
+### Server-Side HTTP Client Calls to Twitter
+
+curl -v -u "${OAUTH2_TOKEN}" -F "grant_type=client_credentials" https://api.twitter.com/oauth2/token
 
 https://developer.twitter.com/en/portal/dashboard
 https://developer.twitter.com/en/docs/authentication/api-reference
@@ -802,12 +937,13 @@ Libraries like 'Axios' make executing HTTP/HTTPS calls easier than the native 'h
       //Reference - https://www.websocket.org/echo.html
       var webSocket = new WebSocket("wss://echo.websocket.org/");
       webSocket.onopen = function() {
-        webSocket.send("Testing 1, 2, 3 ...");
-        webSocket.send("Testing 1, 2, 3 ...");
-        webSocket.send("Testing 1, 2, 3 ...");
+        webSocket.send(" Testing 1, 2, 3 ...");
+        webSocket.send(" Testing 4, 5, 6 ...");
+        webSocket.send(" Testing 7, 8, 9 ...");
+        console.log("Sent All Three Messages at " + new Date());
       };
       webSocket.onmessage = function(event) {
-        console.log("Received - " + event.data);
+        console.log("Received at " + new Date() + " - " + event.data);
       };
     </script>
   </head>
@@ -1027,36 +1163,3 @@ console.log("Done executing instructions, nothing should be printed below this l
 
 Conflict with CORS (HTTP 'OPTIONS' call is made)
 
-```
-<html>
-  <head>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
-    <script>
-      var apiKey = "";
-      var apiKeySecret = "";
-      console.log(btoa(apiKey + ":" + apiKeySecret));
-      $(document).ready(function() {
-            $.post(
-              {
-                url: "https://api.twitter.com/oauth2/token",
-                headers: {
-                  Authorization: "Basic " + btoa(apiKey + ":" + apiKeySecret)
-                },
-                data: {
-                  grant_type: "client_credentials"
-                },
-                success: function(data, status) {
-                  console.log(JSON.stringify(data));
-                  //$("#title").val(data.title);
-                }
-              }
-            );
-          },
-      );
-    </script>
-  </head>
-  <body>
-    Hello
-  </body>
-</html>
-```
