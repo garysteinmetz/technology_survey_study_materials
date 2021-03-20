@@ -310,6 +310,46 @@ ps -aef
 / # curl -v http://jsonplaceholder.typicode.com/posts/1 > output1.txt
 ```
 
+## Spelling Help
+
+### Background
+
+Computers now support text-to-speech programs.
+
+  - Mac - The `say` program (like `say Hello`)
+
+This program uses text-to-speech to create an interactive spelling text.
+
+Reference - https://stackoverflow.com/questions/1040655/ms-speech-from-command-line
+
+### Running Program
+
+Reference - https://github.com/garysteinmetz/word_mastery
+
+  - Open a command prompt and go to the Desktop (`cd Desktop`)
+  - Run `git clone git clone https://github.com/garysteinmetz/word_mastery`
+  - Go into that project's directory (`cd word_mastery`)
+  - Compile the program with command `javac SpellingHelp.java`
+  - In the same directory, create a text file named `words.txt` with content below
+  - Test your spelling of 5 words with command `java -classpath . SpellingHelp words.txt 5`
+
+```
+carpet
+flute
+rice
+orange
+automobile
+metropolis
+movie
+running
+star
+```
+
+### Supporting Windows
+
+Reference - https://www.baeldung.com/java-detect-os
+Reference - https://mkyong.com/java/how-to-detect-os-in-java-systemgetpropertyosname/
+
 ## Route Custom Domain to GitHub Pages Site
 
 https://docs.github.com/en/github/working-with-github-pages/managing-a-custom-domain-for-your-github-pages-site
