@@ -558,3 +558,144 @@ Effects with sprites and scenes
 Events with sprites
 Classes including - Phaser.Math, tile image, spritesheet, 'anims' function
 Cursor keys
+
+
+## Exercise - Basketball Game
+
+Base Project - https://github.com/photonstorm/phaser3-typescript-project-template
+
+```
+git clone https://github.com/photonstorm/phaser3-typescript-project-template.git
+```
+
+Override 'src/game.ts' file with contents in code block below
+
+Run these 'npm' commands -
+
+```
+npm install
+npm run watch
+```
+
+Open Browser - http://localhost:10001/
+
+Upload to Public server (recommended - rename 'dist/index.html' file) -
+
+```
+aws s3 sync --acl public-read --exclude ".*" ./dist s3://content.chhcsfun.com/content
+```
+
+### 'src/game.ts' Contents
+
+```
+import 'phaser';
+import { Physics } from 'phaser';
+
+//https://photonstorm.github.io/phaser3-docs/
+export default class BasketballGame extends Phaser.Scene
+{
+    keys: Phaser.Types.Input.Keyboard.CursorKeys;
+    basketball: Phaser.GameObjects.Sprite;
+    net: Phaser.GameObjects.Sprite;
+    scoreBoard: Phaser.GameObjects.Text;
+    score: number = 0;
+
+    constructor ()
+    {
+        super('basketballGame');
+    }
+
+    preload ()
+    {
+        this.load.image(
+            'basketball',
+            'https://img.icons8.com/emoji/48/000000/basketball-emoji.png'
+        );
+        this.load.image(
+            'net',
+            'https://img.icons8.com/color/48/000000/basketball-net.png'
+        );
+    }
+
+    create ()
+    {
+        this.scoreBoard = this.add.text(
+            scoreBoardOffset, scoreBoardOffset, this.score.toString());
+
+        this.basketball = this.add.sprite(
+            basketballOffset, basketballOffset, "basketball");
+        this.basketball.displayWidth = spriteSide;
+        this.basketball.displayHeight = spriteSide;
+
+        this.net = this.add.sprite(netOffset, netOffset, "net");
+        this.net.flipX = true;
+        this.net.displayWidth = spriteSide;
+        this.net.displayHeight = spriteSide;
+
+        this.keys = this.input.keyboard.createCursorKeys();
+
+        this.physics.add.existing(this.basketball);
+        this.physics.add.existing(this.net);
+        this.physics.add.collider(this.basketball, this.net,
+            (a, b) => {
+                this.score = this.score + 1;
+                this.scoreBoard.text = this.score.toString();
+                this.basketball.setY(basketballOffset);
+                this.basketball.setX(basketballOffset);
+            });
+    }
+    update ()
+    {
+        if (this.keys.down.isDown) {
+            this.basketball.setY(this.basketball.y + movementOffset);
+            if (this.basketball.y > canvasHeight) {
+                this.basketball.setY(0);
+            }
+        }
+        if (this.keys.up.isDown) {
+            this.basketball.setY(this.basketball.y - movementOffset);
+            if (this.basketball.y < 0) {
+                this.basketball.setY(canvasHeight);
+            }
+        }
+        if (this.keys.right.isDown) {
+            this.basketball.setX(this.basketball.x + movementOffset);
+            if (this.basketball.x > canvasWidth) {
+                this.basketball.setX(0);
+            }
+        }
+        if (this.keys.left.isDown) {
+            this.basketball.setX(this.basketball.x - movementOffset);
+            if (this.basketball.x < 0) {
+                this.basketball.setX(canvasWidth);
+            }
+        }
+    }
+}
+
+const canvasWidth = 400;
+const canvasHeight = 400;
+
+const scoreBoardOffset = 0;
+const basketballOffset = 100;
+const netOffset = 250;
+
+const movementOffset = 2;
+
+const spriteSide = 75;
+
+const config = {
+    type: Phaser.CANVAS,
+    backgroundColor: '#125555',
+    width: canvasWidth,
+    height: canvasHeight,
+    scene: BasketballGame,
+    //Note - the following setting is required to use 'this.physics'
+    physics: {
+        default: "arcade"
+    }
+};
+
+const game = new Phaser.Game(config);
+
+```
