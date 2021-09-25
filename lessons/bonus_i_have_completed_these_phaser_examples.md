@@ -615,6 +615,14 @@ export default class BasketballGame extends Phaser.Scene
             'net',
             'https://img.icons8.com/color/48/000000/basketball-net.png'
         );
+        //Entering 'online sound effect generator' into a search engine lists sites like these
+        //  - https://sfxr.me/
+        //  - https://www.leshylabs.com/apps/sfMaker/
+        //
+        //Note - Uncomment the line below to load a sound, uncomment line in 'create' function to play it
+        //  Copy the sound file into the 'dist' directory of this project
+        //  Use the correct name for that sound file immediately below instead of using "sound.wav"
+        //this.load.audio("sound1", "sound.wav");
     }
 
     create ()
@@ -638,6 +646,8 @@ export default class BasketballGame extends Phaser.Scene
         this.physics.add.existing(this.net);
         this.physics.add.collider(this.basketball, this.net,
             (a, b) => {
+                //Note - Uncomment the line below to play a sound (must be loaded above)
+                //this.sound.play("sound1");
                 this.score = this.score + 1;
                 this.scoreBoard.text = this.score.toString();
                 this.basketball.setY(basketballOffset);
