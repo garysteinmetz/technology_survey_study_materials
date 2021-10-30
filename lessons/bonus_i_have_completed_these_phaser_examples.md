@@ -709,3 +709,215 @@ const config = {
 const game = new Phaser.Game(config);
 
 ```
+
+## Exercise - Haunted Treasure Game
+
+Use the same setup as the basketball game, but update the contents as follows.
+
+### 'src/game.ts' Contents
+
+```
+import 'phaser';
+import { Physics } from 'phaser';
+
+//https://photonstorm.github.io/phaser3-docs/
+export default class HauntedTreasureGame extends Phaser.Scene
+{
+    keys: Phaser.Types.Input.Keyboard.CursorKeys;
+    adventurer: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+    ghost: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+    treasureChest: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+    scoreBoard: Phaser.GameObjects.Text;
+    highScoreBoard: Phaser.GameObjects.Text;
+    score: number = 0;
+    highScore: number = 0;
+    background: Phaser.GameObjects.Image;
+
+    constructor ()
+    {
+        super('hauntedTreasureGame');
+    }
+
+    preload ()
+    {
+        this.load.image(
+            'adventurer',
+            'https://img.icons8.com/external-vitaliy-gorbachev-flat-vitaly-gorbachev/58/000000/external-explorer-jungle-vitaliy-gorbachev-flat-vitaly-gorbachev-1.png'
+        );
+        this.load.image(
+            'ghost',
+            'https://img.icons8.com/dusk/64/000000/ghost--v1.png'
+        );
+        this.load.image(
+            'treasureChest',
+            'https://img.icons8.com/external-justicon-flat-justicon/64/000000/external-treasure-pirates-justicon-flat-justicon.png'
+        );
+        this.load.image(
+            'background',
+            'https://img.icons8.com/external-justicon-lineal-justicon/64/000000/external-haunted-house-halloween-justicon-lineal-justicon.png');
+        //    'https://img.icons8.com/external-icongeek26-linear-colour-icongeek26/64/000000/external-desert-desert-icongeek26-linear-colour-icongeek26-1.png');
+        //this.load.audio("sound1", "sound.wav");
+    }
+
+    create ()
+    {
+        this.background = this.add.image(canvasWidth/2, canvasHeight/2, 'background');
+        this.background.setDisplaySize(canvasWidth, canvasHeight);
+        //
+        this.scoreBoard = this.add.text(
+            scoreBoardOffset, scoreBoardOffset, ("Score: " + this.score));
+        this.highScoreBoard = this.add.text(
+            highScoreBoardLeftOffset, highScoreBoardTopOffset,
+            ("High Score: " + this.highScore));
+        //
+        this.adventurer = this.physics.add.sprite(
+            adventurerOffset, adventurerOffset, "adventurer");
+        this.adventurer.displayWidth = spriteSide;
+        this.adventurer.displayHeight = spriteSide;
+        this.adventurer.setVelocity(0, 0);
+        //
+        this.treasureChest = this.physics.add.sprite(
+            treasureChestOffset, treasureChestOffset, "treasureChest");
+        this.treasureChest.displayWidth = spriteSide;
+        this.treasureChest.displayHeight = spriteSide;
+        //
+        //
+        this.ghost = this.physics.add.sprite(ghostOffset, ghostOffset, "ghost");
+        this.ghost.flipX = true;
+        this.ghost.displayWidth = ghostSide;
+        this.ghost.displayHeight = ghostSide;
+        this.updateGhostMovement();
+
+        this.keys = this.input.keyboard.createCursorKeys();
+
+        //this.physics.add.existing(this.adventurer);
+        //this.physics.add.existing(this.ghost);
+        this.physics.add.collider(this.adventurer, this.ghost, null,
+            (a, b) => {
+                //this.sound.play("sound1");
+                if (this.highScore < this.score) {
+                    this.highScore = this.score;
+                }
+                this.resetPlayers();
+                this.resetGame();
+                this.updateScoreBoards();
+                return true;
+            }, this);
+        this.physics.add.collider(this.adventurer, this.treasureChest, null,
+            (a, b) => {
+                //this.sound.play("sound1");
+                this.score = this.score + 1;
+                this.resetPlayers();
+                this.updateScoreBoards();
+                ghostSide = ghostSide + ghostSideIncrement;
+                this.ghost.displayWidth = ghostSide;
+                this.ghost.displayHeight = ghostSide;
+                ghostMovementOffset = ghostMovementOffset + ghostMovementIncrement;
+                return true;
+            }, this);
+        setInterval(
+            () => {
+                this.updateGhostMovement();
+            },
+            2000
+        );
+    }
+    update ()
+    {
+        if (this.keys.down.isDown) {
+            this.adventurer.setY(this.adventurer.y + adventurerMovementOffset);
+        }
+        if (this.keys.up.isDown) {
+            this.adventurer.setY(this.adventurer.y - adventurerMovementOffset);
+        }
+        if (this.keys.right.isDown) {
+            this.adventurer.setX(this.adventurer.x + adventurerMovementOffset);
+        }
+        if (this.keys.left.isDown) {
+            this.adventurer.setX(this.adventurer.x - adventurerMovementOffset);
+        }
+        this.wrapBoundary(this.adventurer);
+        this.wrapBoundary(this.ghost);
+        //for some reason, this sprite starts to follow ghost
+        //  after a while, this command prevents that
+        this.adventurer.setVelocity(0, 0);
+    }
+    wrapBoundary (sprite: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody)
+    {
+        //
+        if (sprite.y > canvasHeight) {
+            sprite.setY(0);
+        }
+        if (sprite.y < 0) {
+            sprite.setY(canvasHeight);
+        }
+        if (sprite.x > canvasWidth) {
+            sprite.setX(0);
+        }
+        if (sprite.x < 0) {
+            sprite.setX(canvasWidth);
+        }
+    }
+    resetPlayers()
+    {
+        this.adventurer.setY(adventurerOffset);
+        this.adventurer.setX(adventurerOffset);
+        this.ghost.setY(ghostOffset);
+        this.ghost.setX(ghostOffset);
+    }
+    resetGame()
+    {
+        this.score = 0;
+        ghostMovementOffset = baseGhostMovementOffset;
+        ghostSide = spriteSide;
+        this.ghost.displayWidth = ghostSide;
+        this.ghost.displayHeight = ghostSide;
+    }
+    updateScoreBoards()
+    {
+        this.scoreBoard.text = ("Score: " + this.score);
+        this.highScoreBoard.text = ("High Score: " + this.highScore);
+    }
+    updateGhostMovement() {
+        const leftPolarity = Phaser.Math.RND.between(0, 1) === 1 ? 1 : -1;
+        const topPolarity = Phaser.Math.RND.between(0, 1) === 1 ? 1 : -1;
+        this.ghost.setVelocity(
+            leftPolarity*Phaser.Math.RND.between(1, ghostMovementOffset),
+            topPolarity*Phaser.Math.RND.between(1, ghostMovementOffset));
+    }
+}
+
+const canvasWidth = 400;
+const canvasHeight = 400;
+
+const scoreBoardOffset = 0;
+const highScoreBoardLeftOffset = 200;
+const highScoreBoardTopOffset = 0;
+const adventurerOffset = 100;
+const ghostOffset = 250;
+const ghostSideIncrement = 5;
+const treasureChestOffset = 250;
+
+const adventurerMovementOffset = 2;
+const baseGhostMovementOffset = 5;
+const ghostMovementIncrement = 5;
+let ghostMovementOffset = baseGhostMovementOffset;
+
+const spriteSide = 75;
+let ghostSide = spriteSide;
+const backgroundColor = '#303030';
+
+const config = {
+    type: Phaser.CANVAS,
+    backgroundColor: backgroundColor,
+    width: canvasWidth,
+    height: canvasHeight,
+    scene: HauntedTreasureGame,
+    //Note - the following setting is required to use 'this.physics'
+    physics: {
+        default: "arcade"
+    }
+};
+
+const game = new Phaser.Game(config);
+```
