@@ -254,6 +254,7 @@ the font size of the title of the page changes from `font-size: 36pt;` to
 ```
 <html>
 <head>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
     <script>
         //
         var ROCK = 0;
