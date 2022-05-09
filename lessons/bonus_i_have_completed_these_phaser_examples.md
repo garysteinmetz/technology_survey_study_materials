@@ -921,3 +921,72 @@ const config = {
 
 const game = new Phaser.Game(config);
 ```
+
+## Exercise - Combine Sprite Sheets and Promises
+
+### Create Sprite Sheet
+
+#### Create a Multi-Layer Image with Transparency Enabled
+
+Using Gimp, create a multi-layer image with transparency (i.e. alpha channel enabled).
+The dimensions of this image should be 200 pixels wide by 200 pixel high.
+Each layer of the image should contain a frame of whatever type
+(e.g. animal, character, weapons) sprite sheet is being developed.
+
+#### Assemble and Export Image as a Sprite Sheet
+
+Do the following.
+
+  - In the menu, select `Filters > Combine > Filmstrip`
+  - In the 'Selection' tab, do the following
+    - Check 'Fit height to images' checkbox
+    - Uncheck 'At top' and 'At bottom' checkboxes
+    - Click the colored rectangle next to `Color` label in the `Filmstrip` section
+      - In the `Select Film Color` popup window, enter `fffffe`* for `HTML notation` field,
+      then click `OK` button
+  - In the 'Advanced' tab, do the following
+    - Slide the `Image height` slider all the way to the right (resulting value of `1.000`)
+    - Slide all other sliders to the left (resulting value of `0.000` for each)
+  - Click the `OK` button
+
+* That's a code for an almost completely white color that probably wasn't used in any layer.
+
+Now do the following to clear the background of the resulting sprite sheet.
+
+  - In the menu, select `Layer > Transparency > Add Alpha Channel`
+  - In the menu, select `Layer > Transparency > Color to Alpha`
+    - In the `Color to Alpha` popup window, do the following
+      - Click the colored rectangle next to `Color` label
+      - In the `Select Film Color` popup window, enter `fffffe`* for `HTML notation` field,
+      then click `OK` button
+  - Click the `OK` button
+
+Now export this image as a PNG file.
+
+  - In the menu, select `File > Export`
+  - In the `Name` field, enter `sampleSpriteSheet1.png`
+  - Select the `Desktop` directory
+  - Click the `Export` button
+  - In the `Export Image as PNG` popup, do the following
+    - Uncheck the `Save background color` and `Save color values from transparent pixels` checkboxes
+    - Click the `Export` button
+
+### Create Web Page
+
+### Run and Test Web Page Locally
+
+Go to the directory where the sprite sheet image and the web (HTML) page are,
+then run the following command to start a local web server.
+
+```
+python -m SimpleHTTPServer 9090
+```
+
+Open a browser and go to `http://localhost:9090/sampleSpriteSheet1.html` .
+
+#### Why Does a Web Server Need to Be Run?
+
+Even though the sprite sheet image and the web (HTML) page are in the same directory,
+the Phaser JS library tries to load image files (like the sprite sheet) by making
+an HTTP call. This call will fail with a CORS error unless the web page is hosted
+on a web server.
