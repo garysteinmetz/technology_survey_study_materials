@@ -74,6 +74,8 @@ enter 'bio' and select 'Change advanced startup options'
 13) Select the 'Exit Saving Changes' option, press 'Enter',
 then press 'Enter' over the '[Yes]' option in the 'Exit Saving Changes?' menu
 
+Reference - https://mashtips.com/enable-virtualization-windows-10/
+
 ### Basic Docker Commands
 
 For the following subsections, run the associate commands from the command line.
@@ -969,7 +971,7 @@ Run `chmod 777 runAws.sh` after creating this file so that it can be executed.
 Here is the file (call it 'runAws.bat') for Windows. Instead of ` "$@"` at the end,
 the equivalent value in Windows is ` %*` .
 ```
-docker run --rm -it --network host -e AWS_ACCESS_KEY_ID=DoesNotMatter -e AWS_SECRET_ACCESS_KEY=DoesNotMatter amazon/aws-cli
+docker run --rm -it --network host -e AWS_ACCESS_KEY_ID=DoesNotMatter -e AWS_SECRET_ACCESS_KEY=DoesNotMatter amazon/aws-cli %*
 ```
 
 Now use the script to execute the same 'list-tables' command as above - with fewer keystrokes!
@@ -1051,6 +1053,21 @@ would be 'slapjack|123' .
   before developing.
 
 #### Create Database Table
+
+##### Escaping Characters on the Windows Command Line.
+
+Some characters typed on the Windows command line have special meaning (like `%`).
+They won't be interpreted as just an individual character (like the letter `a`).
+For these characters to not undergo special interpretation, they must be proceeded by another
+character (called the `escape character`). For the `%` character, preceding it by itself (`%%`)
+results in the two characters being interpreted by just one `%` without any special interpretation.
+
+Reference - https://www.robvanderwoude.com/escapechars.php
+
+Linux/Mac also have conventions for escape characters, with `\` being a commonly used escape
+character when a character is encased in double quotes (`"`).
+
+##### Actions to Create a Table
 
 When creating a DynamoDB table, it's important to note that a column that isn't searched
 against or part of the `primary key` should _Not_ be included in the tables definition.
@@ -1364,11 +1381,3 @@ Here is what is returned.
     "ConsumedCapacity": null
 }
 ```
-
-environment variables as feature flags
-
-generate certificate
-
-billing
-
-C:\Users\Brian\Desktop>docker run --rm -it --network host -e AWS_ACCESS_KEY_ID=DoesNotMatter -e AWS_SECRET_ACCESS_KEY=DoesNotMatter amazon/aws-cli dynamodb --region us-east-1 put-item --table-name UserAppData --item "{\"author_id\": {\"S\": \"123\"}, \"user_app_id\": {\"S\": \"slapjack-456\"}, \"app_data\": {\"S\": \"{\\\"highScore\\\" : 5}\"}}" --endpoint-url http://localhost:8000

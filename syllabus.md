@@ -63,6 +63,7 @@ Code samples can be conveniently tested at https://www.w3schools.com/html/tryit.
   - [Bonus: I have completed these Phaser examples](lessons/bonus_i_have_completed_these_phaser_examples.md)
   - [Bonus: I have reviewed these additional front-end UI topics](lessons/bonus_i_have_reviewed_these_additional_front_end_ui_topics.md)
   - [Bonus: I have completed these server examples](lessons/bonus_i_have_completed_these_server_examples.md)
+  - [Bonus: I can use a web framework](lessons/bonus_i_can_use_a_web_framework.md)
   - I am a computer programmer who has written the classic 'Hello World!' program in a browser
   - I am a server-side programmer
   - I can create an interactive web page (Form Submission, Ajax)
